@@ -1,5 +1,11 @@
 ## **This is Disatomic project with React**
 
+**_2022/09/08_**
+
+- **Add picture preview in upload**
+- **Picture could preview in chat record**
+- **File could be save in Server**
+
 **_2022/09/03_**
 
 - **Using styled-components**
