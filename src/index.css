@@ -5,9 +5,10 @@
 }
 
 body {
-  max-height: 100vh;
-  max-width: 100vw;
-  padding-left: 10px;
-  padding-top: 10px;
-  /* background-color: rgba(0, 0, 0, 0.9); */
+  height: 100vh;
+  width: 100vw;
 }
+
+/* #container {
+  display: flex;
+} */
