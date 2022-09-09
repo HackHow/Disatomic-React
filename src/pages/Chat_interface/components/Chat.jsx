@@ -85,13 +85,14 @@ const ChatContainer = styled.div`
 `;
 
 // socket.io-client package
-const socket = io.connect('http://localhost:3001/');
+// const socket = io.connect('http://localhost:3001/');
 
 // linkify-react package
 const options = { defaultProtocol: 'https' };
 
 function Chat() {
   // socket connect error handling
+  const socket = io.connect('http://localhost:3001/');
   useEffect(() => {
     socket.on('connect', () => {
       console.log('socket connected:', socket.id, new Date().toISOString());
@@ -146,7 +147,7 @@ function Chat() {
       try {
         const formData = new FormData();
         formData.append('images', chooseFiles);
-        const url = 'http://localhost:3001/api/1.0/test/images';
+        const url = 'http://localhost:3001/api/1.0/channels/uploadfiles';
         const { data } = await axios.post(url, formData);
         const { pictureUrl } = data;
         socket.emit('sendMessage', { message, pictureUrl });
@@ -189,7 +190,6 @@ function Chat() {
     //   return;
     // }
     setChooseFiles(uploadFile);
-    // event.target.value = null;
   };
   const resetFileInput = () => {
     inputRef.current.value = null;
