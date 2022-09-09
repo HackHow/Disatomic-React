@@ -4,8 +4,8 @@ import io from 'socket.io-client';
 // import * as HiIcons from 'react-icons/hi';
 // import * as AiIcons from 'react-icons/ai';
 import * as GrIcons from 'react-icons/gr';
-import LinksBar from './Links';
-import FilesBar from './files';
+import LinksBar from './LinksBlock';
+import FilesBar from './FilesBlock';
 import Linkify from 'linkify-react';
 import axios from 'axios';
 
@@ -84,15 +84,13 @@ const ChatContainer = styled.div`
   }
 `;
 
-// socket.io-client package
-// const socket = io.connect('http://localhost:3001/');
-
-// linkify-react package
-const options = { defaultProtocol: 'https' };
-
-function Chat() {
-  // socket connect error handling
+function ChatRecord() {
   const socket = io.connect('http://localhost:3001/');
+
+  // linkify-react package
+  const options = { defaultProtocol: 'https' };
+
+  // socket connect error handling
   useEffect(() => {
     socket.on('connect', () => {
       console.log('socket connected:', socket.id, new Date().toISOString());
@@ -265,4 +263,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default ChatRecord;

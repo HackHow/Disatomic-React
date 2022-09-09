@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import * as AiIcons from 'react-icons/ai';
 
-function FilesBar() {
+function FilesBlock() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
@@ -24,4 +24,4 @@ function FilesBar() {
   );
 }
 
-export default FilesBar;
+export default FilesBlock;

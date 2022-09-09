@@ -15,7 +15,7 @@ const GroupChannelContainer = styled.div`
   }
 `;
 
-function GroupChannel() {
+function ChannelsGroup() {
   return (
     <GroupChannelContainer>
       <div>
@@ -35,4 +35,4 @@ function GroupChannel() {
   );
 }
 
-export default GroupChannel;
+export default ChannelsGroup;

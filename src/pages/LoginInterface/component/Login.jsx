@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import constants from '../../../components/constants';
+import Constants from '../../../components/Constants';
 
 const SignInContainer = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const SignInContainer = styled.div`
   }
 `;
 
-function SignIn() {
+function Login() {
   const [loginInfo, setLoginInfo] = useState({
     email: 'test@test.com',
     password: '123456',
@@ -22,7 +22,7 @@ function SignIn() {
   };
 
   const loginButton = async () => {
-    const url = constants.LOGIN_URL;
+    const url = Constants.LOGIN_URL;
     try {
       const { data } = await axios.post(url, loginInfo);
       alert(data);
@@ -32,10 +32,6 @@ function SignIn() {
       console.log(error);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(loginInfo);
-  // }, [loginInfo]);
 
   return (
     <SignInContainer>
@@ -71,4 +67,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Login;

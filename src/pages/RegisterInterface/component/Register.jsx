@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import constants from '../../../components/constants';
+import Constants from '../../../components/Constants';
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const SignUpContainer = styled.div`
   }
 `;
 
-function SignUp() {
+function Register() {
   const [registerInfo, setRegisterInfo] = useState({
     name: 'howard',
     email: 'test@test.com',
@@ -24,7 +24,7 @@ function SignUp() {
 
   const registerButton = async () => {
     // const data = Object.values(registerInfo);
-    const url = constants.REGISTER_URL;
+    const url = Constants.REGISTER_URL;
     try {
       const { data } = await axios.post(url, registerInfo);
       alert(data);
@@ -79,4 +79,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Register;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import GroupChannel from './components/Group_channel';
-import Chat from './components/Chat';
+import ChannelsGroup from './components/ChannelsGroup';
+import ChatRecord from './components/ChatRecord';
 
 const ChatInterfaceContainer = styled.div`
   display: flex;
@@ -12,8 +12,8 @@ const ChatInterfaceContainer = styled.div`
 function ChatInterface() {
   return (
     <ChatInterfaceContainer>
-      <GroupChannel />
-      <Chat />
+      <ChannelsGroup />
+      <ChatRecord />
     </ChatInterfaceContainer>
   );
 }

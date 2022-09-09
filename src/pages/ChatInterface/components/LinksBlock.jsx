@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import * as HiIcons from 'react-icons/hi';
 
-function LinksBar() {
+function LinksBlock() {
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
@@ -21,4 +21,4 @@ function LinksBar() {
   );
 }
 
-export default LinksBar;
+export default LinksBlock;
