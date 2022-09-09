@@ -1,9 +1,11 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.png';
 
 const SideBarContainer = styled.div`
   padding: 10px 10px;
+  display: flex;
   button {
     border: none;
     height: 100px;
@@ -36,21 +38,24 @@ const SideBarContainer = styled.div`
 function SideBar() {
   return (
     <SideBarContainer>
-      <div className="direct-messages">
-        <button type="submit">
-          <img src={Logo} alt="Logo" />
-        </button>
+      <div>
+        <div className='direct-messages'>
+          <button type='submit'>
+            <img src={Logo} alt='Logo' />
+          </button>
+        </div>
+        <div className='add-server'>
+          <button type='submit'>
+            <span>AppWork School</span>
+          </button>
+          <button type='submit'>
+            <span>
+              <h1>+</h1>
+            </span>
+          </button>
+        </div>
       </div>
-      <div className="add-server">
-        <button type="submit">
-          <span>AppWork School</span>
-        </button>
-        <button type="submit">
-          <span>
-            <h1>+</h1>
-          </span>
-        </button>
-      </div>
+      <Outlet />
     </SideBarContainer>
   );
 }
