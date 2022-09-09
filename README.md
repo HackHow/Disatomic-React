@@ -1,5 +1,11 @@
 ## **This is Disatomic project with React**
 
+**_2022/09/09_**
+
+- **Add login layout**
+- **Add register layout**
+- **Add React Router**
+
 **_2022/09/08_**
 
 - **Add picture preview in upload**
