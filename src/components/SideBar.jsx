@@ -6,7 +6,7 @@ import Logo from '../assets/logo.png';
 const SideBarContainer = styled.div`
   padding: 10px 10px;
   display: flex;
-  button {
+  .server {
     border: none;
     height: 100px;
     width: 100px;
@@ -40,15 +40,15 @@ function SideBar() {
     <SideBarContainer>
       <div>
         <div className='direct-messages'>
-          <button type='submit'>
+          <button className='server' type='submit'>
             <img src={Logo} alt='Logo' />
           </button>
         </div>
         <div className='add-server'>
-          <button type='submit'>
+          <button type='submit' className='server'>
             <span>AppWork School</span>
           </button>
-          <button type='submit'>
+          <button type='submit' className='server'>
             <span>
               <h1>+</h1>
             </span>
