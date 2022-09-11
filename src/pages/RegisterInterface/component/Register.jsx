@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
@@ -18,20 +19,21 @@ function Register() {
   });
 
   const changeHandler = (prop) => (event) => {
-    // console.log(registerInfo);
+    console.log(prop, event.target.value);
     setRegisterInfo({ ...registerInfo, [prop]: event.target.value });
   };
 
-  const registerButton = async () => {
+  const registerButton = async (event) => {
     // const data = Object.values(registerInfo);
+    event.preventDefault();
     const url = Constants.REGISTER_URL;
     try {
       const { data } = await axios.post(url, registerInfo);
-      alert(data);
-      console.log('Register Successful');
+      console.log('accessToken', data.accessToken);
+      alert('Register Successful');
     } catch (error) {
       console.log('Register Fail');
-      console.log(error);
+      console.log('error', error.message);
     }
   };
 
@@ -39,7 +41,7 @@ function Register() {
     <SignUpContainer>
       <div>
         <h2>建立新帳號</h2>
-        <div>
+        <form action='' onSubmit={registerButton}>
           <label className='register-info'>
             <b>使用者名稱</b>
           </label>
@@ -49,7 +51,7 @@ function Register() {
             onChange={changeHandler('name')}
             value={registerInfo.name}
             required
-          ></input>
+          />
           <label className='register-info'>
             <b>電子郵件</b>
           </label>
@@ -59,7 +61,7 @@ function Register() {
             onChange={changeHandler('email')}
             value={registerInfo.email}
             required
-          ></input>
+          />
           <label className='register-info'>
             <b>密碼</b>
           </label>
@@ -69,11 +71,13 @@ function Register() {
             onChange={changeHandler('password')}
             value={registerInfo.password}
             required
-          ></input>
-        </div>
-        <button type='button' onClick={registerButton}>
-          註冊
-        </button>
+          />
+          <button type='submit'>註冊</button>
+        </form>
+
+        <span>
+          <Link to='/login'>已經有一個帳號？</Link>
+        </span>
       </div>
     </SignUpContainer>
   );
