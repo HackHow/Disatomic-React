@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
@@ -10,7 +11,9 @@ const SignInContainer = styled.div`
   }
 `;
 
-function Login() {
+function Login({ setUserId }) {
+  const navigate = useNavigate();
+
   const [loginInfo, setLoginInfo] = useState({
     email: 'test@test.com',
     password: '123456',
@@ -21,15 +24,18 @@ function Login() {
     setLoginInfo({ ...loginInfo, [prop]: event.target.value });
   };
 
-  const loginButton = async () => {
+  const loginButton = async (event) => {
+    event.preventDefault();
     const url = Constants.LOGIN_URL;
     try {
       const { data } = await axios.post(url, loginInfo);
-      alert(data);
-      console.log('Login Success');
+      localStorage.setItem('Authorization', data.accessToken);
+      setUserId(data.userId);
+      alert('Login Success');
+      navigate('/server/home');
     } catch (error) {
       console.log('Login Fail');
-      console.log(error);
+      alert(error.response.data);
     }
   };
 
@@ -37,7 +43,7 @@ function Login() {
     <SignInContainer>
       <div>
         <h2>歡迎回來</h2>
-        <div>
+        <form action='' onSubmit={loginButton}>
           <label className='login-info'>
             <b>電子郵件</b>
           </label>
@@ -58,10 +64,11 @@ function Login() {
             value={loginInfo.password}
             required
           ></input>
-        </div>
-        <button type='button' onClick={loginButton}>
-          登入
-        </button>
+          <button type='submit'>登入</button>
+        </form>
+        <span>
+          需要一個帳號？<Link to='/register'>註冊</Link>
+        </span>
       </div>
     </SignInContainer>
   );
