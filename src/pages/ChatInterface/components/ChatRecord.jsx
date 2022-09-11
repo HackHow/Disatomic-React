@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
-// import * as HiIcons from 'react-icons/hi';
-// import * as AiIcons from 'react-icons/ai';
 import * as GrIcons from 'react-icons/gr';
 import LinksBar from './LinksBlock';
 import FilesBar from './FilesBlock';
