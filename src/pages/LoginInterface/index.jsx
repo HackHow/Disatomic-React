@@ -1,10 +1,10 @@
 import React from 'react';
 import Login from './component/Login';
 
-function LoginInterface() {
+function LoginInterface({ setUserId }) {
   return (
     <>
-      <Login />
+      <Login setUserId={setUserId} />
     </>
   );
 }
