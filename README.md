@@ -1,5 +1,12 @@
 ## **This is Disatomic project with React**
 
+**_2022/09/11_**
+
+- **Modify login console log**
+- **Add jwt verify and sign in login/register**
+- **Direct default page to login page**
+- **Add Home component**
+
 **_2022/09/09_**
 
 - **Add login layout**
