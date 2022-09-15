@@ -41,12 +41,12 @@ function DirectMessages({ userId }) {
         <CreateMessage />
       </PrivateMessage>
 
-      <FriendsList>
+      {/* <FriendsList>
         <FriendsIcon>
           <div></div>
         </FriendsIcon>
         <div>Morton</div>
-      </FriendsList>
+      </FriendsList> */}
     </Home>
   );
 }
