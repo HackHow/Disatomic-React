@@ -2,10 +2,10 @@ import React from 'react';
 import DirectMessages from './component/DirectMessages';
 import FriendStatus from './component/FriendStatus';
 
-function HomeInterface({ userId }) {
+function HomeInterface() {
   return (
     <>
-      <DirectMessages userId={userId} />
+      <DirectMessages />
       <FriendStatus />
     </>
   );
