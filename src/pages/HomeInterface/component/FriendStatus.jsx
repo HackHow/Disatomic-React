@@ -30,13 +30,12 @@ function FriendStatus() {
   return (
     <>
       <FriendStatusHeader>
-        <p className='status'>好友</p>
         <p className='status'>線上</p>
         <p className='status'>所有</p>
         <p className='status'>等待中</p>
       </FriendStatusHeader>
 
-      <FriendsIcon>
+      {/* <FriendsIcon>
         <div>
           <div></div>
           <FriendIsOnline>
@@ -44,7 +43,7 @@ function FriendStatus() {
             <p>線上</p>
           </FriendIsOnline>
         </div>
-      </FriendsIcon>
+      </FriendsIcon> */}
     </>
   );
 }
