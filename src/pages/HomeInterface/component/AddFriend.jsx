@@ -5,10 +5,12 @@ import Modal from 'react-bootstrap/Modal';
 import * as BsIcons from 'react-icons/bs';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
+import styled from 'styled-components';
 
 function AddFriend({ userId }) {
   const [show, setShow] = useState(false);
   const [friendName, setFriendName] = useState('Morton');
+  const [demoTest, setDemoTest] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,11 +21,16 @@ function AddFriend({ userId }) {
   };
 
   const sendFriendInvitation = async () => {
+    console.log('userId', userId);
     const url = Constants.ADD_FRIEND_URL;
-    const data = { userId, friendName };
+    const data = { senderId: userId, friendName };
+
     try {
+      console.log(userId);
       const result = await axios.post(url, data);
-      console.log(result);
+      console.log(result.data.friendName);
+      setDemoTest(result.data.friendName);
+      console.log('demoTest', demoTest);
     } catch (error) {
       console.log(error);
       alert(error.response.data);
@@ -31,11 +38,32 @@ function AddFriend({ userId }) {
     setShow(false);
   };
 
+  const FriendsIcon = styled.div`
+    border: 1px solid #010000;
+    border-radius: 20%;
+    width: 70px;
+    height: 70px;
+    position: relative;
+    left: 120%;
+    bottom: 0;
+  `;
+
   return (
     <>
       <Button variant='dark ' onClick={handleShow}>
         <BsIcons.BsFillPersonPlusFill size={80} />
       </Button>
+
+      <FriendsIcon>
+        <div id='test'>
+          {demoTest && (
+            <>
+              <div>{demoTest}</div>
+              <div>線上</div>
+            </>
+          )}
+        </div>
+      </FriendsIcon>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
