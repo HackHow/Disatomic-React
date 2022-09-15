@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -13,6 +13,12 @@ const SignInContainer = styled.div`
 
 function Login({ setUserId }) {
   const navigate = useNavigate();
+
+  const token = localStorage.getItem('Authorization');
+
+  useEffect(() => {
+    if (token) navigate('/server/home');
+  }, [navigate, token]);
 
   const [loginInfo, setLoginInfo] = useState({
     email: 'test@test.com',
@@ -31,11 +37,9 @@ function Login({ setUserId }) {
       const { data } = await axios.post(url, loginInfo);
       localStorage.setItem('Authorization', data.accessToken);
       setUserId(data.userId);
-      alert('Login Success');
       navigate('/server/home');
     } catch (error) {
-      console.log('Login Fail');
-      alert(error.response.data);
+      console.log(error.response.data);
     }
   };
 
