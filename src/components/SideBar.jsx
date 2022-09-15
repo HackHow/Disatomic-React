@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.png';
+import axios from 'axios';
+import Constants from './Constants';
 
 const SideBarContainer = styled.div`
   padding: 10px 10px;
@@ -35,7 +37,26 @@ const SideBarContainer = styled.div`
   }
 `;
 
-function SideBar() {
+function SideBar({ userId }) {
+  const [demoServer, setDemoServer] = useState('');
+
+  console.log('userId', userId);
+
+  const createServer = async () => {
+    const serverName = 'AppWorkSchool';
+    // const userId = '631f1fe4a3e26e83aaa525e2';
+    const data = { userId, serverName };
+    const url = Constants.CREATE_SERVER;
+    console.log('click pass');
+    const result = await axios.post(url, data);
+
+    console.log('result', result);
+    if (result.data === 'Create server success') {
+      const testServer = 'Test Server';
+      setDemoServer(testServer);
+    }
+  };
+
   return (
     <SideBarContainer>
       <div>
@@ -48,10 +69,13 @@ function SideBar() {
           <button type='submit' className='server'>
             <span>AppWork School</span>
           </button>
+          {demoServer && (
+            <button type='submit' className='server'>
+              <span>{demoServer}</span>
+            </button>
+          )}
           <button type='submit' className='server'>
-            <span>
-              <h1>+</h1>
-            </span>
+            <span onClick={createServer}>+</span>
           </button>
         </div>
       </div>
