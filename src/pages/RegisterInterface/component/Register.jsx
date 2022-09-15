@@ -36,7 +36,6 @@ function Register() {
     try {
       const { data } = await axios.post(url, registerInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      alert('Register Successful');
       navigate('/server/home');
     } catch (error) {
       console.log('Register Fail');
