@@ -19,7 +19,7 @@ function App() {
           element={<LoginInterface setUserId={setUserId} />}
         />
         <Route path='/register' element={<RegisterInterface />} />
-        <Route path='/server' element={<SideBar />}>
+        <Route path='/server' element={<SideBar userId={userId} />}>
           <Route path='home' element={<HomeInterface userId={userId} />} />
           <Route path='channels' element={<ChatInterface />} />
         </Route>
