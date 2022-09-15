@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
@@ -12,6 +12,14 @@ const SignUpContainer = styled.div`
 `;
 
 function Register() {
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('Authorization');
+
+  useEffect(() => {
+    if (token) navigate('/server/home');
+  }, [navigate, token]);
+
   const [registerInfo, setRegisterInfo] = useState({
     name: 'howard',
     email: 'test@test.com',
@@ -19,21 +27,20 @@ function Register() {
   });
 
   const changeHandler = (prop) => (event) => {
-    console.log(prop, event.target.value);
     setRegisterInfo({ ...registerInfo, [prop]: event.target.value });
   };
 
   const registerButton = async (event) => {
-    // const data = Object.values(registerInfo);
     event.preventDefault();
     const url = Constants.REGISTER_URL;
     try {
       const { data } = await axios.post(url, registerInfo);
-      console.log('accessToken', data.accessToken);
+      localStorage.setItem('Authorization', data.accessToken);
       alert('Register Successful');
+      navigate('/server/home');
     } catch (error) {
       console.log('Register Fail');
-      console.log('error', error.message);
+      alert(error.response.data);
     }
   };
 
