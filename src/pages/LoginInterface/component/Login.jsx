@@ -36,7 +36,6 @@ function Login({ setUserId }) {
     try {
       const { data } = await axios.post(url, loginInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      setUserId(data.userId);
       navigate('/server/home');
     } catch (error) {
       console.log(error.response.data);
