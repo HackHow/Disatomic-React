@@ -7,30 +7,34 @@ import axios from 'axios';
 import Constants from '../../../components/Constants';
 import styled from 'styled-components';
 
-function AddFriend({ userId }) {
+function AddFriend() {
   const [show, setShow] = useState(false);
-  const [friendName, setFriendName] = useState('Morton');
-  const [demoTest, setDemoTest] = useState('');
+  const [inputFriendName, setInputFriendName] = useState('Morton#2826');
+  // const [friendNameArray, setFriendNameArray] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const changeHandler = (event) => {
     const userName = event.target.value;
-    setFriendName(userName);
+    setInputFriendName(userName);
   };
 
   const sendFriendInvitation = async () => {
-    console.log('userId', userId);
+    const token = localStorage.getItem('Authorization');
     const url = Constants.ADD_FRIEND_URL;
-    const data = { senderId: userId, friendName };
-
     try {
-      console.log(userId);
-      const result = await axios.post(url, data);
-      console.log(result.data.friendName);
-      setDemoTest(result.data.friendName);
-      console.log('demoTest', demoTest);
+      const { data } = await axios.post(
+        url,
+        { friendName: inputFriendName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(data);
+      // setFriendNameArray((arr) => [data.friendName, ...arr]);
     } catch (error) {
       console.log(error);
       alert(error.response.data);
@@ -38,32 +42,11 @@ function AddFriend({ userId }) {
     setShow(false);
   };
 
-  const FriendsIcon = styled.div`
-    border: 1px solid #010000;
-    border-radius: 20%;
-    width: 70px;
-    height: 70px;
-    position: relative;
-    left: 120%;
-    bottom: 0;
-  `;
-
   return (
     <>
       <Button variant='dark ' onClick={handleShow}>
         <BsIcons.BsFillPersonPlusFill size={80} />
       </Button>
-
-      <FriendsIcon>
-        <div id='test'>
-          {demoTest && (
-            <>
-              <div>{demoTest}</div>
-              <div>線上</div>
-            </>
-          )}
-        </div>
-      </FriendsIcon>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -77,7 +60,7 @@ function AddFriend({ userId }) {
                 type='text'
                 placeholder='Morton'
                 autoFocus
-                value={friendName}
+                value={inputFriendName}
                 onChange={changeHandler}
               />
             </Form.Group>
