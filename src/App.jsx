@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SideBar from './components/SideBar';
 import ChatInterface from './pages/ChatInterface';
