@@ -11,14 +11,14 @@ const SignInContainer = styled.div`
   }
 `;
 
-function Login({ setUserId }) {
+function Login() {
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('Authorization');
-
   useEffect(() => {
+    const token = localStorage.getItem('Authorization');
+    console.log('token', token);
     if (token) navigate('/server/home');
-  }, [navigate, token]);
+  }, []);
 
   const [loginInfo, setLoginInfo] = useState({
     email: 'test@test.com',
