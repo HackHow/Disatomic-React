@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 function AddFriend() {
   const [show, setShow] = useState(false);
-  const [inputFriendName, setInputFriendName] = useState('Morton#2826');
+  const [inputFriendName, setInputFriendName] = useState('Morton#1049');
   // const [friendNameArray, setFriendNameArray] = useState([]);
 
   const handleClose = () => setShow(false);
