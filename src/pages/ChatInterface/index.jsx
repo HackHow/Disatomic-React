@@ -13,7 +13,7 @@ const ChatInterfaceContainer = styled.div`
 function ChatInterface() {
   return (
     <ChatInterfaceContainer>
-      {/* <SideBar /> */}
+      <SideBar />
       <ChannelsGroup />
       <ChatRecord />
     </ChatInterfaceContainer>
