@@ -7,12 +7,17 @@ const ADD_FRIEND_URL = `${DNS}/api/1.0/friend`;
 
 const CREATE_SERVER = `${DNS}/api/1.0/server`;
 
+const GET_ALL_FRIEND = `${DNS}/api/1.0/friend/all`;
+const GET_PENDING_FRIEND = `${DNS}/api/1.0/friend/pending`;
+
 const constants = {
   REGISTER_URL,
   LOGIN_URL,
   USER_INFO,
   ADD_FRIEND_URL,
   CREATE_SERVER,
+  GET_ALL_FRIEND,
+  GET_PENDING_FRIEND,
 };
 
 export default constants;
