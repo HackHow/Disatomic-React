@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import SideBar from '../../components/SideBar';
 import ChannelsGroup from './components/ChannelsGroup';
 import ChatRecord from './components/ChatRecord';
 
@@ -12,6 +13,7 @@ const ChatInterfaceContainer = styled.div`
 function ChatInterface() {
   return (
     <ChatInterfaceContainer>
+      {/* <SideBar /> */}
       <ChannelsGroup />
       <ChatRecord />
     </ChatInterfaceContainer>
