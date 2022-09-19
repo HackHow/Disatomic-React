@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Constants from '../../../components/Constants';
 
@@ -21,7 +22,7 @@ function FriendStatus() {
   const token = localStorage.getItem('Authorization');
   const [allFriend, setAllFriend] = useState([]);
   const [pendingFriend, setPendingFriend] = useState([]);
-  const [friendState, setFriendState] = useState('');
+  const [friendState, setFriendState] = useState('線上');
 
   const clickAllFriendState = async () => {
     const url = Constants.GET_ALL_FRIEND;
@@ -63,10 +64,6 @@ function FriendStatus() {
         <div className='status' onClick={clickPendingFriendState}>
           等待中
         </div>
-        {/* <div>{allFriend && allFriend.map((item) => <div>{item}</div>)}</div>
-        <div>
-          {pendingFriend && pendingFriend.map((item) => <div>{item.name}</div>)} */}
-        {/* </div> */}
         <div>
           {friendState === '等待中'
             ? pendingFriend.map((item) => <div>{item.name}</div>)
