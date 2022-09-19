@@ -63,6 +63,7 @@ function SideBar() {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('data', data);
         setServersArray(data.userOwnServers);
       };
       getUserInfo();
@@ -70,6 +71,10 @@ function SideBar() {
       console.log(error.message);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('serversArray', serversArray);
+  });
 
   const createServerClick = async () => {
     const url = Constants.CREATE_SERVER;
@@ -85,7 +90,10 @@ function SideBar() {
             },
           }
         );
-        setServersArray((arr) => [data.serverName, ...arr]);
+        setServersArray((arr) => [
+          { serverId: data.serverId, serverName: data.serverName },
+          ...arr,
+        ]);
       };
       createServer();
     } catch (error) {
@@ -114,7 +122,7 @@ function SideBar() {
           {serversArray &&
             serversArray.map((item) => (
               <ServersContainer>
-                <Link to={`/channels/${item}`}>{item}</Link>
+                <Link to={`/channels/${item.serverId}`}>{item.serverName}</Link>
               </ServersContainer>
             ))}
         </div>
@@ -137,7 +145,6 @@ function SideBar() {
                 <Form.Control
                   type='text'
                   placeholder='AppWorkSchool'
-                  // value='AppWorkSchool'
                   onChange={changeHandler}
                   onKeyDown={handleKeypress}
                   autoFocus
