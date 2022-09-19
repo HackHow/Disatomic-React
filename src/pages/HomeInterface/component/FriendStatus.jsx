@@ -1,5 +1,7 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Constants from '../../../components/Constants';
 
 const FriendStatusHeader = styled.div`
   height: 10vh;
@@ -16,12 +18,60 @@ const FriendStatusHeader = styled.div`
 `;
 
 function FriendStatus() {
+  const token = localStorage.getItem('Authorization');
+  const [allFriend, setAllFriend] = useState([]);
+  const [pendingFriend, setPendingFriend] = useState([]);
+  const [friendState, setFriendState] = useState('');
+
+  const clickAllFriendState = async () => {
+    const url = Constants.GET_ALL_FRIEND;
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setAllFriend(data);
+      setFriendState('所有');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clickPendingFriendState = async () => {
+    const url = Constants.GET_PENDING_FRIEND;
+    try {
+      const { data } = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setPendingFriend(data.outgoingRequest);
+      setFriendState('等待中');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <FriendStatusHeader>
-        <p className='status'>線上</p>
-        <p className='status'>所有</p>
-        <p className='status'>等待中</p>
+        <div className='status'>線上</div>
+        <div className='status' onClick={clickAllFriendState}>
+          所有
+        </div>
+        <div className='status' onClick={clickPendingFriendState}>
+          等待中
+        </div>
+        {/* <div>{allFriend && allFriend.map((item) => <div>{item}</div>)}</div>
+        <div>
+          {pendingFriend && pendingFriend.map((item) => <div>{item.name}</div>)} */}
+        {/* </div> */}
+        <div>
+          {friendState === '等待中'
+            ? pendingFriend.map((item) => <div>{item.name}</div>)
+            : allFriend.map((item) => <div>{item}</div>)}
+        </div>
       </FriendStatusHeader>
     </>
   );
