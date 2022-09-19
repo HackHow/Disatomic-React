@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -105,12 +106,16 @@ function SideBar() {
     <>
       {/* <SideBarContainer> */}
       <div>
-        <LogoContainer src={Logo} alt='Logo'></LogoContainer>
+        <Link to='/channels/@me'>
+          <LogoContainer src={Logo} alt='Logo'></LogoContainer>
+        </Link>
 
         <div>
           {serversArray &&
             serversArray.map((item) => (
-              <ServersContainer>{item}</ServersContainer>
+              <ServersContainer>
+                <Link to={`/channels/${item}`}>{item}</Link>
+              </ServersContainer>
             ))}
         </div>
 
