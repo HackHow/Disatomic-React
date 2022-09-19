@@ -31,7 +31,7 @@ function FriendStatus() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAllFriend(data);
+      setAllFriend([...data]);
       setFriendState('所有');
     } catch (error) {
       console.log(error);
