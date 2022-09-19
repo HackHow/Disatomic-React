@@ -15,12 +15,14 @@ const PrivateMessage = styled.div`
 
 function DirectMessages() {
   return (
-    <Home>
-      <PrivateMessage>
-        <div>私人訊息</div>
-        <CreateMessage />
-      </PrivateMessage>
-    </Home>
+    <>
+      {/* <Home> */}
+      {/* <PrivateMessage> */}
+      <div>私人訊息</div>
+      <CreateMessage />
+      {/* </PrivateMessage> */}
+      {/* </Home> */}
+    </>
   );
 }
 
