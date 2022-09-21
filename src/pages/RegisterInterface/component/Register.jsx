@@ -5,10 +5,36 @@ import axios from 'axios';
 import Constants from '../../../components/Constants';
 
 const SignUpContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  .register-info {
-    display: block;
-  }
+  justify-content: center;
+  align-items: center;
+`;
+
+const TitleContainer = styled.h3`
+  text-align: center;
+`;
+
+const InputDataContainer = styled.label`
+  display: block;
+`;
+
+const RegisterButton = styled.button`
+  display: block;
+  margin-top: 20px;
+  border-radius: 16px 0;
+`;
+
+const ButtonAndLink = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  /* border: solid; */
+  padding: 0 16px;
+  border-radius: 16px 0;
 `;
 
 function Register() {
@@ -45,46 +71,40 @@ function Register() {
 
   return (
     <SignUpContainer>
-      <div>
-        <h2>建立新帳號</h2>
-        <form action='' onSubmit={registerButton}>
-          <label className='register-info'>
-            <b>使用者名稱</b>
-          </label>
-          <input
-            type='text'
-            placeholder='Enter username'
-            onChange={changeHandler('name')}
-            value={registerInfo.name}
-            required
-          />
-          <label className='register-info'>
-            <b>電子郵件</b>
-          </label>
-          <input
-            type='email'
-            placeholder='Enter email'
-            onChange={changeHandler('email')}
-            value={registerInfo.email}
-            required
-          />
-          <label className='register-info'>
-            <b>密碼</b>
-          </label>
-          <input
-            type='password'
-            placeholder='Enter password'
-            onChange={changeHandler('password')}
-            value={registerInfo.password}
-            required
-          />
-          <button type='submit'>註冊</button>
-        </form>
+      <form action='' onSubmit={registerButton} className='xx'>
+        <TitleContainer>建立新帳號</TitleContainer>
+        <InputDataContainer>使用者名稱</InputDataContainer>
+        <Input
+          type='text'
+          placeholder='Enter username'
+          onChange={changeHandler('name')}
+          value={registerInfo.name}
+          autoFocus
+          required
+        />
 
-        <span>
+        <InputDataContainer>電子郵件</InputDataContainer>
+        <Input
+          type='email'
+          placeholder='Enter email'
+          onChange={changeHandler('email')}
+          value={registerInfo.email}
+          required
+        />
+
+        <InputDataContainer>密碼</InputDataContainer>
+        <Input
+          type='password'
+          placeholder='Enter password'
+          onChange={changeHandler('password')}
+          value={registerInfo.password}
+          required
+        />
+        <ButtonAndLink>
+          <RegisterButton type='submit'>註冊</RegisterButton>
           <Link to='/login'>已經有一個帳號？</Link>
-        </span>
-      </div>
+        </ButtonAndLink>
+      </form>
     </SignUpContainer>
   );
 }

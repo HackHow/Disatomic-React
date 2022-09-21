@@ -7,13 +7,32 @@ import Logo from '../assets/logo.png';
 import styled from 'styled-components';
 import Constants from './Constants';
 import axios from 'axios';
+import * as BsIcons from 'react-icons/bs';
 
 const LogoContainer = styled.img`
-  height: 100px;
-  width: 100px;
+  margin-left: 10px;
+  margin-top: 10px;
   border: none;
-  height: 100px;
-  width: 100px;
+  height: 70px;
+  width: 70px;
+  border-radius: 80%;
+  background-color: #808080b8;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    background-color: #7e89c8;
+    border-radius: 30%;
+  }
+`;
+
+const ServersContainer = styled.div`
+  text-align: center;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 20px 0;
+  height: 70px;
+  width: 70px;
+  border: none;
   border-radius: 80%;
   background-color: #808080bb;
   color: white;
@@ -22,28 +41,17 @@ const LogoContainer = styled.img`
     background-color: #7e89c8;
     border-radius: 30%;
   }
-`;
-const ServersContainer = styled.div`
-  text-align: center;
-  padding: 40px 0;
-  height: 100px;
-  width: 100px;
-  border: none;
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  background-color: #808080bb;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #7e89c8;
-    border-radius: 30%;
-  }
+  overflow: hidden;
+  white-space: nowrap;
+  /* text-overflow: ellipsis; */
 `;
 
-function SideBar() {
+const AddServerButton = styled.div`
+  padding: 23px;
+`;
+
+function SideBar({ serversArray, setServersArray, setChooseServer }) {
   const [show, setShow] = useState(false);
-  const [serversArray, setServersArray] = useState([]);
   const [serverName, setServerName] = useState('');
   const token = localStorage.getItem('Authorization');
 
@@ -63,7 +71,6 @@ function SideBar() {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('data', data);
         setServersArray(data.userOwnServers);
       };
       getUserInfo();
@@ -71,10 +78,6 @@ function SideBar() {
       console.log(error.message);
     }
   }, []);
-
-  useEffect(() => {
-    console.log('serversArray', serversArray);
-  });
 
   const createServerClick = async () => {
     const url = Constants.CREATE_SERVER;
@@ -94,42 +97,51 @@ function SideBar() {
           { serverId: data.serverId, serverName: data.serverName },
           ...arr,
         ]);
+        setShow(false);
+        setServerName('');
       };
       createServer();
     } catch (error) {
       console.log(error.message);
     }
-    setShow(false);
   };
 
   const handleKeypress = (event) => {
     if (event.keyCode === 13) {
       event.preventDefault();
-      console.log('You have pressed Enter ');
-      createServerClick();
+      if (serverName !== '') {
+        console.log('You have pressed Enter ');
+        createServerClick();
+      }
     }
+  };
+
+  const clickServer = (server) => {
+    setChooseServer(server);
+    console.log('AAAAAAAAAAAAAAAA');
   };
 
   return (
     <>
-      {/* <SideBarContainer> */}
       <div>
-        <Link to='/channels/@me'>
-          <LogoContainer src={Logo} alt='Logo'></LogoContainer>
-        </Link>
-
         <div>
-          {serversArray &&
-            serversArray.map((item) => (
-              <ServersContainer>
-                <Link to={`/channels/${item.serverId}`}>{item.serverName}</Link>
-              </ServersContainer>
-            ))}
+          <Link to='/channels/@me'>
+            <LogoContainer src={Logo} alt='Logo'></LogoContainer>
+          </Link>
         </div>
 
-        <Button variant='primary' onClick={handleShow}>
-          +
-        </Button>
+        {serversArray &&
+          serversArray.map((item) => (
+            <ServersContainer onClick={() => clickServer(item.serverName)}>
+              <Link to={`/channels/${item.serverId}`}>{item.serverName}</Link>
+            </ServersContainer>
+          ))}
+
+        <AddServerButton>
+          <Button variant='primary' onClick={handleShow}>
+            <BsIcons.BsPlusCircleFill />
+          </Button>
+        </AddServerButton>
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -153,7 +165,11 @@ function SideBar() {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='primary' onClick={createServerClick}>
+            <Button
+              variant='primary'
+              onClick={createServerClick}
+              disabled={serverName === ''}
+            >
               建立
             </Button>
             <Button variant='secondary' onClick={handleClose}>
@@ -162,7 +178,6 @@ function SideBar() {
           </Modal.Footer>
         </Modal>
       </div>
-      {/* </SideBarContainer> */}
     </>
   );
 }

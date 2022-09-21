@@ -5,10 +5,36 @@ import axios from 'axios';
 import Constants from '../../../components/Constants';
 
 const SignInContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  .login-info {
-    display: block;
-  }
+  justify-content: center;
+  align-items: center;
+`;
+
+const TitleContainer = styled.h3`
+  text-align: center;
+`;
+
+const InputDataContainer = styled.label`
+  display: block;
+`;
+
+const RegisterButton = styled.button`
+  display: block;
+  margin-top: 20px;
+  border-radius: 16px 0;
+`;
+
+const ButtonAndLink = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  /* border: solid; */
+  padding: 0 16px;
+  border-radius: 16px 0;
 `;
 
 function Login() {
@@ -16,7 +42,6 @@ function Login() {
 
   useEffect(() => {
     const token = localStorage.getItem('Authorization');
-    console.log('token', token);
     if (token) navigate('/channels/@me');
   }, []);
 
@@ -45,33 +70,32 @@ function Login() {
   return (
     <SignInContainer>
       <div>
-        <h2>歡迎回來</h2>
+        <TitleContainer>歡迎回來</TitleContainer>
         <form action='' onSubmit={loginButton}>
-          <label className='login-info'>
-            <b>電子郵件</b>
-          </label>
-          <input
+          <InputDataContainer>電子郵件</InputDataContainer>
+          <Input
             type='email'
             placeholder='Enter email'
             onChange={changeHandler('email')}
             value={loginInfo.email}
+            autoFocus
             required
-          ></input>
-          <label className='login-info'>
-            <b>密碼</b>
-          </label>
-          <input
+          ></Input>
+          <InputDataContainer>密碼</InputDataContainer>
+          <Input
             type='password'
             placeholder='Enter password'
             onChange={changeHandler('password')}
             value={loginInfo.password}
             required
-          ></input>
-          <button type='submit'>登入</button>
+          ></Input>
+          <ButtonAndLink>
+            <RegisterButton type='submit'>登入</RegisterButton>
+            <span>
+              需要一個帳號？<Link to='/register'>註冊</Link>
+            </span>
+          </ButtonAndLink>
         </form>
-        <span>
-          需要一個帳號？<Link to='/register'>註冊</Link>
-        </span>
       </div>
     </SignInContainer>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import io from 'socket.io-client';
-import * as GrIcons from 'react-icons/gr';
+// import io from 'socket.io-client';
+// import * as GrIcons from 'react-icons/gr';
 import LinksBar from './LinksBlock';
 import FilesBar from './FilesBlock';
 import Linkify from 'linkify-react';
@@ -82,32 +82,30 @@ const ChatContainer = styled.div`
   }
 `;
 
-function ChatRecord() {
-  const socket = io.connect('http://localhost:3001/');
-
+function ChatRecord({ ws, setWs }) {
   // linkify-react package
   const options = { defaultProtocol: 'https' };
 
   // socket connect error handling
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('socket connected:', socket.id, new Date().toISOString());
-    });
+  // useEffect(() => {
+  //   socket.on('connect', () => {
+  //     console.log('socket connected:', socket.id, new Date().toISOString());
+  //   });
 
-    socket.on('disconnect', () => {
-      console.log('socket disconnect');
-    });
+  //   socket.on('disconnect', () => {
+  //     console.log('socket disconnect');
+  //   });
 
-    // socket.on('pong', () => {
-    //   console.log(new Date().toISOString());
-    // });
+  // socket.on('pong', () => {
+  //   console.log(new Date().toISOString());
+  // });
 
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      // socket.off('pong');
-    };
-  }, []);
+  //   return () => {
+  //     socket.off('connect');
+  //     socket.off('disconnect');
+  //     // socket.off('pong');
+  //   };
+  // }, []);
 
   const [message, setMessage] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
@@ -117,26 +115,26 @@ function ChatRecord() {
 
   const inputRef = useRef('');
 
-  useEffect(() => {
-    let fileReader,
-      isCancel = false;
-    if (chooseFiles) {
-      fileReader = new FileReader();
-      fileReader.onload = (event) => {
-        const { result } = event.target;
-        if (result && !isCancel) {
-          setPreviewFiles(result);
-        }
-      };
-      fileReader.readAsDataURL(chooseFiles);
-    }
-    return () => {
-      isCancel = true;
-      if (fileReader && fileReader.readyState === 1) {
-        fileReader.abort();
-      }
-    };
-  }, [chooseFiles]);
+  // useEffect(() => {
+  //   let fileReader,
+  //     isCancel = false;
+  //   if (chooseFiles) {
+  //     fileReader = new FileReader();
+  //     fileReader.onload = (event) => {
+  //       const { result } = event.target;
+  //       if (result && !isCancel) {
+  //         setPreviewFiles(result);
+  //       }
+  //     };
+  //     fileReader.readAsDataURL(chooseFiles);
+  //   }
+  //   return () => {
+  //     isCancel = true;
+  //     if (fileReader && fileReader.readyState === 1) {
+  //       fileReader.abort();
+  //     }
+  //   };
+  // }, [chooseFiles]);
 
   const checkImage = async () => {
     if (chooseFiles) {
@@ -146,31 +144,31 @@ function ChatRecord() {
         const url = 'http://localhost:3001/api/1.0/channels/uploadfiles';
         const { data } = await axios.post(url, formData);
         const { pictureUrl } = data;
-        socket.emit('sendMessage', { message, pictureUrl });
+        ws.emit('sendMessage', { message, pictureUrl });
       } catch (error) {
         console.log(error);
       }
     } else {
-      socket.emit('sendMessage', { message });
+      ws.emit('sendMessage', { message });
     }
     setMessage('');
     setPreviewFiles(null);
   };
 
-  useEffect(() => {
-    socket.on('receiveMessage', (data) => {
-      if (data.pictureUrl) {
-        setChatFiles(data.pictureUrl);
-        setMessageReceived((prevMessageReceived) => {
-          return [...prevMessageReceived, data.message];
-        });
-      } else {
-        setMessageReceived((prevMessageReceived) => {
-          return [...prevMessageReceived, data.message];
-        });
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   ws.on('receiveMessage', (data) => {
+  //     if (data.pictureUrl) {
+  //       setChatFiles(data.pictureUrl);
+  //       setMessageReceived((prevMessageReceived) => {
+  //         return [...prevMessageReceived, data.message];
+  //       });
+  //     } else {
+  //       setMessageReceived((prevMessageReceived) => {
+  //         return [...prevMessageReceived, data.message];
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   const changeHandler = (event) => {
     const [uploadFile] = event.target.files;
@@ -194,9 +192,7 @@ function ChatRecord() {
   return (
     <ChatContainer>
       <div className='header'>
-        <div className='channel-name'>
-          <h2># 班級頻道</h2>
-        </div>
+        <div className='channel-name'>{/* <h2># 班級頻道</h2> */}</div>
         <div className='icons'>
           <h2 className='link-icon'>
             <LinksBar></LinksBar>
@@ -204,9 +200,7 @@ function ChatRecord() {
           <h2>
             <FilesBar></FilesBar>
           </h2>
-          <h2>
-            <GrIcons.GrGroup />
-          </h2>
+          <h2>{/* <GrIcons.GrGroup /> */}</h2>
         </div>
       </div>
       <ol id='messages'>

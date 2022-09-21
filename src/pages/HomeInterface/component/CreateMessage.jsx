@@ -17,6 +17,7 @@ function CreateMessage() {
 
   return (
     <>
+      <div>私人訊息</div>
       <Button variant='dark' onClick={handleShow}>
         +
       </Button>

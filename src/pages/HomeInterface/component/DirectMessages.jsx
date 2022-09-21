@@ -19,7 +19,7 @@ function DirectMessages() {
       {/* <Home> */}
       {/* <PrivateMessage> */}
       <div>私人訊息</div>
-      <CreateMessage />
+      {/* <CreateMessage /> */}
       {/* </PrivateMessage> */}
       {/* </Home> */}
     </>

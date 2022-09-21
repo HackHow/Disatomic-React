@@ -1,58 +1,77 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideBar from '../../components/SideBar';
 import AddFriend from './component/AddFriend';
 import DirectMessages from './component/DirectMessages';
+import CreateMessage from './component/CreateMessage';
 import FriendStatus from './component/FriendStatus';
+import PersonalChat from './component/PersonalChat';
 import { Outlet } from 'react-router-dom';
 import io from 'socket.io-client';
+import styled from 'styled-components';
 
-// const token = localStorage.getItem('Authorization');
+const HomeContainer = styled.div`
+  display: flex;
+`;
 
-// const socket = io('http://localhost:3001/', {
-//   auth: {
-//     token: `Bearer ${token}`,
-//   },
-//   withCredentials: true,
-// });
-
-function HomeInterface() {
-  const token = localStorage.getItem('Authorization');
+function HomeInterface({
+  serversArray,
+  setServersArray,
+  ws,
+  setWs,
+  chooseServer,
+  setChooseServer,
+}) {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io('ws://localhost:3001/', {
-      auth: {
-        token: `Bearer ${token}`,
-      },
-    });
-
-    socket.on('connect', () => {
-      console.log('socket connected:', socket.id, new Date().toISOString());
-    });
-
-    socket.on('disconnect', () => {
-      console.log('socket disconnect');
-    });
-
-    socket.on('friendState', (data) => console.log(data));
-
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-    };
+    if (!ws) {
+      const token = window.localStorage.getItem('Authorization');
+      const socket = io('http://localhost:3001/', {
+        auth: {
+          token: `Bearer ${token}`,
+        },
+      });
+      setWs(socket);
+    }
   }, []);
 
-  // useEffect(() => {
-  //   socket.on('friendState', (data) => console.log(data));
-  // }, []);
+  useEffect(() => {
+    if (ws) {
+      ws.on('connect', () => {
+        console.log('socket connected:', ws.id, new Date().toISOString());
+      });
+
+      ws.on('token', (data) => {
+        alert(data);
+        navigate('/');
+      });
+
+      ws.on('disconnect', () => {
+        console.log('socket disconnect');
+      });
+
+      return () => {
+        ws.off('connect');
+        ws.off('disconnect');
+      };
+    }
+  }, [ws]);
 
   return (
-    <>
-      <SideBar />
+    <HomeContainer>
+      <SideBar
+        serversArray={serversArray}
+        setServersArray={setServersArray}
+        chooseServer={chooseServer}
+        setChooseServer={setChooseServer}
+      />
       <AddFriend />
-      <DirectMessages />
-      <FriendStatus />
-      <Outlet />
-    </>
+      <CreateMessage />
+      <FriendStatus ws={ws} setWs={setWs} />
+      <PersonalChat></PersonalChat>
+      {/* <Outlet /> */}
+    </HomeContainer>
   );
 }
 

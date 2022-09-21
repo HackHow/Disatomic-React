@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import SideBar from '../../components/SideBar';
 import ChannelsGroup from './components/ChannelsGroup';
@@ -10,12 +11,28 @@ const ChatInterfaceContainer = styled.div`
   height: 100vh;
 `;
 
-function ChatInterface() {
+function ChatInterface({
+  serversArray,
+  setServersArray,
+  ws,
+  setWs,
+  chooseServer,
+  setChooseServer,
+}) {
   return (
     <ChatInterfaceContainer>
-      <SideBar />
-      <ChannelsGroup />
-      <ChatRecord />
+      <SideBar
+        serversArray={serversArray}
+        setServersArray={setServersArray}
+        chooseServer={chooseServer}
+        setChooseServer={setChooseServer}
+      />
+      <ChannelsGroup
+        serversArray={serversArray}
+        chooseServer={chooseServer}
+        setChooseServer={setChooseServer}
+      />
+      <ChatRecord ws={ws} setWs={setWs} />
     </ChatInterfaceContainer>
   );
 }
