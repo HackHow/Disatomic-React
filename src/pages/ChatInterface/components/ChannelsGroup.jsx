@@ -7,6 +7,7 @@ import Constants from '../../../components/Constants';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import * as BsIcons from 'react-icons/bs';
 
 const GroupChannelContainer = styled.div`
   border: 2px solid black;
@@ -26,16 +27,48 @@ const ChannelContainer = styled.div`
   display: flex;
 `;
 
-function ChannelsGroup({ serversArray, ws, chooseServer, setChooseServer }) {
+function ChannelsGroup({
+  serversArray,
+  ws,
+  chooseServer,
+  setChooseServer,
+  chooseServerId,
+  setChooseServerId,
+  chooseChannelId,
+  setChooseChannelId,
+}) {
   const [show, setShow] = useState(false);
+  const [showInviteFriend, setShowInviteFriend] = useState(false);
   const [channelName, setChannelName] = useState('General');
+  const [friendName, setFriendName] = useState('');
   const [isPublicOn, setIsPublicOn] = useState(true);
   const [channel, setChannel] = useState([]);
   const token = localStorage.getItem('Authorization');
-  const serverId = window.location.href.split('/')[4];
+  // const serverId = window.location.href.split('/')[4];
+  const serverId = window.location.href.split('?')[0].split('/')[4];
+  const channelId = window.location.href.split('=')[1];
   const location = useLocation();
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleCloseInviteFriend = () => setShowInviteFriend(false);
+  const handleShowInviteFriend = () => setShowInviteFriend(true);
+
+  const onSwitchAction = () => {
+    setIsPublicOn(!isPublicOn);
+    // console.log(!isPublicOn);
+  };
+  const changeHandler = (event) => {
+    setChannelName(event.target.value);
+  };
+
+  const changeHandlerFriendName = (event) => {
+    setFriendName(event.target.value);
+  };
+
   useEffect(() => {
+    const serverId = window.location.href.split('/')[4];
     const url = Constants.SERVER_INFO + `/${serverId}`;
     try {
       const getServerInfo = async () => {
@@ -44,44 +77,15 @@ function ChannelsGroup({ serversArray, ws, chooseServer, setChooseServer }) {
             Authorization: `Bearer ${token}`,
           },
         });
+        // console.log(data);
+        setChannel(data.channelList);
         setChooseServer(data.serverName);
       };
       getServerInfo();
     } catch (error) {
       console.log(error);
     }
-  }, []);
-
-  // useEffect(() => {
-  // console.log(location);
-  // if (location.search) {
-  //   const channelId = location.search.split('=')[1];
-  //   const url = Constants.CHANNEL + `/${channelId}`;
-  //   try {
-  //     const getChannelInfo = async () => {
-  //       const { data } = await axios.get(url, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-  // }, []);
-
-  const onSwitchAction = () => {
-    setIsPublicOn(!isPublicOn);
-    // console.log(!isPublicOn);
-  };
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const changeHandler = (event) => {
-    setChannelName(event.target.value);
-  };
+  }, [chooseServer]);
 
   const createChannel = async () => {
     const serverId = location.pathname.split('/')[2];
@@ -98,8 +102,31 @@ function ChannelsGroup({ serversArray, ws, chooseServer, setChooseServer }) {
         },
       });
       setShow(false);
-      console.log(data);
+      console.log('createChannel', data);
       setChannel(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const InviteFriendToChannel = async () => {
+    const url = Constants.InviteFriendToChannel;
+    try {
+      const { data } = await axios.post(
+        url,
+        {
+          serverId,
+          channelId,
+          friendName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setShowInviteFriend(false);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -115,17 +142,57 @@ function ChannelsGroup({ serversArray, ws, chooseServer, setChooseServer }) {
           </Button>
 
           {channel &&
-            serversArray.map((server) =>
-              channel.map((channel) => (
-                <ChannelContainer>
-                  <Link
-                    to={`/channels/${server.serverId}?channel=${channel.channelId}`}
-                  >
-                    {channel.channelName}
-                  </Link>
-                </ChannelContainer>
-              ))
-            )}
+            channel.map((channel) => (
+              <ChannelContainer>
+                <Link
+                  to={`/channels/${chooseServerId}?channel=${channel.channelId}`}
+                  onClick={() => setChooseChannelId(channel.channelId)}
+                >
+                  {channel.channelName}
+                </Link>
+
+                <Button variant='primary' onClick={handleShowInviteFriend}>
+                  <BsIcons.BsPlus size={20} />
+                </Button>
+                <Modal
+                  show={showInviteFriend}
+                  onHide={handleCloseInviteFriend}
+                  centered
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>{`邀請好友到 ${chooseServer} 伺服器`}</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Form>
+                      <Form.Group
+                        className='mb-3'
+                        controlId='exampleForm.ControlInput1'
+                      >
+                        <Form.Label>輸入名稱</Form.Label>
+                        <Form.Control
+                          type='text'
+                          placeholder='Morton'
+                          autoFocus
+                          // value={channelName}
+                          onChange={changeHandlerFriendName}
+                        />
+                      </Form.Group>
+                    </Form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant='primary' onClick={InviteFriendToChannel}>
+                      建立
+                    </Button>
+                    <Button
+                      variant='secondary'
+                      onClick={handleCloseInviteFriend}
+                    >
+                      取消
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </ChannelContainer>
+            ))}
 
           <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>

@@ -6,6 +6,8 @@ import LinksBar from './LinksBlock';
 import FilesBar from './FilesBlock';
 import Linkify from 'linkify-react';
 import axios from 'axios';
+import Constants from '../../../components/Constants';
+import { Link, useLocation } from 'react-router-dom';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -82,30 +84,9 @@ const ChatContainer = styled.div`
   }
 `;
 
-function ChatRecord({ ws, setWs }) {
+function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
   // linkify-react package
   const options = { defaultProtocol: 'https' };
-
-  // socket connect error handling
-  // useEffect(() => {
-  //   socket.on('connect', () => {
-  //     console.log('socket connected:', socket.id, new Date().toISOString());
-  //   });
-
-  //   socket.on('disconnect', () => {
-  //     console.log('socket disconnect');
-  //   });
-
-  // socket.on('pong', () => {
-  //   console.log(new Date().toISOString());
-  // });
-
-  //   return () => {
-  //     socket.off('connect');
-  //     socket.off('disconnect');
-  //     // socket.off('pong');
-  //   };
-  // }, []);
 
   const [message, setMessage] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
@@ -113,62 +94,88 @@ function ChatRecord({ ws, setWs }) {
   const [previewFiles, setPreviewFiles] = useState(null);
   const [chatFiles, setChatFiles] = useState('');
 
-  const inputRef = useRef('');
+  const inputRef = useRef();
 
-  // useEffect(() => {
-  //   let fileReader,
-  //     isCancel = false;
-  //   if (chooseFiles) {
-  //     fileReader = new FileReader();
-  //     fileReader.onload = (event) => {
-  //       const { result } = event.target;
-  //       if (result && !isCancel) {
-  //         setPreviewFiles(result);
-  //       }
-  //     };
-  //     fileReader.readAsDataURL(chooseFiles);
-  //   }
-  //   return () => {
-  //     isCancel = true;
-  //     if (fileReader && fileReader.readyState === 1) {
-  //       fileReader.abort();
-  //     }
-  //   };
-  // }, [chooseFiles]);
+  useEffect(() => {
+    let fileReader,
+      isCancel = false;
+    if (chooseFiles) {
+      fileReader = new FileReader();
+      fileReader.onload = (event) => {
+        const { result } = event.target;
+        console.log(result);
+        if (result && !isCancel) {
+          setPreviewFiles(result);
+        }
+      };
+      fileReader.readAsDataURL(chooseFiles);
+    }
+    return () => {
+      isCancel = true;
+      if (fileReader && fileReader.readyState === 1) {
+        fileReader.abort();
+      }
+    };
+  }, [chooseFiles]);
 
-  const checkImage = async () => {
+  const checkUploadFiles = async () => {
+    const url = Constants.UPLOAD_FILES;
     if (chooseFiles) {
       try {
         const formData = new FormData();
-        formData.append('images', chooseFiles);
-        const url = 'http://localhost:3001/api/1.0/channels/uploadfiles';
+        formData.append('files', chooseFiles);
         const { data } = await axios.post(url, formData);
         const { pictureUrl } = data;
-        ws.emit('sendMessage', { message, pictureUrl });
+        ws.emit('channelSendMessage', { message, pictureUrl });
       } catch (error) {
         console.log(error);
       }
     } else {
-      ws.emit('sendMessage', { message });
+      ws.emit('channelSendMessage', {
+        channelId: chooseChannelId,
+        content: message,
+        // links: { url: null },
+        // files: { url: null },
+      });
     }
     setMessage('');
     setPreviewFiles(null);
   };
 
   // useEffect(() => {
-  //   ws.on('receiveMessage', (data) => {
+  //   ws.on('channelReceiveMessage', (data) => {
+  //     console.log('data', data);
   //     if (data.pictureUrl) {
   //       setChatFiles(data.pictureUrl);
   //       setMessageReceived((prevMessageReceived) => {
-  //         return [...prevMessageReceived, data.message];
+  //         return [...prevMessageReceived, data.content];
   //       });
   //     } else {
   //       setMessageReceived((prevMessageReceived) => {
-  //         return [...prevMessageReceived, data.message];
+  //         return [...prevMessageReceived, data.content];
   //       });
   //     }
   //   });
   // }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (ws) {
+      ws.emit('join', chooseChannelId);
+    }
+  }, [chooseChannelId]);
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('channelReceiveMessage', (data) => {
+        console.log(data);
+        setMessageReceived((prevMessageReceived) => {
+          return [...prevMessageReceived, data];
+        });
+      });
+    }
+  }, [ws]);
 
   const changeHandler = (event) => {
     const [uploadFile] = event.target.files;
@@ -185,6 +192,7 @@ function ChatRecord({ ws, setWs }) {
     // }
     setChooseFiles(uploadFile);
   };
+
   const resetFileInput = () => {
     inputRef.current.value = null;
   };
@@ -217,7 +225,7 @@ function ChatRecord({ ws, setWs }) {
             ))
           : messageReceived.map((item) => (
               <li>
-                <Linkify options={options}> {item}</Linkify>
+                <Linkify options={options}>{item}</Linkify>
               </li>
             ))}
       </ol>
@@ -230,7 +238,7 @@ function ChatRecord({ ws, setWs }) {
         action=''
         onSubmit={(event) => {
           event.preventDefault();
-          checkImage();
+          checkUploadFiles();
           resetFileInput();
         }}
       >
@@ -238,7 +246,8 @@ function ChatRecord({ ws, setWs }) {
           <input
             type='file'
             onChange={changeHandler}
-            name='images'
+            name='files'
+            multiple
             ref={inputRef}
           />
         </p>

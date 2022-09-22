@@ -14,10 +14,13 @@ const GET_PENDING_FRIEND = `${DNS}/api/1.0/friend/pending`;
 const CREATE_CHANNEL = `${DNS}/api/1.0/channel`;
 
 const CHANNEL = `${DNS}/api/1.0/channel`;
+const InviteFriendToChannel = `${DNS}/api/1.0/channel/friend`;
 
 const ACCEPT_FRIEND = `${DNS}/api/1.0/friend/accept`;
 const REJECT_FRIEND = `${DNS}/api/1.0/friend/reject`;
 const CANCEL_FRIEND = `${DNS}/api/1.0/friend/cancel`;
+
+const UPLOAD_FILES = `${DNS}/api/1.0/uploadfiles`;
 
 const constants = {
   REGISTER_URL,
@@ -33,6 +36,8 @@ const constants = {
   ACCEPT_FRIEND,
   REJECT_FRIEND,
   CANCEL_FRIEND,
+  UPLOAD_FILES,
+  InviteFriendToChannel,
 };
 
 export default constants;

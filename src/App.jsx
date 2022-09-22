@@ -11,6 +11,7 @@ function App() {
   const [serversArray, setServersArray] = useState([]);
   const [ws, setWs] = useState(null);
   const [chooseServer, setChooseServer] = useState('');
+  const [chooseServerId, setChooseServerId] = useState('');
 
   return (
     <BrowserRouter>
@@ -28,6 +29,8 @@ function App() {
               setWs={setWs}
               chooseServer={chooseServer}
               setChooseServer={setChooseServer}
+              chooseServerId={chooseServerId}
+              setChooseServerId={setChooseServerId}
             />
           }
         />
@@ -41,6 +44,8 @@ function App() {
               setWs={setWs}
               chooseServer={chooseServer}
               setChooseServer={setChooseServer}
+              chooseServerId={chooseServerId}
+              setChooseServerId={setChooseServerId}
             />
           }
         />

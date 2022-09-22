@@ -50,7 +50,14 @@ const AddServerButton = styled.div`
   padding: 23px;
 `;
 
-function SideBar({ serversArray, setServersArray, setChooseServer }) {
+function SideBar({
+  serversArray,
+  setServersArray,
+  chooseServer,
+  setChooseServer,
+  chooseServerId,
+  setChooseServerId,
+}) {
   const [show, setShow] = useState(false);
   const [serverName, setServerName] = useState('');
   const token = localStorage.getItem('Authorization');
@@ -116,11 +123,6 @@ function SideBar({ serversArray, setServersArray, setChooseServer }) {
     }
   };
 
-  const clickServer = (server) => {
-    setChooseServer(server);
-    console.log('AAAAAAAAAAAAAAAA');
-  };
-
   return (
     <>
       <div>
@@ -132,8 +134,16 @@ function SideBar({ serversArray, setServersArray, setChooseServer }) {
 
         {serversArray &&
           serversArray.map((item) => (
-            <ServersContainer onClick={() => clickServer(item.serverName)}>
-              <Link to={`/channels/${item.serverId}`}>{item.serverName}</Link>
+            <ServersContainer>
+              <Link
+                to={`/channels/${item.serverId}`}
+                onClick={() => {
+                  setChooseServer(item.serverName);
+                  setChooseServerId(item.serverId);
+                }}
+              >
+                {item.serverName}
+              </Link>
             </ServersContainer>
           ))}
 

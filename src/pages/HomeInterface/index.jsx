@@ -21,6 +21,8 @@ function HomeInterface({
   setWs,
   chooseServer,
   setChooseServer,
+  chooseServerId,
+  setChooseServerId,
 }) {
   const navigate = useNavigate();
 
@@ -65,12 +67,14 @@ function HomeInterface({
         setServersArray={setServersArray}
         chooseServer={chooseServer}
         setChooseServer={setChooseServer}
+        chooseServerId={chooseServerId}
+        setChooseServerId={setChooseServerId}
       />
       <AddFriend />
       <CreateMessage />
       <FriendStatus ws={ws} setWs={setWs} />
       <PersonalChat></PersonalChat>
-      {/* <Outlet /> */}
+      <Outlet />
     </HomeContainer>
   );
 }
