@@ -55,6 +55,7 @@ function HomeInterface({
 
       return () => {
         ws.off('connect');
+        ws.off('token');
         ws.off('disconnect');
       };
     }

@@ -65,6 +65,10 @@ function FriendStatus({ ws }) {
       ws.on('OnlineFriend', (friendsList) => {
         setOnlineFriends(friendsList);
       });
+
+      return () => {
+        ws.off('OnlineFriend');
+      };
     }
   }, [ws]);
 

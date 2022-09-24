@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-// import io from 'socket.io-client';
 // import * as GrIcons from 'react-icons/gr';
 import LinksBar from './LinksBlock';
 import FilesBar from './FilesBlock';
 import Linkify from 'linkify-react';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
-import { Link, useLocation } from 'react-router-dom';
+// import { Link, useLocation } from 'react-router-dom';
+import * as FaIcons from 'react-icons/fa';
+import * as VscIcons from 'react-icons/vsc';
+import { isCompositeComponentWithType } from 'react-dom/test-utils';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -84,12 +86,21 @@ const ChatContainer = styled.div`
   }
 `;
 
-function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
+function ChatRecord({
+  ws,
+  setWs,
+  chooseChannelId,
+  setChooseChannelId,
+  messageReceived,
+  setMessageReceived,
+  chooseChannel,
+  setChooseChannel,
+}) {
   // linkify-react package
   const options = { defaultProtocol: 'https' };
 
   const [message, setMessage] = useState('');
-  const [messageReceived, setMessageReceived] = useState([]);
+  // const [messageReceived, setMessageReceived] = useState([]);
   const [chooseFiles, setChooseFiles] = useState('');
   const [previewFiles, setPreviewFiles] = useState(null);
   const [chatFiles, setChatFiles] = useState('');
@@ -103,7 +114,7 @@ function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
       fileReader = new FileReader();
       fileReader.onload = (event) => {
         const { result } = event.target;
-        console.log(result);
+        // console.log(result);
         if (result && !isCancel) {
           setPreviewFiles(result);
         }
@@ -120,60 +131,57 @@ function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
 
   const checkUploadFiles = async () => {
     const url = Constants.UPLOAD_FILES;
+    const token = localStorage.getItem('Authorization');
     if (chooseFiles) {
       try {
         const formData = new FormData();
         formData.append('files', chooseFiles);
-        const { data } = await axios.post(url, formData);
-        const { pictureUrl } = data;
-        ws.emit('channelSendMessage', { message, pictureUrl });
+        const { data } = await axios.post(url, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        ws.emit('channelSendMessage', {
+          channelId: chooseChannelId,
+          text: message,
+          links: { linkURL: null },
+          files: { fileURL: data.pictureURL },
+        });
+        setMessage('');
+        setPreviewFiles(null);
       } catch (error) {
         console.log(error);
       }
     } else {
       ws.emit('channelSendMessage', {
         channelId: chooseChannelId,
-        content: message,
-        // links: { url: null },
-        // files: { url: null },
+        text: message,
+        links: { linkURL: null },
+        files: { fileURL: null },
       });
+      setMessage('');
+      setPreviewFiles(null);
     }
-    setMessage('');
-    setPreviewFiles(null);
   };
-
-  // useEffect(() => {
-  //   ws.on('channelReceiveMessage', (data) => {
-  //     console.log('data', data);
-  //     if (data.pictureUrl) {
-  //       setChatFiles(data.pictureUrl);
-  //       setMessageReceived((prevMessageReceived) => {
-  //         return [...prevMessageReceived, data.content];
-  //       });
-  //     } else {
-  //       setMessageReceived((prevMessageReceived) => {
-  //         return [...prevMessageReceived, data.content];
-  //       });
-  //     }
-  //   });
-  // }, []);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (ws) {
-      ws.emit('join', chooseChannelId);
-    }
-  }, [chooseChannelId]);
 
   useEffect(() => {
     if (ws) {
       ws.on('channelReceiveMessage', (data) => {
-        console.log(data);
-        setMessageReceived((prevMessageReceived) => {
-          return [...prevMessageReceived, data];
-        });
+        if (data.channelId === chooseChannelId && data.files.fileURL) {
+          setChatFiles(data.files.fileURL);
+          setMessageReceived((prevMessageReceived) => {
+            return [...prevMessageReceived, data];
+          });
+        } else {
+          setMessageReceived((prevMessageReceived) => {
+            return [...prevMessageReceived, data];
+          });
+        }
       });
+
+      return () => {
+        ws.off('channelReceiveMessage');
+      };
     }
   }, [ws]);
 
@@ -181,6 +189,7 @@ function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
     const [uploadFile] = event.target.files;
     console.log('uploadFile', uploadFile);
     if (!uploadFile) {
+      console.log('AAAAAAAAAA');
       return 'No files';
     }
     // console.log('After', uploadFile);
@@ -197,10 +206,11 @@ function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
     inputRef.current.value = null;
   };
 
+  // console.log('chatFiles', chatFiles);
   return (
     <ChatContainer>
       <div className='header'>
-        <div className='channel-name'>{/* <h2># 班級頻道</h2> */}</div>
+        <div className='channel-name'>{chooseChannel}</div>
         <div className='icons'>
           <h2 className='link-icon'>
             <LinksBar></LinksBar>
@@ -212,22 +222,22 @@ function ChatRecord({ ws, setWs, chooseChannelId, setChooseChannelId }) {
         </div>
       </div>
       <ol id='messages'>
-        {chatFiles
-          ? messageReceived.map((item) => (
-              <li>
-                <Linkify> {item}</Linkify>
-                <br />
-                <a href={chatFiles}>{chatFiles}</a>
-                <p className='img-preview-wrapper'>
-                  <img src={chatFiles} alt='chatFiles' />
-                </p>
-              </li>
-            ))
-          : messageReceived.map((item) => (
-              <li>
-                <Linkify options={options}>{item}</Linkify>
-              </li>
-            ))}
+        {messageReceived.map((item) => (
+          <li>
+            <VscIcons.VscAccount />
+            {item.userName}
+            <Linkify options={options}>{item.text}</Linkify>
+            <br />
+            <a href={item.files.fileURL} target='_blank' rel='noreferrer'>
+              {item.files.fileURL}
+            </a>
+            {item.files.fileURL ? (
+              <p className='img-preview-wrapper'>
+                <img src={item.files.fileURL} alt='chatFiles' />
+              </p>
+            ) : null}
+          </li>
+        ))}
       </ol>
       {previewFiles ? (
         <p className='img-preview-wrapper'>

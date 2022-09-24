@@ -36,6 +36,10 @@ function ChannelsGroup({
   setChooseServerId,
   chooseChannelId,
   setChooseChannelId,
+  messageReceived,
+  setMessageReceived,
+  chooseChannel,
+  setChooseChannel,
 }) {
   const [show, setShow] = useState(false);
   const [showInviteFriend, setShowInviteFriend] = useState(false);
@@ -132,6 +136,17 @@ function ChannelsGroup({
     }
   };
 
+  const switchChannel = (channelId, channel) => {
+    setChooseChannelId(channelId);
+    setMessageReceived([]);
+    setChooseChannel(channel);
+    // const url = Constants.
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <GroupChannelContainer>
       <div>
@@ -146,7 +161,9 @@ function ChannelsGroup({
               <ChannelContainer>
                 <Link
                   to={`/channels/${chooseServerId}?channel=${channel.channelId}`}
-                  onClick={() => setChooseChannelId(channel.channelId)}
+                  onClick={() =>
+                    switchChannel(channel.channelId, channel.channelName)
+                  }
                 >
                   {channel.channelName}
                 </Link>

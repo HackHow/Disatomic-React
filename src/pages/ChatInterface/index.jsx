@@ -24,6 +24,8 @@ function ChatInterface({
   setChooseServerId,
 }) {
   const [chooseChannelId, setChooseChannelId] = useState('');
+  const [messageReceived, setMessageReceived] = useState([]);
+  const [chooseChannel, setChooseChannel] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +57,7 @@ function ChatInterface({
 
       return () => {
         ws.off('connect');
+        ws.off('token');
         ws.off('disconnect');
       };
     }
@@ -78,12 +81,20 @@ function ChatInterface({
         setChooseServerId={setChooseServerId}
         chooseChannelId={chooseChannelId}
         setChooseChannelId={setChooseChannelId}
+        messageReceived={messageReceived}
+        setMessageReceived={setMessageReceived}
+        chooseChannel={chooseChannel}
+        setChooseChannel={setChooseChannel}
       />
       <ChatRecord
         ws={ws}
         setWs={setWs}
         chooseChannelId={chooseChannelId}
         setChooseChannelId={setChooseChannelId}
+        messageReceived={messageReceived}
+        setMessageReceived={setMessageReceived}
+        chooseChannel={chooseChannel}
+        setChooseChannel={setChooseChannel}
       />
     </ChatInterfaceContainer>
   );
