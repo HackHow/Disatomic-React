@@ -10,7 +10,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
+  // DialogContentText,
   DialogTitle,
 } from '@mui/material/';
 
@@ -18,6 +18,7 @@ const ChannelList = ({
   chooseChannelName,
   setChooseChannelName,
   chooseServerId,
+  setChooseChannelId,
 }) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState([]);
@@ -52,7 +53,7 @@ const ChannelList = ({
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [chooseServerId]);
 
   const createChannel = async () => {
     const serverId = location.pathname.split('/')[2];
@@ -83,6 +84,7 @@ const ChannelList = ({
   const redirectChannel = (chooseServerId, channelId, channelName) => () => {
     navigate(`/channels/${chooseServerId}/${channelId}`);
     setChooseChannelName(channelName);
+    setChooseChannelId(channelId);
 
     const newChannelList = JSON.parse(JSON.stringify(channelList));
     newChannelList.map((item) => {

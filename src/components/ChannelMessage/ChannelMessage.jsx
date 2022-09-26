@@ -16,7 +16,6 @@ const ChannelMessage = ({ author, date, content, hasMention, isBot }) => {
       <Message>
         <Header>
           <strong>{author}</strong>
-          {/* {isBot && <span>Bot</span>} */}
           <time>{date}</time>
         </Header>
         <Content>{content}</Content>

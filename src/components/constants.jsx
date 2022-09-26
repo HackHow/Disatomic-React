@@ -1,4 +1,6 @@
-const DNS = 'http://localhost:3001';
+const DNS = 'https://dis4tomic.com';
+// const DNS = 'http://localhost:3001';
+
 const REGISTER_URL = `${DNS}/api/1.0/user/signup`;
 const LOGIN_URL = `${DNS}/api/1.0/user/signin`;
 const USER_INFO = `${DNS}/api/1.0/user`;

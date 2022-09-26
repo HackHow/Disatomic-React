@@ -16,6 +16,7 @@ const Layout = () => {
   const [chooseServerName, setChooseServerName] = useState('');
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseServerId, setChooseServerId] = useState('');
+  const [chooseChannelId, setChooseChannelId] = useState('');
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
@@ -74,9 +75,10 @@ const Layout = () => {
         setChooseChannelName={setChooseChannelName}
         chooseServerId={chooseServerId}
         setChooseServerId={setChooseServerId}
+        setChooseChannelId={setChooseChannelId}
       />
       <UserInfo ws={ws} setWs={setWs} />
-      <ChannelData />
+      <ChannelData ws={ws} setWs={setWs} chooseChannelId={chooseChannelId} />
       {/* <UserList /> */}
     </LayoutStyles>
   );
