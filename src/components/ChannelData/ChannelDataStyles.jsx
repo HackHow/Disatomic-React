@@ -74,3 +74,11 @@ export const InputIcon = styled(UploadCloud)`
 export const InputFiles = styled.input`
   display: none;
 `;
+
+export const UploadPreviewFile = styled.img`
+  height: 250px;
+  width: 250px;
+  margin: 20px 30px;
+`;
+
+export const Test = styled.div``;

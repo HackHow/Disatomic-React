@@ -80,3 +80,12 @@ export const Mention = styled.span`
     text-decoration: underline;
   }
 `;
+
+export const PictureLink = styled.a`
+  color: var(--link);
+`;
+
+export const PreviewImg = styled.img`
+  width: 200px;
+  height: 200px;
+`;

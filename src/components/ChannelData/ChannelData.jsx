@@ -9,6 +9,8 @@ import {
   Input,
   InputIcon,
   InputFiles,
+  UploadPreviewFile,
+  Test,
 } from './ChannelDataStyles';
 
 const ChannelData = ({ ws, chooseChannelId }) => {
@@ -44,7 +46,6 @@ const ChannelData = ({ ws, chooseChannelId }) => {
   const checkUploadFiles = async () => {
     const url = Constants.UPLOAD_FILES;
     const token = localStorage.getItem('Authorization');
-    console.log('XXXXX', chooseFiles);
     if (chooseFiles) {
       try {
         const formData = new FormData();
@@ -65,16 +66,14 @@ const ChannelData = ({ ws, chooseChannelId }) => {
       }
       setMessage('');
       setPreviewFiles(null);
+      setChooseFiles('');
     } else {
-      console.log('socket');
-      console.log('message', message);
       ws.emit('channelSendMessage', {
         channelId: chooseChannelId,
         text: message,
         links: { linkURL: null },
         files: { fileURL: null },
       });
-      console.log('PASSS');
       setMessage('');
       setPreviewFiles(null);
     }
@@ -106,10 +105,8 @@ const ChannelData = ({ ws, chooseChannelId }) => {
     const [uploadFile] = event.target.files;
     console.log('uploadFile', uploadFile);
     if (!uploadFile) {
-      console.log('AAAAAAAAAA');
       return 'No files';
     }
-    // console.log('After', uploadFile);
     // const chooseFiles = event.target.files[0];
     // const imageMimeType = /image\/(png|jpg|jpeg)/i;
     // if (!chooseFiles.type.match(imageMimeType)) {
@@ -123,54 +120,52 @@ const ChannelData = ({ ws, chooseChannelId }) => {
     inputRef.current.value = null;
   };
 
-  const handleKeypress = (event) => {
-    if (event.keyCode === 13) {
-      // setMessage('');
-      // event.preventDefault();
-      // if (inputFriendName !== '') {
-      //   console.log('You have pressed Enter ');
-      //   sendFriendInvitation();
-      // }
-    }
-  };
-
   return (
     <Container>
       <Messages>
         {messageReceived.map((item) => (
-          <ChannelMessage author='Howard' date='09/25/2022' content='Hello' />
+          <ChannelMessage
+            author={item.userName}
+            date={item.dateTime}
+            content={item.text}
+            fileURL={item.files.fileURL}
+          />
         ))}
       </Messages>
-      <InputWrapper
-        onSubmit={(event) => {
-          // console.log(event);
-          event.preventDefault();
-          checkUploadFiles();
-          resetFileInput();
-        }}
-      >
-        <Input
-          type='text'
-          placeholder='Message...'
-          // onKeyDown={handleKeypress}
-          value={message}
-          onChange={(event) => {
-            setMessage(event.target.value);
+
+      <Test>
+        {previewFiles && (
+          <UploadPreviewFile src={previewFiles}></UploadPreviewFile>
+        )}
+
+        <InputWrapper
+          onSubmit={(event) => {
+            event.preventDefault();
+            checkUploadFiles();
+            resetFileInput();
           }}
-        />
-        <label htmlFor='file-input'>
-          <InputIcon />
-        </label>
-        <InputFiles
-          type='file'
-          id='file-input'
-          name='files'
-          multiple
-          ref={inputRef}
-          onChange={changeHandler}
-        />
-        {/* <button type='submit'>send</button> */}
-      </InputWrapper>
+        >
+          <Input
+            type='text'
+            placeholder='Message...'
+            value={message}
+            onChange={(event) => {
+              setMessage(event.target.value);
+            }}
+          />
+          <label htmlFor='file-input'>
+            <InputIcon />
+          </label>
+          <InputFiles
+            type='file'
+            id='file-input'
+            name='files'
+            multiple
+            ref={inputRef}
+            onChange={changeHandler}
+          />
+        </InputWrapper>
+      </Test>
     </Container>
   );
 };
