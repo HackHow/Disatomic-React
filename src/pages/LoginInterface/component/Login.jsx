@@ -42,7 +42,7 @@ function Login() {
 
   useEffect(() => {
     const token = localStorage.getItem('Authorization');
-    if (token) navigate('/channels/@me');
+    if (token) navigate('/channels');
   }, []);
 
   const [loginInfo, setLoginInfo] = useState({
@@ -61,7 +61,7 @@ function Login() {
     try {
       const { data } = await axios.post(url, loginInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      navigate('/channels/@me');
+      navigate('/channels/63300e4caa06dc8e61956030');
     } catch (error) {
       console.log(error.response.data);
     }

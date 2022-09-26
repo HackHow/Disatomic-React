@@ -43,7 +43,7 @@ function Register() {
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
-    if (token) navigate('/channels/@me');
+    if (token) navigate('/channels');
   }, [navigate, token]);
 
   const [registerInfo, setRegisterInfo] = useState({
@@ -62,7 +62,7 @@ function Register() {
     try {
       const { data } = await axios.post(url, registerInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      navigate('/channels/@me');
+      navigate('/channels/63300e4caa06dc8e61956030');
     } catch (error) {
       console.log('Register Fail');
       alert(error.response.data);

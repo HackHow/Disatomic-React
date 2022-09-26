@@ -78,7 +78,7 @@ function SideBar({
             Authorization: `Bearer ${token}`,
           },
         });
-        setServersArray(data.userOwnServers);
+        setServersArray(data.userOwnServer);
       };
       getUserInfo();
     } catch (error) {

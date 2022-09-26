@@ -23,6 +23,7 @@ const CANCEL_FRIEND = `${DNS}/api/1.0/friend/cancel`;
 const UPLOAD_FILES = `${DNS}/api/1.0/uploadfiles`;
 
 const constants = {
+  DNS,
   REGISTER_URL,
   LOGIN_URL,
   USER_INFO,
