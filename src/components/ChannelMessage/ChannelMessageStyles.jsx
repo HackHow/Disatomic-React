@@ -70,6 +70,9 @@ export const Content = styled.div`
   text-align: left;
   color: var(--white);
   font-size: 16px;
+  > a {
+    color: var(--link);
+  }
 `;
 
 export const Mention = styled.span`

@@ -62,7 +62,7 @@ function Register() {
     try {
       const { data } = await axios.post(url, registerInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      navigate('/channels/63300e4caa06dc8e61956030');
+      navigate('/channels/@me');
     } catch (error) {
       console.log('Register Fail');
       alert(error.response.data);

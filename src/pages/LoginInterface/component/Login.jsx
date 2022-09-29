@@ -62,7 +62,7 @@ function Login() {
     try {
       const { data } = await axios.post(url, loginInfo);
       localStorage.setItem('Authorization', data.accessToken);
-      navigate('/channels/63300e4caa06dc8e61956030');
+      navigate('/channels/@me');
     } catch (error) {
       console.log(error.response.data);
     }

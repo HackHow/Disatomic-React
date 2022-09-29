@@ -24,6 +24,8 @@ const CANCEL_FRIEND = `${DNS}/api/1.0/friend/cancel`;
 
 const UPLOAD_FILES = `${DNS}/api/1.0/uploadfiles`;
 
+const GET_MULTI_CHAT_RECORD = `${DNS}/api/1.0/chat`;
+
 const constants = {
   DNS,
   REGISTER_URL,
@@ -41,6 +43,7 @@ const constants = {
   CANCEL_FRIEND,
   UPLOAD_FILES,
   InviteFriendToChannel,
+  GET_MULTI_CHAT_RECORD,
 };
 
 export default constants;

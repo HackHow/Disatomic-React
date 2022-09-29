@@ -7,12 +7,7 @@ import ServerHome from '../ServerHome/ServerHome';
 import ServerCreate from '../ServerCreate/ServerCreate';
 import Constants from '../Constants';
 
-const ServerList = ({
-  chooseServerName,
-  setChooseServerName,
-  chooseServerId,
-  setChooseServerId,
-}) => {
+const ServerList = ({ setChooseServerName, setChooseServerId }) => {
   const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
 
@@ -39,12 +34,22 @@ const ServerList = ({
     setChooseServerId(serverId);
     navigate(`/channels/${serverId}`);
     setChooseServerName(serverName);
-    console.log('AAA');
+  };
+
+  const redirectHomePage = (homeId, homeName) => () => {
+    setChooseServerId(homeId);
+    navigate(`/channels/${homeId}`);
+    setChooseServerName(homeName);
   };
 
   return (
     <Container>
-      <ServerHome isHome />
+      <ServerHome
+        isHome
+        redirectHomePage={redirectHomePage}
+        homeId={'@me'}
+        homeName={'Disatomic'}
+      />
       <Separator />
 
       {serverArray &&

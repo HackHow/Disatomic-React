@@ -8,18 +8,18 @@ import {
   DocumentsIcon,
   LinkIcon,
   FileAndLink,
-} from './ChannelInfoStyles';
-import FilePopup from '../PopUp/FilePopup';
-import LinkPopup from '../PopUp/LinkPopup';
+} from './HomeInfoStyles';
+// import FilePopup from '../PopUp/FilePopup';
+// import LinkPopup from '../PopUp/LinkPopup';/
 
-const ChanelInfo = ({ chooseChannelName, messageReceived }) => {
+const HomeInfo = ({ chooseChannelName, messageReceived }) => {
   return (
     <Container>
       <HashtagIcon />
       <Title>{chooseChannelName}</Title>
       <FileAndLink>
-        <FilePopup messageReceived={messageReceived} />
-        <LinkPopup messageReceived={messageReceived} />
+        {/* <FilePopup messageReceived={messageReceived} /> */}
+        {/* <LinkPopup messageReceived={messageReceived} /> */}
         <div id='popup-root' />
       </FileAndLink>
       {/* <Separator /> */}
@@ -28,4 +28,4 @@ const ChanelInfo = ({ chooseChannelName, messageReceived }) => {
   );
 };
 
-export default ChanelInfo;
+export default HomeInfo;

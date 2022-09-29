@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+
 import Constants from '../Constants';
 import ChannelMessage, { Mention } from '../ChannelMessage/ChannelMessage';
 import {
@@ -13,11 +14,15 @@ import {
   Test,
 } from './ChannelDataStyles';
 
-const ChannelData = ({ ws, chooseChannelId }) => {
+const ChannelData = ({
+  ws,
+  chooseChannelId,
+  messageReceived,
+  setMessageReceived,
+}) => {
   const [message, setMessage] = useState('');
   const [chooseFiles, setChooseFiles] = useState('');
   const [previewFiles, setPreviewFiles] = useState(null);
-  const [messageReceived, setMessageReceived] = useState([]);
 
   const inputRef = useRef();
 
@@ -55,6 +60,7 @@ const ChannelData = ({ ws, chooseChannelId }) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('data', data);
         ws.emit('channelSendMessage', {
           channelId: chooseChannelId,
           text: message,
@@ -63,10 +69,20 @@ const ChannelData = ({ ws, chooseChannelId }) => {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        setMessage('');
+        setPreviewFiles(null);
+        setChooseFiles('');
       }
+    } else if (/https?:\/\/./.test(message)) {
+      ws.emit('channelSendMessage', {
+        channelId: chooseChannelId,
+        text: message,
+        links: { linkURL: message },
+        files: { fileURL: null },
+      });
       setMessage('');
       setPreviewFiles(null);
-      setChooseFiles('');
     } else {
       ws.emit('channelSendMessage', {
         channelId: chooseChannelId,
@@ -80,17 +96,30 @@ const ChannelData = ({ ws, chooseChannelId }) => {
   };
 
   useEffect(() => {
+    const url = Constants.GET_MULTI_CHAT_RECORD + `/${chooseChannelId}`;
+    const token = localStorage.getItem('Authorization');
+    try {
+      const getMultiChatRecord = async () => {
+        const { data } = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMessageReceived(data);
+      };
+      getMultiChatRecord();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [chooseChannelId]);
+
+  useEffect(() => {
     if (ws) {
       ws.on('channelReceiveMessage', (data) => {
-        if (data.channelId === chooseChannelId && data.files.fileURL) {
-          // setChatFiles(data.files.fileURL);
-          console.log('data:', data);
-          setMessageReceived((prevMessageReceived) => {
-            return [...prevMessageReceived, data];
-          });
-        } else {
-          setMessageReceived((prevMessageReceived) => {
-            return [...prevMessageReceived, data];
+        console.log(data.channelId === chooseChannelId);
+        if (data.channelId === chooseChannelId) {
+          setMessageReceived((prev) => {
+            return [...prev, data];
           });
         }
       });
@@ -99,7 +128,7 @@ const ChannelData = ({ ws, chooseChannelId }) => {
         ws.off('channelReceiveMessage');
       };
     }
-  }, [ws]);
+  }, [ws, chooseChannelId]);
 
   const changeHandler = (event) => {
     const [uploadFile] = event.target.files;
@@ -125,8 +154,8 @@ const ChannelData = ({ ws, chooseChannelId }) => {
       <Messages>
         {messageReceived.map((item) => (
           <ChannelMessage
-            author={item.userName}
-            date={item.dateTime}
+            author={item.senderId.name}
+            date={item.createdAt}
             content={item.text}
             fileURL={item.files.fileURL}
           />

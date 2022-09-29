@@ -5,6 +5,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import LoginInterface from './pages/LoginInterface';
 import RegisterInterface from './pages/RegisterInterface';
 import HomeInterface from './pages/HomeInterface';
+import HomeLayout from './components/HomeLayout/HomeLayout';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path='/' element={<Navigate to='/login' />} />
         <Route path='/login' element={<LoginInterface />} />
         <Route path='/register' element={<RegisterInterface />} />
-        <Route path='/channels/@me' element={<HomeInterface />} />
+        <Route path='/channels/@me' element={<HomeLayout />} />
         <Route path='/channels'>
           <Route path=':serverId/' element={<Layout />} />
           <Route path=':serverId/:channelId' element={<Layout />} />

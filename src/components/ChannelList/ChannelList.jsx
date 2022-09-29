@@ -86,6 +86,7 @@ const ChannelList = ({
     setChooseChannelName(channelName);
     setChooseChannelId(channelId);
 
+    console.log('channelList', channelList);
     const newChannelList = JSON.parse(JSON.stringify(channelList));
     newChannelList.map((item) => {
       if (item.channelId === channelId) {
@@ -136,7 +137,6 @@ const ChannelList = ({
             redirectChannel={redirectChannel}
             chooseServerId={chooseServerId}
             selected={item.selected}
-            // channelSelected={channelSelected}
           />
         ))}
     </Container>

@@ -68,6 +68,7 @@ const ChannelButton = ({
         <HashtagIcon />
         <span>{channelName}</span>
       </div>
+
       <div className='iconsRight'>
         <Button variant='text' onClick={handleClickOpen}>
           <InviteIcon />

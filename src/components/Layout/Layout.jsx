@@ -17,6 +17,8 @@ const Layout = () => {
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseServerId, setChooseServerId] = useState('');
   const [chooseChannelId, setChooseChannelId] = useState('');
+  const [messageReceived, setMessageReceived] = useState([]);
+
   const [ws, setWs] = useState(null);
 
   useEffect(() => {
@@ -57,9 +59,7 @@ const Layout = () => {
   return (
     <LayoutStyles>
       <ServerList
-        chooseServerName={chooseServerName}
         setChooseServerName={setChooseServerName}
-        chooseServerId={chooseServerId}
         setChooseServerId={setChooseServerId}
       />
       <ServerName
@@ -68,7 +68,7 @@ const Layout = () => {
       />
       <ChannelInfo
         chooseChannelName={chooseChannelName}
-        setChooseChannelName={setChooseChannelName}
+        messageReceived={messageReceived}
       />
       <ChannelList
         chooseChannelName={chooseChannelName}
@@ -78,7 +78,13 @@ const Layout = () => {
         setChooseChannelId={setChooseChannelId}
       />
       <UserInfo ws={ws} setWs={setWs} />
-      <ChannelData ws={ws} setWs={setWs} chooseChannelId={chooseChannelId} />
+      <ChannelData
+        ws={ws}
+        setWs={setWs}
+        chooseChannelId={chooseChannelId}
+        messageReceived={messageReceived}
+        setMessageReceived={setMessageReceived}
+      />
       {/* <UserList /> */}
     </LayoutStyles>
   );
