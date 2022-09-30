@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 import Constants from '../Constants';
-import ChannelMessage, { Mention } from '../ChannelMessage/ChannelMessage';
+import ChannelMessage, {
+  Mention,
+} from '../HomePrivateDataStyles/HomePrivateDataStyles';
 import {
   Container,
   Messages,

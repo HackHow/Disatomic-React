@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useGlobal } from '../../context/global';
 import {
   Container,
   Profile,
@@ -12,9 +13,12 @@ import {
   UserIcon,
 } from './UserInfoStyles';
 
-const UserInfo = ({ ws, setWs }) => {
-  const [userName, setUserName] = useState('');
-  const [userHashNumber, setUserHashNumber] = useState('');
+const UserInfo = ({ ws }) => {
+  // const [userName, setUserName] = useState('');
+  // const [userHashNumber, setUserHashNumber] = useState('');
+
+  const { userName, userHashNumber, setUserName, setUserHashNumber } =
+    useGlobal();
 
   useEffect(() => {
     if (ws) {

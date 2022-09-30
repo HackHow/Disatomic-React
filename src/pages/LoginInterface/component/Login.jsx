@@ -42,7 +42,7 @@ function Login() {
 
   useEffect(() => {
     const token = localStorage.getItem('Authorization');
-    if (token) navigate('/channels');
+    if (token) navigate('/channels/@me');
   }, []);
 
   const [loginInfo, setLoginInfo] = useState({

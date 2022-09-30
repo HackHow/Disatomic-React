@@ -43,7 +43,7 @@ function Register() {
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
-    if (token) navigate('/channels');
+    if (token) navigate('/channels/@me');
   }, [navigate, token]);
 
   const [registerInfo, setRegisterInfo] = useState({

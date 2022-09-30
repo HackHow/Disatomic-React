@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Mic, Headset, Settings } from 'styled-icons/material';
 import { User } from 'styled-icons/entypo';
-import { UserAstronaut } from 'styled-icons/fa-solid';
 
 export const Container = styled.div`
   grid-area: UI;
@@ -91,5 +90,6 @@ export const UserIcon = styled(User)`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: var(--gray);
+  background-color: var(--mention-detail);
+  /* background-color: var(--gray); */
 `;

@@ -7,6 +7,7 @@ import {
   // SettingsIcon,
 } from './ChannelButtonStyles';
 import Constants from '../Constants';
+import { useGlobal } from '../../context/global';
 
 import {
   Button,
@@ -22,11 +23,11 @@ const ChannelButton = ({
   channelName,
   channelId,
   selected,
-  chooseServerId,
   redirectChannel,
 }) => {
   const [friendName, setFriendName] = useState('');
   const [open, setOpen] = useState(false);
+  const { chooseServerId } = useGlobal();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

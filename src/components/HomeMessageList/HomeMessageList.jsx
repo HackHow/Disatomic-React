@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import ChannelButton from '../ChannelButton/ChannelButton';
-import { Container, Category, AddCategoryIcon } from './HomeMessageListStyles';
+import HomeFriendButton from '../HomeFriendButton/HomeFriendButton';
+import {
+  Container,
+  Category,
+  AddCategoryIcon,
+  AddUserIcon,
+  DirectMessage,
+} from './HomeMessageListStyles';
 import Constants from '../Constants';
 import axios from 'axios';
 import {
@@ -20,20 +26,39 @@ const HomeMessageList = ({
   chooseServerId,
   setChooseChannelId,
 }) => {
-  //   const [channelName, setChannelName] = useState('');
-  //   const [channelList, setChannelList] = useState([]);
-  //   const [isPublicOn, setIsPublicOn] = useState(true);
-  //   const [open, setOpen] = useState(false);
-
-  //   const handleClickOpen = () => setOpen(true);
-  //   const handleClose = () => setOpen(false);
-
   //   const navigate = useNavigate();
   //   const location = useLocation();
+  const [friendName, setFriendName] = useState('');
+  const [open, setOpen] = useState(false);
 
-  //   const changeHandler = (event) => {
-  //     setChannelName(event.target.value);
-  //   };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const changeHandler = (event) => {
+    setFriendName(event.target.value);
+  };
+
+  const sendFriendInvitation = async () => {
+    const token = localStorage.getItem('Authorization');
+    const url = Constants.ADD_FRIEND_URL;
+    try {
+      await axios.post(
+        url,
+        { friendName },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data);
+    } finally {
+      setFriendName('');
+      setOpen(false);
+    }
+  };
 
   //   useEffect(() => {
   //     const serverId = window.location.href.split('/')[4];
@@ -55,65 +80,20 @@ const HomeMessageList = ({
   //     }
   //   }, [chooseServerId]);
 
-  //   const createChannel = async () => {
-  //     const serverId = location.pathname.split('/')[2];
-  //     const token = localStorage.getItem('Authorization');
-  //     const url = Constants.CREATE_CHANNEL;
-  //     try {
-  //       const { data } = await axios.post(
-  //         url,
-  //         {
-  //           serverId: serverId,
-  //           channelTitle: channelName,
-  //           isPublicOn: isPublicOn,
-  //         },
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       console.log('create channel:', data);
-  //       setChannelList(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //     setOpen(false);
-  //   };
-
-  //   const redirectChannel = (chooseServerId, channelId, channelName) => () => {
-  //     navigate(`/channels/${chooseServerId}/${channelId}`);
-  //     setChooseChannelName(channelName);
-  //     setChooseChannelId(channelId);
-
-  //     console.log('channelList', channelList);
-  //     const newChannelList = JSON.parse(JSON.stringify(channelList));
-  //     newChannelList.map((item) => {
-  //       if (item.channelId === channelId) {
-  //         return (item.selected = 'active');
-  //       } else {
-  //         return (item.selected = '');
-  //       }
-  //     });
-  //     setChannelList(newChannelList);
-  //   };
-
   return (
     <Container>
       <Category>
-        <span>Channel List</span>
-
-        {/* <Button variant='text' onClick={handleClickOpen}>
-          <AddCategoryIcon />
+        <Button variant='plain' onClick={handleClickOpen}>
+          <AddUserIcon />
         </Button>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Create Channel</DialogTitle>
+          <DialogTitle>Invite Friend</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin='dense'
               id='name'
-              label='Channel Name'
+              label='Friend Name'
               type='text'
               fullWidth
               variant='standard'
@@ -121,13 +101,13 @@ const HomeMessageList = ({
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={createChannel} disabled={channelName === ''}>
-              Create
-            </Button>
+            <Button onClick={sendFriendInvitation}>Invite</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
-        </Dialog> */}
+        </Dialog>
       </Category>
+
+      <DirectMessage>{'私人訊息'}</DirectMessage>
 
       {/* {channelList &&
         channelList.map((item) => (

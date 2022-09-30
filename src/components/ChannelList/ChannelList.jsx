@@ -4,6 +4,7 @@ import ChannelButton from '../ChannelButton/ChannelButton';
 import { Container, Category, AddCategoryIcon } from './ChannelListStyles';
 import Constants from '../Constants';
 import axios from 'axios';
+import { useGlobal } from '../../context/global';
 import {
   Button,
   TextField,
@@ -14,16 +15,12 @@ import {
   DialogTitle,
 } from '@mui/material/';
 
-const ChannelList = ({
-  chooseChannelName,
-  setChooseChannelName,
-  chooseServerId,
-  setChooseChannelId,
-}) => {
+const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState([]);
   const [isPublicOn, setIsPublicOn] = useState(true);
   const [open, setOpen] = useState(false);
+  const { chooseServerId } = useGlobal();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -47,7 +44,6 @@ const ChannelList = ({
           },
         });
         setChannelList(data.channelList);
-        console.log(data.channelList);
       };
       getServerInfo();
     } catch (error) {
@@ -82,11 +78,9 @@ const ChannelList = ({
   };
 
   const redirectChannel = (chooseServerId, channelId, channelName) => () => {
-    navigate(`/channels/${chooseServerId}/${channelId}`);
     setChooseChannelName(channelName);
     setChooseChannelId(channelId);
-
-    console.log('channelList', channelList);
+    navigate(`/channels/${chooseServerId}/${channelId}`);
     const newChannelList = JSON.parse(JSON.stringify(channelList));
     newChannelList.map((item) => {
       if (item.channelId === channelId) {
@@ -135,7 +129,6 @@ const ChannelList = ({
             channelName={item.channelName}
             channelId={item.channelId}
             redirectChannel={redirectChannel}
-            chooseServerId={chooseServerId}
             selected={item.selected}
           />
         ))}

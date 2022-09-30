@@ -6,8 +6,10 @@ import ServerButton from '../ServerButton/ServerButton';
 import ServerHome from '../ServerHome/ServerHome';
 import ServerCreate from '../ServerCreate/ServerCreate';
 import Constants from '../Constants';
+import { useGlobal } from '../../context/global';
 
-const ServerList = ({ setChooseServerName, setChooseServerId }) => {
+const ServerList = () => {
+  const { setChooseServerName, setChooseServerId } = useGlobal();
   const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
 
@@ -21,7 +23,6 @@ const ServerList = ({ setChooseServerName, setChooseServerId }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(data);
         setServerArray(data.userOwnServer);
       };
       getUserInfo();
@@ -31,15 +32,15 @@ const ServerList = ({ setChooseServerName, setChooseServerId }) => {
   }, []);
 
   const redirect = (serverId, serverName) => () => {
+    setChooseServerName(serverName);
     setChooseServerId(serverId);
     navigate(`/channels/${serverId}`);
-    setChooseServerName(serverName);
   };
 
   const redirectHomePage = (homeId, homeName) => () => {
     setChooseServerId(homeId);
-    navigate(`/channels/${homeId}`);
     setChooseServerName(homeName);
+    navigate(`/channels/${homeId}`);
   };
 
   return (
@@ -60,7 +61,6 @@ const ServerList = ({ setChooseServerName, setChooseServerId }) => {
             redirect={redirect}
           ></ServerButton>
         ))}
-
       <ServerCreate />
     </Container>
   );

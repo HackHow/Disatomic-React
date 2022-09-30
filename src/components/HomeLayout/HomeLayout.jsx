@@ -1,76 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import io from 'socket.io-client';
+import { useNavigate, Outlet } from 'react-router-dom';
+import io from 'socket.io-client';
 import HomeLayoutStyles from './HomeLayoutStyles';
 import ServerList from '../ServerList/ServerList';
 import ServerName from '../ServerName/ServerName';
 import HomeMessageList from '../HomeMessageList/HomeMessageList';
 import HomeInfo from '../HomeInfo/HomeInfo';
-import HomeFriendList from '../HomeFriendList/HomeFriendList';
+import HomeFriendData from '../HomeFriendData/HomeFriendData';
 import UserInfo from '../UserInfo/UserInfo';
 import Constants from '../Constants';
 
-const HomeLayout = () => {
-  //   const navigate = useNavigate();
+const HomeLayout = ({ ws, setWs }) => {
+  const navigate = useNavigate();
+  // const [friendState, setFriendState] = useState('線上');
+  // const [allFriend, setAllFriend] = useState([]);
+  // const [incomingRequest, setIncomingRequest] = useState([]);
+  // const [outgoingRequest, setOutgoingRequest] = useState([]);
 
-  const [chooseServerName, setChooseServerName] = useState('');
-  //   const [chooseChannelName, setChooseChannelName] = useState('');
-  const [chooseServerId, setChooseServerId] = useState('');
-  //   const [chooseChannelId, setChooseChannelId] = useState('');
-  //   const [messageReceived, setMessageReceived] = useState([]);
+  useEffect(() => {
+    if (!ws) {
+      const token = window.localStorage.getItem('Authorization');
+      const socket = io(Constants.DNS, {
+        auth: {
+          token: `Bearer ${token}`,
+        },
+      });
+      setWs(socket);
+    }
+  }, []);
 
-  //   const [ws, setWs] = useState(null);
+  useEffect(() => {
+    if (ws) {
+      ws.on('connect', () => {
+        console.log('socket connected:', ws.id, new Date().toISOString());
+      });
 
-  //   useEffect(() => {
-  //     if (!ws) {
-  //       const token = window.localStorage.getItem('Authorization');
-  //       const socket = io(Constants.DNS, {
-  //         auth: {
-  //           token: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setWs(socket);
-  //     }
-  //   }, []);
+      ws.on('token', (data) => {
+        alert(data);
+        navigate('/');
+      });
 
-  //   useEffect(() => {
-  //     if (ws) {
-  //       ws.on('connect', () => {
-  //         console.log('socket connected:', ws.id, new Date().toISOString());
-  //       });
+      ws.on('disconnect', () => {
+        console.log('socket disconnect');
+      });
 
-  //       ws.on('token', (data) => {
-  //         alert(data);
-  //         navigate('/');
-  //       });
-
-  //       ws.on('disconnect', () => {
-  //         console.log('socket disconnect');
-  //       });
-
-  //       return () => {
-  //         ws.off('connect');
-  //         ws.off('token');
-  //         ws.off('disconnect');
-  //       };
-  //     }
-  //   }, [ws]);
+      return () => {
+        ws.off('connect');
+        ws.off('token');
+        ws.off('disconnect');
+      };
+    }
+  }, [ws]);
 
   return (
     <HomeLayoutStyles>
-      <ServerList
-        setChooseServerName={setChooseServerName}
-        setChooseServerId={setChooseServerId}
-      />
-
-      <ServerName
-        chooseServerName={chooseServerName}
-        setChooseServerName={setChooseServerName}
-      />
+      <ServerList />
+      <ServerName />
       <HomeMessageList />
-      <HomeInfo />
-      <UserInfo />
-      <HomeFriendList />
+      <UserInfo ws={ws} />
+      {/* <HomeInfo
+        setFriendState={setFriendState}
+        setAllFriend={setAllFriend}
+        setIncomingRequest={setIncomingRequest}
+        setOutgoingRequest={setOutgoingRequest}
+      />
+      <HomeFriendData
+        ws={ws}
+        friendState={friendState}
+        allFriend={allFriend}
+        incomingRequest={incomingRequest}
+        outgoingRequest={outgoingRequest}
+      /> */}
+      <Outlet />
     </HomeLayoutStyles>
   );
 };

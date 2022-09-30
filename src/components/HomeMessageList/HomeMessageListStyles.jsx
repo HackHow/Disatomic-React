@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Add } from 'styled-icons/material';
+import { AddUser } from 'styled-icons/entypo';
 
 export const Container = styled.div`
-  grid-area: CL;
+  grid-area: HML;
   display: flex;
   flex-direction: column;
   padding: 24px 9.5px 0 16px;
@@ -12,7 +13,8 @@ export const Container = styled.div`
 export const Category = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   margin-bottom: 16px;
 
   > span {
@@ -28,4 +30,16 @@ export const AddCategoryIcon = styled(Add)`
   height: 21px;
   color: var(--symbol);
   cursor: pointer;
+`;
+
+export const AddUserIcon = styled(AddUser)`
+  width: 80px;
+  height: 80px;
+  color: var(--symbol);
+  cursor: pointer;
+`;
+
+export const DirectMessage = styled.p`
+  font-size: 15px;
+  color: var(--senary);
 `;

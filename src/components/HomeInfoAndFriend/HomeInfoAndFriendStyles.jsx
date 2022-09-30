@@ -8,19 +8,15 @@ import styled from 'styled-components';
 // UL - User List
 // UI - User Info
 
-// 'SL SN  HI  HI'
-// 'SL HML HFL HFL'
-// 'SL UI  HFL HFL';
-
-const HomeLayoutStyles = styled.div`
+const HomeInfoAndFriendStyles = styled.div`
   display: grid;
-  grid-template-columns: 71px 240px auto;
+  grid-template-columns: 71px 240px auto 240px;
   grid-template-rows: 46px auto 52px;
   grid-template-areas:
-    'SL SN '
-    'SL HML'
-    'SL UI ';
+    'HI  HI  HI  HI '
+    'HFL HFL HFL HFL '
+    'HFL HFL HFL HFL ';
   height: 100vh;
 `;
 
-export default HomeLayoutStyles;
+export default HomeInfoAndFriendStyles;

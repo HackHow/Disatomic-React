@@ -9,9 +9,9 @@ import {
   Content,
   PictureLink,
   PreviewImg,
-} from './ChannelMessageStyles';
+} from './HomePrivateMessageStyles';
 
-export { Mention } from './ChannelMessageStyles';
+export { Mention } from './HomePrivateMessageStyles';
 
 const ChannelMessage = ({ author, date, content, hasMention, fileURL }) => {
   const options = {
