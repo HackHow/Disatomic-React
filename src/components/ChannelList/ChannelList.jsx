@@ -37,15 +37,16 @@ const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
     const url = Constants.SERVER_INFO + `/${serverId}`;
     const token = localStorage.getItem('Authorization');
     try {
-      const getServerInfo = async () => {
+      const getChannelOfServer = async () => {
         const { data } = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        // console.log('data.channelList', data.channelList);
         setChannelList(data.channelList);
       };
-      getServerInfo();
+      getChannelOfServer();
     } catch (error) {
       console.log(error);
     }

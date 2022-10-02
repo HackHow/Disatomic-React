@@ -8,6 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--primary);
+  height: 94.5%;
 `;
 export const Messages = styled.div`
   padding: 20px 0;

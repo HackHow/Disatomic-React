@@ -6,11 +6,11 @@ import LoginInterface from './pages/LoginInterface';
 import RegisterInterface from './pages/RegisterInterface';
 import HomeLayout from './components/HomeLayout/HomeLayout';
 import HomeInfoAndFriend from './components/HomeInfoAndFriend/HomeInfoAndFriend';
-import HomePrivateMessage from './components/HomePrivateMessage/HomePrivateMessage';
+import HomeInfoAndPrivateMsg from './components/HomeInfoAndPrivateMsg/HomeInfoAndPrivateMsg';
 import { GlobalContext } from './context/global';
 
 function App() {
-  const [chooseServerName, setChooseServerName] = useState('');
+  const [chooseServerName, setChooseServerName] = useState('Disatomic');
   const [chooseServerId, setChooseServerId] = useState('');
   const [userName, setUserName] = useState('');
   const [userHashNumber, setUserHashNumber] = useState('');
@@ -19,6 +19,8 @@ function App() {
   const [allFriend, setAllFriend] = useState([]);
   const [incomingRequest, setIncomingRequest] = useState([]);
   const [outgoingRequest, setOutgoingRequest] = useState([]);
+  const [friendUserName, setFriendUserName] = useState('');
+  const [receiverId, setReceiverId] = useState('');
 
   const [ws, setWs] = useState(null);
 
@@ -43,7 +45,16 @@ function App() {
 
           <Route
             path='/channels/'
-            element={<HomeLayout ws={ws} setWs={setWs} />}
+            element={
+              <HomeLayout
+                ws={ws}
+                setWs={setWs}
+                setAllFriend={setAllFriend}
+                allFriend={allFriend}
+                setFriendUserName={setFriendUserName}
+                setReceiverId={setReceiverId}
+              />
+            }
           >
             <Route
               path='@me'
@@ -58,10 +69,21 @@ function App() {
                   setIncomingRequest={setIncomingRequest}
                   outgoingRequest={outgoingRequest}
                   setOutgoingRequest={setOutgoingRequest}
+                  setFriendUserName={setFriendUserName}
+                  setReceiverId={setReceiverId}
                 />
               }
             />
-            <Route path='@me/:userId' element={<HomePrivateMessage />}></Route>
+            <Route
+              path='@me/:userId'
+              element={
+                <HomeInfoAndPrivateMsg
+                  ws={ws}
+                  friendUserName={friendUserName}
+                  receiverId={receiverId}
+                />
+              }
+            ></Route>
           </Route>
 
           <Route path='/channels'>

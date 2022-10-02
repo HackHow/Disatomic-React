@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-
 import Constants from '../Constants';
 import ChannelMessage, { Mention } from '../ChannelMessage/ChannelMessage';
 import {
@@ -153,7 +152,7 @@ const ChannelData = ({
       <Messages>
         {messageReceived.map((item) => (
           <ChannelMessage
-            author={item.senderId.name}
+            author={item.sender.name}
             date={item.createdAt}
             content={item.text}
             fileURL={item.files.fileURL}

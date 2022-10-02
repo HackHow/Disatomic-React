@@ -7,6 +7,7 @@ import {
   AddCategoryIcon,
   AddUserIcon,
   DirectMessage,
+  PrivateMessageFriendList,
 } from './HomeMessageListStyles';
 import Constants from '../Constants';
 import axios from 'axios';
@@ -21,12 +22,12 @@ import {
 } from '@mui/material/';
 
 const HomeMessageList = ({
-  chooseChannelName,
-  setChooseChannelName,
-  chooseServerId,
-  setChooseChannelId,
+  allFriend,
+  setAllFriend,
+  setFriendUserName,
+  setReceiverId,
 }) => {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   //   const location = useLocation();
   const [friendName, setFriendName] = useState('');
   const [open, setOpen] = useState(false);
@@ -60,25 +61,29 @@ const HomeMessageList = ({
     }
   };
 
-  //   useEffect(() => {
-  //     const serverId = window.location.href.split('/')[4];
-  //     const url = Constants.SERVER_INFO + `/${serverId}`;
-  //     const token = localStorage.getItem('Authorization');
-  //     try {
-  //       const getServerInfo = async () => {
-  //         const { data } = await axios.get(url, {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         setChannelList(data.channelList);
-  //         console.log(data.channelList);
-  //       };
-  //       getServerInfo();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }, [chooseServerId]);
+  useEffect(() => {
+    const url = Constants.GET_ALL_FRIEND;
+    const token = localStorage.getItem('Authorization');
+    try {
+      const privateMessageList = async () => {
+        const { data } = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAllFriend(data);
+      };
+      privateMessageList();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  const redirectPrivateMsg = async (userId, friendName) => {
+    navigate(`@me/${userId}`);
+    setFriendUserName(friendName);
+    setReceiverId(userId);
+  };
 
   return (
     <Container>
@@ -109,16 +114,13 @@ const HomeMessageList = ({
 
       <DirectMessage>{'私人訊息'}</DirectMessage>
 
-      {/* {channelList &&
-        channelList.map((item) => (
-          <ChannelButton
-            channelName={item.channelName}
-            channelId={item.channelId}
-            redirectChannel={redirectChannel}
-            chooseServerId={chooseServerId}
-            selected={item.selected}
-          />
-        ))} */}
+      {allFriend.map((item) => (
+        <PrivateMessageFriendList
+          onClick={() => redirectPrivateMsg(item._id, item.name)}
+        >
+          <HomeFriendButton userName={item.name} />
+        </PrivateMessageFriendList>
+      ))}
     </Container>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeInfoAndFriendStyles from './HomeInfoAndFriendStyles';
+import { FriendListFixed } from './HomeInfoAndFriendStyles';
 import HomeInfo from '../HomeInfo/HomeInfo';
 import HomeFriendData from '../HomeFriendData/HomeFriendData';
 
@@ -13,9 +13,11 @@ const HomeInfoAndFriend = ({
   allFriend,
   incomingRequest,
   outgoingRequest,
+  setFriendUserName,
+  setReceiverId,
 }) => {
   return (
-    <HomeInfoAndFriendStyles>
+    <FriendListFixed>
       <HomeInfo
         setFriendState={setFriendState}
         setAllFriend={setAllFriend}
@@ -28,8 +30,10 @@ const HomeInfoAndFriend = ({
         allFriend={allFriend}
         incomingRequest={incomingRequest}
         outgoingRequest={outgoingRequest}
+        setFriendUserName={setFriendUserName}
+        setReceiverId={setReceiverId}
       />
-    </HomeInfoAndFriendStyles>
+    </FriendListFixed>
   );
 };
 

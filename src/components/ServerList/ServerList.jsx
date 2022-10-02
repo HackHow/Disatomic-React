@@ -8,7 +8,7 @@ import ServerCreate from '../ServerCreate/ServerCreate';
 import Constants from '../Constants';
 import { useGlobal } from '../../context/global';
 
-const ServerList = () => {
+const ServerList = ({ ws }) => {
   const { setChooseServerName, setChooseServerId } = useGlobal();
   const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const ServerList = () => {
             redirect={redirect}
           ></ServerButton>
         ))}
-      <ServerCreate />
+      <ServerCreate setServerArray={setServerArray} serverArray={serverArray} />
     </Container>
   );
 };

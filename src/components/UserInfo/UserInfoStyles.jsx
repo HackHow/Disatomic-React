@@ -10,6 +10,7 @@ export const Container = styled.div`
   padding: 10px;
   background-color: var(--quaternary);
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
+  height: 6%;
 `;
 
 export const Profile = styled.div`
@@ -25,7 +26,7 @@ export const Avatar = styled.div`
 `;
 
 export const UserData = styled.div`
-  margin-left: 8px;
+  margin-left: 10px;
 
   > strong {
     color: var(--white);
@@ -87,8 +88,8 @@ export const SettingsIcon = styled(Settings)`
 `;
 
 export const UserIcon = styled(User)`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: var(--mention-detail);
   /* background-color: var(--gray); */

@@ -22,6 +22,8 @@ const HomeFriendData = ({
   allFriend,
   incomingRequest,
   outgoingRequest,
+  setFriendUserName,
+  setReceiverId,
 }) => {
   const navigate = useNavigate();
   const [onlineFriends, setOnlineFriends] = useState([]);
@@ -94,7 +96,11 @@ const HomeFriendData = ({
     }
   };
 
-  const redirectPersonalChatPage = async () => {};
+  const redirectPrivateMsg = async (userId, friendName) => {
+    navigate(userId);
+    setFriendUserName(friendName);
+    setReceiverId(userId);
+  };
 
   return (
     <Container>
@@ -109,9 +115,12 @@ const HomeFriendData = ({
                   state={' '}
                   request={'線上'}
                 />
-                {/* onClick={() => navigate(`channels/@me/${item._id}`)} */}
                 <CheckAndCancelIcon>
-                  <ChatboxIcon />
+                  <ChatboxIcon
+                    onClick={() =>
+                      redirectPrivateMsg(item.friendId, item.friendName)
+                    }
+                  />
                 </CheckAndCancelIcon>
               </FriendButton>
             </>
@@ -157,7 +166,9 @@ const HomeFriendData = ({
               <FriendButton>
                 <HomeFriendButton userName={item.name} />
                 <CheckAndCancelIcon>
-                  <ChatboxIcon onClick={() => navigate(`${item._id}`)} />
+                  <ChatboxIcon
+                    onClick={() => redirectPrivateMsg(item._id, item.name)}
+                  />
                 </CheckAndCancelIcon>
               </FriendButton>
             </>

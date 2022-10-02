@@ -17,21 +17,57 @@ const LinkBlockButton = styled.button`
   background-color: transparent;
 `;
 
-const StyledPopup = styled(Popup)`
-  &-arrow {
-    color: white;
+const Files = styled.div`
+  width: 200px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  margin: auto;
+  > p {
+    font-size: 50px;
+    background-color: green;
   }
+`;
+
+const StyledPopup = styled(Popup)`
+  /* &-arrow {
+    color: white;
+  } */
   // use your custom style for ".popup-overlay"
   /* &-overlay {
   } */
 
   // use your custom style for ".popup-content"
   &-content {
-    border: 5px solid black;
-    background-color: green;
-    /* background-color: var(--quinary); */
-    /* border-radius: 30px; */
-    /* color: white; */
+    border: 5px solid var(--senary);
+    background-color: var(--primary);
+    border-radius: 8px;
+    right: 50px;
+    left: unset !important;
+    max-width: 400px;
+    height: 60vh;
+    overflow: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+
+    &::-webkit-scrollbar {
+      /* width: 4px; */
+      height: 20px;
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--chat-input);
+      border-radius: 6px;
+    }
   }
 `;
 
@@ -39,12 +75,12 @@ const LinkPopup = ({ messageReceived }) => {
   const [filterLinkMessage, setFilterLinkMessage] = useState([]);
 
   useEffect(() => {
-    const linkMessage = messageReceived.filter(
-      (item) => item.links.linkURL !== null
-    );
+    let linkMessage;
+    linkMessage = messageReceived.filter((item) => item.links.linkURL !== null);
     // const linkMessage = messageReceived.filter((item) =>
     //   item.links.some(({ linkURL }) => linkURL !== null)
     // );
+    linkMessage = linkMessage.reverse();
     setFilterLinkMessage(linkMessage);
   }, [messageReceived]);
 
@@ -61,14 +97,16 @@ const LinkPopup = ({ messageReceived }) => {
       {filterLinkMessage.length > 0 ? (
         filterLinkMessage.map((item) => (
           <ChannelMessage
-            author={item.senderId.name}
+            author={item.sender.name}
             date={item.createdAt}
             content={item.text}
             fileURL={item.files.fileURL}
           />
         ))
       ) : (
-        <div>{'No Files'}</div>
+        <Files>
+          <p>{'No Link'}</p>
+        </Files>
       )}
     </StyledPopup>
   );

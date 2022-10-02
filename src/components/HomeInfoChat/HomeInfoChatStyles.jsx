@@ -2,28 +2,38 @@ import styled from 'styled-components';
 import { Hashtag } from 'styled-icons/heroicons-outline';
 import { Documents } from 'styled-icons/ionicons-outline';
 import { Link } from 'styled-icons/entypo';
+import { AlternateEmail } from 'styled-icons/material';
 
 export const Container = styled.div`
-  grid-area: CI;
+  grid-area: HIC;
   display: flex;
   align-items: center;
   padding: 0 17px;
   background-color: var(--primary);
-  /* box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0; */
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
   z-index: 2;
   height: 5.5%;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
+
 export const HashtagIcon = styled(Hashtag)`
   width: 24px;
   height: 24px;
   color: var(--symbol);
 `;
+
+export const AlternateEmailIcon = styled(AlternateEmail)`
+  width: 24px;
+  height: 24px;
+  color: var(--symbol);
+`;
+
 export const Title = styled.h1`
   margin-left: 9px;
-  font-size: 16px;
+  font-size: 18px;
   color: var(--white);
 `;
+
 export const Separator = styled.div`
   width: 1px;
   height: 24px;

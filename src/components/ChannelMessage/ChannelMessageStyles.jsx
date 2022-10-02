@@ -25,6 +25,7 @@ export const Avatar = styled.div`
   /* background-color: var(--secondary); */
   background-color: var(--mention-detail);
   border-radius: 50%;
+  min-width: 40px;
 
   &.bot {
     background-color: var(--mention-detail);

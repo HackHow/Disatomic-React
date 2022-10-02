@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import io from 'socket.io-client';
-import HomeLayoutStyles from './HomeLayoutStyles';
+import { HomeLayoutStyles, HomeListFixed } from './HomeLayoutStyles';
 import ServerList from '../ServerList/ServerList';
 import ServerName from '../ServerName/ServerName';
 import HomeMessageList from '../HomeMessageList/HomeMessageList';
-import HomeInfo from '../HomeInfo/HomeInfo';
-import HomeFriendData from '../HomeFriendData/HomeFriendData';
+// import HomeInfo from '../HomeInfo/HomeInfo';
+// import HomeFriendData from '../HomeFriendData/HomeFriendData';
 import UserInfo from '../UserInfo/UserInfo';
 import Constants from '../Constants';
 
-const HomeLayout = ({ ws, setWs }) => {
+const HomeLayout = ({
+  ws,
+  setWs,
+  allFriend,
+  setAllFriend,
+  setFriendUserName,
+  setReceiverId,
+}) => {
   const navigate = useNavigate();
-  // const [friendState, setFriendState] = useState('線上');
-  // const [allFriend, setAllFriend] = useState([]);
-  // const [incomingRequest, setIncomingRequest] = useState([]);
-  // const [outgoingRequest, setOutgoingRequest] = useState([]);
 
   useEffect(() => {
     if (!ws) {
@@ -55,22 +58,16 @@ const HomeLayout = ({ ws, setWs }) => {
   return (
     <HomeLayoutStyles>
       <ServerList />
-      <ServerName />
-      <HomeMessageList />
-      <UserInfo ws={ws} />
-      {/* <HomeInfo
-        setFriendState={setFriendState}
-        setAllFriend={setAllFriend}
-        setIncomingRequest={setIncomingRequest}
-        setOutgoingRequest={setOutgoingRequest}
-      />
-      <HomeFriendData
-        ws={ws}
-        friendState={friendState}
-        allFriend={allFriend}
-        incomingRequest={incomingRequest}
-        outgoingRequest={outgoingRequest}
-      /> */}
+      <HomeListFixed>
+        <ServerName />
+        <HomeMessageList
+          allFriend={allFriend}
+          setAllFriend={setAllFriend}
+          setFriendUserName={setFriendUserName}
+          setReceiverId={setReceiverId}
+        />
+        <UserInfo ws={ws} />
+      </HomeListFixed>
       <Outlet />
     </HomeLayoutStyles>
   );

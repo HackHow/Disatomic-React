@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-
 import Constants from '../Constants';
-import ChannelMessage, {
+import HomePrivateMessage, {
   Mention,
-} from '../HomePrivateDataStyles/HomePrivateDataStyles';
+} from '../HomePrivateMessage/HomePrivateMessage';
 import {
   Container,
   Messages,
@@ -14,11 +13,13 @@ import {
   InputFiles,
   UploadPreviewFile,
   Test,
-} from './ChannelDataStyles';
+} from './HomePrivateDataStyles';
+import { W } from 'styled-icons/fa-solid';
 
-const ChannelData = ({
+const HomePrivateData = ({
   ws,
-  chooseChannelId,
+  receiverId,
+  friendUserName,
   messageReceived,
   setMessageReceived,
 }) => {
@@ -27,6 +28,11 @@ const ChannelData = ({
   const [previewFiles, setPreviewFiles] = useState(null);
 
   const inputRef = useRef();
+  const dummy = useRef(null);
+
+  useEffect(() => {
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messageReceived]);
 
   useEffect(() => {
     let fileReader,
@@ -62,9 +68,11 @@ const ChannelData = ({
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('ChannelData', data);
-        ws.emit('channelSendMessage', {
-          channelId: chooseChannelId,
+        ws.emit('privateSendMessage', {
+          receiver: {
+            id: receiverId,
+            name: friendUserName.split('#')[0],
+          },
           text: message,
           links: { linkURL: null },
           files: { fileURL: data.pictureURL },
@@ -77,8 +85,11 @@ const ChannelData = ({
         setChooseFiles('');
       }
     } else if (/https?:\/\/./.test(message)) {
-      ws.emit('channelSendMessage', {
-        channelId: chooseChannelId,
+      ws.emit('privateSendMessage', {
+        receiver: {
+          id: receiverId,
+          name: friendUserName.split('#')[0],
+        },
         text: message,
         links: { linkURL: message },
         files: { fileURL: null },
@@ -86,8 +97,11 @@ const ChannelData = ({
       setMessage('');
       setPreviewFiles(null);
     } else {
-      ws.emit('channelSendMessage', {
-        channelId: chooseChannelId,
+      ws.emit('privateSendMessage', {
+        receiver: {
+          id: receiverId,
+          name: friendUserName.split('#')[0],
+        },
         text: message,
         links: { linkURL: null },
         files: { fileURL: null },
@@ -98,10 +112,10 @@ const ChannelData = ({
   };
 
   useEffect(() => {
-    const url = Constants.GET_MULTI_CHAT_RECORD + `/${chooseChannelId}`;
+    const url = Constants.GET_PERSONAL_CHAT_RECORD + `/${receiverId}`;
     const token = localStorage.getItem('Authorization');
     try {
-      const getMultiChatRecord = async () => {
+      const getPersonalChatRecord = async () => {
         const { data } = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -109,16 +123,20 @@ const ChannelData = ({
         });
         setMessageReceived(data);
       };
-      getMultiChatRecord();
+      getPersonalChatRecord();
     } catch (error) {
       console.log(error);
     }
-  }, [chooseChannelId]);
+  }, [receiverId]);
 
   useEffect(() => {
     if (ws) {
-      ws.on('channelReceiveMessage', (data) => {
-        if (data.channelId === chooseChannelId) {
+      ws.on('privateReceiveMessage', (data) => {
+        console.log('server socket message pass');
+        if (
+          data.sender.id === receiverId ||
+          data.sender.id === data.receiver.id
+        ) {
           setMessageReceived((prev) => {
             return [...prev, data];
           });
@@ -126,10 +144,10 @@ const ChannelData = ({
       });
 
       return () => {
-        ws.off('channelReceiveMessage');
+        ws.off('privateReceiveMessage');
       };
     }
-  }, [ws, chooseChannelId]);
+  }, [ws, receiverId]);
 
   const changeHandler = (event) => {
     const [uploadFile] = event.target.files;
@@ -154,13 +172,14 @@ const ChannelData = ({
     <Container>
       <Messages>
         {messageReceived.map((item) => (
-          <ChannelMessage
-            author={item.senderId.name}
+          <HomePrivateMessage
+            author={item.sender.name}
             date={item.createdAt}
             content={item.text}
             fileURL={item.files.fileURL}
           />
         ))}
+        <div ref={dummy} />
       </Messages>
 
       <Test>
@@ -200,4 +219,4 @@ const ChannelData = ({
   );
 };
 
-export default ChannelData;
+export default HomePrivateData;

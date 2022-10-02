@@ -8,6 +8,7 @@ export const Container = styled.div`
   flex-direction: column;
   padding: 24px 9.5px 0 16px;
   background-color: var(--secondary);
+  height: 88.5%;
 `;
 
 export const Category = styled.div`
@@ -42,4 +43,12 @@ export const AddUserIcon = styled(AddUser)`
 export const DirectMessage = styled.p`
   font-size: 15px;
   color: var(--senary);
+`;
+
+export const PrivateMessageFriendList = styled.div`
+  cursor: pointer;
+  border-radius: 16px;
+  &:hover {
+    background-color: var(--quinary);
+  }
 `;

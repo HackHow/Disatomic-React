@@ -8,15 +8,17 @@ import styled from 'styled-components';
 // UL - User List
 // UI - User Info
 
-const HomeInfoAndFriendStyles = styled.div`
+export const HomeInfoAndFriendStyles = styled.div`
   display: grid;
-  grid-template-columns: 71px 240px auto 240px;
+  grid-template-columns: auto;
   grid-template-rows: 46px auto 52px;
   grid-template-areas:
-    'HI  HI  HI  HI '
-    'HFL HFL HFL HFL '
-    'HFL HFL HFL HFL ';
+    'HI '
+    'HFL'
+    'HFL';
   height: 100vh;
 `;
 
-export default HomeInfoAndFriendStyles;
+export const FriendListFixed = styled.div`
+  height: 100vh;
+`;

@@ -7,8 +7,10 @@ export const Container = styled.div`
   align-items: center;
   padding: 0 17px;
   background-color: var(--primary);
-  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0;
+  /* box-shadow: rgba(0, 0, 0, 0.2) 0 1px 0 0; */
   z-index: 2;
+  height: 5.5%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 export const Title = styled.h1`
   margin-left: 9px;

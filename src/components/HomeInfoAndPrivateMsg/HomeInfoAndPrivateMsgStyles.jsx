@@ -8,21 +8,17 @@ import styled from 'styled-components';
 // UL - User List
 // UI - User Info
 
-// 'SL SN  HI  HI'
-// 'SL HML HFL HFL'
-// 'SL UI  HFL HFL';
-
-export const HomeLayoutStyles = styled.div`
+export const HomeInfoAndPrivateMsgStyles = styled.div`
   display: grid;
-  grid-template-columns: 71px 240px auto;
+  /* grid-template-columns: 71px 240px auto 240px; */
   grid-template-rows: 46px auto 52px;
   grid-template-areas:
-    'SL SN '
-    'SL HML'
-    'SL UI ';
+    'HIC'
+    'HPD'
+    'HPD';
   height: 100vh;
 `;
 
-export const HomeListFixed = styled.div`
+export const PrivateChatFixed = styled.div`
   height: 100vh;
 `;

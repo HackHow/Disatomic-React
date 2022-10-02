@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import LayoutStyles from './LayoutStyles';
+import { LayoutStyles, ChannelFixed, ChatFixed } from './LayoutStyles';
 import ServerList from '../ServerList/ServerList';
 import ServerName from '../ServerName/ServerName';
 import ChannelInfo from '../ChannelInfo/ChannelInfo';
@@ -11,7 +11,7 @@ import ChannelData from '../ChannelData/ChannelData';
 import Constants from '../Constants';
 
 const Layout = ({ ws }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseChannelId, setChooseChannelId] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
@@ -55,23 +55,29 @@ const Layout = ({ ws }) => {
 
   return (
     <LayoutStyles>
-      <ServerList />
-      <ServerName />
-      <ChannelInfo
-        chooseChannelName={chooseChannelName}
-        messageReceived={messageReceived}
-      />
-      <ChannelList
-        setChooseChannelName={setChooseChannelName}
-        setChooseChannelId={setChooseChannelId}
-      />
-      <UserInfo ws={ws} />
-      <ChannelData
-        ws={ws}
-        chooseChannelId={chooseChannelId}
-        messageReceived={messageReceived}
-        setMessageReceived={setMessageReceived}
-      />
+      <ServerList ws={ws} />
+
+      <ChannelFixed>
+        <ServerName />
+        <ChannelList
+          setChooseChannelName={setChooseChannelName}
+          setChooseChannelId={setChooseChannelId}
+        />
+        <UserInfo ws={ws} />
+      </ChannelFixed>
+
+      <ChatFixed>
+        <ChannelInfo
+          chooseChannelName={chooseChannelName}
+          messageReceived={messageReceived}
+        />
+        <ChannelData
+          ws={ws}
+          chooseChannelId={chooseChannelId}
+          messageReceived={messageReceived}
+          setMessageReceived={setMessageReceived}
+        />
+      </ChatFixed>
     </LayoutStyles>
   );
 };

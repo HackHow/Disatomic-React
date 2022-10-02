@@ -1,32 +1,38 @@
 import styled from 'styled-components';
-import { AlternateEmail } from 'styled-icons/material';
+// import { AlternateEmail } from 'styled-icons/material';
 import { UploadCloud } from 'styled-icons/remix-line';
 
 export const Container = styled.div`
-  grid-area: CD;
+  grid-area: HPD;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--primary);
+  height: 94.5%;
 `;
+
 export const Messages = styled.div`
   padding: 20px 0;
   display: flex;
   flex-direction: column;
   max-height: calc(100vh - 46px - 68px);
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  min-height: 30px;
 
   &::-webkit-scrollbar {
-    width: 4px;
+    /* width: 4px; */
+    width: 12px;
   }
 
-  &::-webkit-scrollbar-trumb {
-    background-color: var(--tertiary);
-    border-radius: 4px;
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+    border-radius: 6px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: var(--secondary);
+    background-color: var(--chat-input);
+    border-radius: 6px;
   }
 `;
 

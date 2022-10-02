@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Constants from '../Constants';
 import {
@@ -47,9 +47,9 @@ const HomeInfo = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('clickPendingFriendState', data);
-      setIncomingRequest(data.incomingRequest);
-      setOutgoingRequest(data.outgoingRequest);
+      // console.log('clickPendingFriendState', data);
+      // setIncomingRequest(data.incomingRequest);
+      // setOutgoingRequest(data.outgoingRequest);
       setFriendState('等待中');
     } catch (error) {
       console.log(error);

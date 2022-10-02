@@ -12,7 +12,13 @@ import {
   DialogTitle,
 } from '@mui/material/';
 
-const ServerCreate = ({ isHome, selected, hasNotifications, mentions }) => {
+const ServerCreate = ({
+  isHome,
+  selected,
+  hasNotifications,
+  mentions,
+  setServerArray,
+}) => {
   const [open, setOpen] = useState(false);
   const [serverName, setServerName] = useState('');
 
@@ -32,7 +38,10 @@ const ServerCreate = ({ isHome, selected, hasNotifications, mentions }) => {
           },
         }
       );
-      console.log('data', data);
+      // console.log('data', data);
+      setServerArray((prev) => {
+        return [...prev, data];
+      });
     } catch (error) {
       console.log(error);
     }

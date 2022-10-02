@@ -13,7 +13,7 @@ import {
 
 export { Mention } from './HomePrivateMessageStyles';
 
-const ChannelMessage = ({ author, date, content, hasMention, fileURL }) => {
+const HomePrivateMessage = ({ author, date, content, hasMention, fileURL }) => {
   const options = {
     defaultProtocol: 'https',
     target: '_blank',
@@ -70,4 +70,4 @@ const ChannelMessage = ({ author, date, content, hasMention, fileURL }) => {
   );
 };
 
-export default ChannelMessage;
+export default HomePrivateMessage;

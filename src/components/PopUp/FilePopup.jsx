@@ -20,20 +20,39 @@ const FileBlockButton = styled.button`
 `;
 
 const StyledPopup = styled(Popup)`
-  &-arrow {
+  /* &-arrow {
     color: white;
-  }
+  } */
   // use your custom style for ".popup-overlay"
   /* &-overlay {
   } */
 
   // use your custom style for ".popup-content"
   &-content {
-    border: 5px solid black;
-    /* background-color: var(--quinary); */
-    background-color: green;
-    /* border-radius: 30px; */
-    /* color: white; */
+    border: 5px solid var(--senary);
+    background-color: var(--primary);
+    border-radius: 8px;
+    right: 110px;
+    left: unset !important;
+    width: 600px;
+    height: 60vh;
+    overflow: auto;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      height: 20px;
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--chat-input);
+      border-radius: 6px;
+    }
   }
 `;
 
@@ -41,13 +60,13 @@ const FilePopup = ({ messageReceived }) => {
   const [filterFileMessage, setFilterFileMessage] = useState([]);
 
   useEffect(() => {
-    const fileMessage = messageReceived.filter(
-      (item) => item.files.fileURL !== null
-    );
+    let fileMessage;
+    fileMessage = messageReceived.filter((item) => item.files.fileURL !== null);
     // filter nested array condition
     // const fileMessage = messageReceived.filter((item) =>
     //   item.files.some(({ fileURL }) => fileURL !== null)
     // );
+    fileMessage = fileMessage.reverse();
     setFilterFileMessage(fileMessage);
   }, [messageReceived]);
 
@@ -64,7 +83,7 @@ const FilePopup = ({ messageReceived }) => {
       {filterFileMessage.length > 0 ? (
         filterFileMessage.map((item) => (
           <ChannelMessage
-            author={item.senderId.name}
+            author={item.sender.name}
             date={item.createdAt}
             content={item.text}
             fileURL={item.files.fileURL}

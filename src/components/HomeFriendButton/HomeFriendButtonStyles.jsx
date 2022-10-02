@@ -15,14 +15,15 @@ export const Container = styled.div`
     padding-left: 14px;
   }
 
-  & + div {
+  /* & + div {
     margin-top: 13px;
-  }
+  } */
 `;
 
 export const Avatar = styled.div`
   height: 40px;
   width: 40px;
+  min-width: 40px;
   background-color: var(--mention-detail);
   border-radius: 50%;
   position: relative;
