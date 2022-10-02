@@ -30,6 +30,8 @@ const HomeInfoAndFriend = ({
         allFriend={allFriend}
         incomingRequest={incomingRequest}
         outgoingRequest={outgoingRequest}
+        setIncomingRequest={setIncomingRequest}
+        setOutgoingRequest={setOutgoingRequest}
         setFriendUserName={setFriendUserName}
         setReceiverId={setReceiverId}
       />

@@ -24,6 +24,8 @@ const HomeFriendData = ({
   outgoingRequest,
   setFriendUserName,
   setReceiverId,
+  setIncomingRequest,
+  setOutgoingRequest,
 }) => {
   const navigate = useNavigate();
   const [onlineFriends, setOnlineFriends] = useState([]);
@@ -58,10 +60,6 @@ const HomeFriendData = ({
     }
   }, [ws, onlineFriends]);
 
-  // useEffect(() => {
-  //   setCurrentOnline(onlineFriends);
-  // }, [onlineFriends]);
-
   useEffect(() => {
     if (ws) {
       ws.on('OfflineNotify', (friendOffline) => {
@@ -82,7 +80,7 @@ const HomeFriendData = ({
     const url = Constants.ACCEPT_FRIEND;
     const token = localStorage.getItem('Authorization');
     try {
-      await axios.post(
+      const { data } = await axios.post(
         url,
         { senderId },
         {
@@ -91,6 +89,7 @@ const HomeFriendData = ({
           },
         }
       );
+      setIncomingRequest(data.incomingFriendReq);
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +99,7 @@ const HomeFriendData = ({
     const url = Constants.REJECT_FRIEND;
     const token = localStorage.getItem('Authorization');
     try {
-      await axios.post(
+      const { data } = await axios.post(
         url,
         { senderId },
         {
@@ -109,6 +108,7 @@ const HomeFriendData = ({
           },
         }
       );
+      setIncomingRequest(data.incomingFriendReq);
     } catch (error) {
       console.log(error);
     }
@@ -127,6 +127,7 @@ const HomeFriendData = ({
           },
         }
       );
+      setOutgoingRequest(data.outgoingFriendReq);
       console.log('cancel', data);
     } catch (error) {
       console.log(error);

@@ -48,8 +48,8 @@ const HomeInfo = ({
         },
       });
       // console.log('clickPendingFriendState', data);
-      // setIncomingRequest(data.incomingRequest);
-      // setOutgoingRequest(data.outgoingRequest);
+      setIncomingRequest(data.incomingRequest);
+      setOutgoingRequest(data.outgoingRequest);
       setFriendState('等待中');
     } catch (error) {
       console.log(error);
