@@ -24,6 +24,11 @@ const ChannelData = ({
   const [previewFiles, setPreviewFiles] = useState(null);
 
   const inputRef = useRef();
+  const dummy = useRef(null);
+
+  useEffect(() => {
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messageReceived]);
 
   useEffect(() => {
     let fileReader,
@@ -158,6 +163,7 @@ const ChannelData = ({
             fileURL={item.files.fileURL}
           />
         ))}
+        <div ref={dummy} />
       </Messages>
 
       <Test>

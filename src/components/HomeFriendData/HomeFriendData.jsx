@@ -27,19 +27,56 @@ const HomeFriendData = ({
 }) => {
   const navigate = useNavigate();
   const [onlineFriends, setOnlineFriends] = useState([]);
+  // const [currentOnline, setCurrentOnline] = useState([]);
 
   useEffect(() => {
     if (ws) {
       ws.emit('getOnlineFriend', 'Online friend list');
-      ws.on('OnlineFriend', (friendsList) => {
+      ws.on('onlineFriend', (friendsList) => {
         setOnlineFriends(friendsList);
       });
 
       return () => {
-        ws.off('OnlineFriend');
+        ws.off('onlineFriend');
       };
     }
   }, [ws]);
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('onlineNotify', (friendOnline) => {
+        // const friendIdArray = currentOnline.map((item) => item.friendId);
+        // if (!friendIdArray.includes(friendOnline.friendId)) {
+        // console.log('AAA');
+        setOnlineFriends((prev) => [friendOnline, ...prev]);
+        // }
+      });
+
+      return () => {
+        ws.off('onlineNotify');
+      };
+    }
+  }, [ws, onlineFriends]);
+
+  // useEffect(() => {
+  //   setCurrentOnline(onlineFriends);
+  // }, [onlineFriends]);
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('OfflineNotify', (friendOffline) => {
+        const updateOnlineUser = onlineFriends.filter(
+          (item) => item.friendId !== friendOffline.friendId
+        );
+        console.log('updateOnlineUser', updateOnlineUser);
+        setOnlineFriends(updateOnlineUser);
+      });
+
+      return () => {
+        ws.off('userOffline');
+      };
+    }
+  }, [ws, onlineFriends]);
 
   const clickAcceptFriend = async (senderId) => {
     const url = Constants.ACCEPT_FRIEND;

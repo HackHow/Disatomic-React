@@ -19,6 +19,18 @@ const FileBlockButton = styled.button`
   background-color: transparent;
 `;
 
+const Links = styled.div`
+  width: 300px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  margin: auto;
+  > p {
+    font-size: 50px;
+    background-color: green;
+  }
+`;
+
 const StyledPopup = styled(Popup)`
   /* &-arrow {
     color: white;
@@ -34,10 +46,14 @@ const StyledPopup = styled(Popup)`
     border-radius: 8px;
     right: 110px;
     left: unset !important;
-    width: 600px;
+    max-width: 600px;
     height: 60vh;
     overflow: auto;
     scroll-behavior: smooth;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
 
     &::-webkit-scrollbar {
       height: 20px;
@@ -90,7 +106,9 @@ const FilePopup = ({ messageReceived }) => {
           />
         ))
       ) : (
-        <div>{'No Files'}</div>
+        <Links>
+          <p>{'No Files'}</p>
+        </Links>
       )}
     </StyledPopup>
   );

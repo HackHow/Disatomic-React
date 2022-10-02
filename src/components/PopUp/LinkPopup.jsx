@@ -18,7 +18,7 @@ const LinkBlockButton = styled.button`
 `;
 
 const Files = styled.div`
-  width: 200px;
+  width: 250px;
   display: flex;
   /* align-items: center; */
   justify-content: center;
@@ -54,7 +54,6 @@ const StyledPopup = styled(Popup)`
     align-items: center;
 
     &::-webkit-scrollbar {
-      /* width: 4px; */
       height: 20px;
       width: 10px;
     }
@@ -77,9 +76,11 @@ const LinkPopup = ({ messageReceived }) => {
   useEffect(() => {
     let linkMessage;
     linkMessage = messageReceived.filter((item) => item.links.linkURL !== null);
+
     // const linkMessage = messageReceived.filter((item) =>
     //   item.links.some(({ linkURL }) => linkURL !== null)
     // );
+
     linkMessage = linkMessage.reverse();
     setFilterLinkMessage(linkMessage);
   }, [messageReceived]);

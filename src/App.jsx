@@ -44,7 +44,7 @@ function App() {
           <Route path='/register' element={<RegisterInterface />} />
 
           <Route
-            path='/channels/'
+            path='/channels'
             element={
               <HomeLayout
                 ws={ws}
