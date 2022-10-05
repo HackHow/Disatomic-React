@@ -58,7 +58,6 @@ function Login() {
   const loginButton = async (event) => {
     event.preventDefault();
     const url = Constants.LOGIN_URL;
-    console.log(url);
     try {
       const { data } = await axios.post(url, loginInfo);
       localStorage.setItem('Authorization', data.accessToken);

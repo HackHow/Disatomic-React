@@ -8,6 +8,7 @@ import {
   AddUserIcon,
   DirectMessage,
   PrivateMessageFriendList,
+  PrivateMessage,
 } from './HomeMessageListStyles';
 import Constants from '../Constants';
 import axios from 'axios';
@@ -114,13 +115,15 @@ const HomeMessageList = ({
 
       <DirectMessage>{'私人訊息'}</DirectMessage>
 
-      {allFriend.map((item) => (
-        <PrivateMessageFriendList
-          onClick={() => redirectPrivateMsg(item._id, item.name)}
-        >
-          <HomeFriendButton userName={item.name} />
-        </PrivateMessageFriendList>
-      ))}
+      <PrivateMessage>
+        {allFriend.map((item) => (
+          <PrivateMessageFriendList
+            onClick={() => redirectPrivateMsg(item._id, item.name)}
+          >
+            <HomeFriendButton userName={item.name} />
+          </PrivateMessageFriendList>
+        ))}
+      </PrivateMessage>
     </Container>
   );
 };

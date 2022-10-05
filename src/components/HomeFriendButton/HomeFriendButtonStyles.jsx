@@ -51,7 +51,8 @@ export const Message = styled.div`
   min-height: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   margin-left: 17px;
 `;
 

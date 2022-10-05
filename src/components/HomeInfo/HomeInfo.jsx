@@ -30,7 +30,6 @@ const HomeInfo = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('clickAllFriendState', data);
       setAllFriend(data);
       setFriendState('所有');
     } catch (error) {
@@ -47,9 +46,8 @@ const HomeInfo = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log('clickPendingFriendState', data);
-      setIncomingRequest(data.incomingRequest);
-      setOutgoingRequest(data.outgoingRequest);
+      setIncomingRequest(data.incomingFriendReq);
+      setOutgoingRequest(data.outgoingFriendReq);
       setFriendState('等待中');
     } catch (error) {
       console.log(error);

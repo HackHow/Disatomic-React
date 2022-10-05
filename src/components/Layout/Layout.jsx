@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
+import React, { useState } from 'react';
 import { LayoutStyles, ChannelFixed, ChatFixed } from './LayoutStyles';
 import ServerList from '../ServerList/ServerList';
 import ServerName from '../ServerName/ServerName';
@@ -8,15 +6,11 @@ import ChannelInfo from '../ChannelInfo/ChannelInfo';
 import ChannelList from '../ChannelList/ChannelList';
 import UserInfo from '../UserInfo/UserInfo';
 import ChannelData from '../ChannelData/ChannelData';
-import Constants from '../Constants';
 
 const Layout = ({ ws }) => {
-  // const navigate = useNavigate();
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseChannelId, setChooseChannelId] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
-
-  // const [ws, setWs] = useState(null);
 
   // useEffect(() => {
   //   if (!ws) {
@@ -60,6 +54,7 @@ const Layout = ({ ws }) => {
       <ChannelFixed>
         <ServerName />
         <ChannelList
+          ws={ws}
           setChooseChannelName={setChooseChannelName}
           setChooseChannelId={setChooseChannelId}
         />

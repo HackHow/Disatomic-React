@@ -52,3 +52,22 @@ export const PrivateMessageFriendList = styled.div`
     background-color: var(--quinary);
   }
 `;
+
+export const PrivateMessage = styled.div`
+  overflow: auto;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--tertiary);
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--chat-input);
+    border-radius: 6px;
+  }
+`;

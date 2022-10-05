@@ -5,7 +5,7 @@ import { Documents } from 'styled-icons/ionicons-outline';
 import { Loop } from 'styled-icons/material';
 import ChannelMessage from '../ChannelMessage/ChannelMessage';
 
-export const DocumentsIcon = styled(Documents)`
+const DocumentsIcon = styled(Documents)`
   width: 30px;
   height: 30px;
   color: var(--symbol);
@@ -46,7 +46,7 @@ const StyledPopup = styled(Popup)`
     border-radius: 8px;
     right: 110px;
     left: unset !important;
-    max-width: 600px;
+    max-width: 800px;
     height: 60vh;
     overflow: auto;
     scroll-behavior: smooth;

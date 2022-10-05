@@ -37,25 +37,6 @@ export const Description = styled.span`
   color: var(--gray);
 `;
 
-export const DocumentsIcon = styled(Documents)`
-  width: 30px;
-  height: 30px;
-  color: var(--symbol);
-  margin-right: 30px;
-  &:hover {
-    background-color: var(--quinary);
-  }
-`;
-
-export const LinkIcon = styled(Link)`
-  width: 30px;
-  height: 30px;
-  color: var(--symbol);
-  &:hover {
-    background-color: var(--quinary);
-  }
-`;
-
 export const FileAndLink = styled.div`
   margin-left: auto;
   margin-right: 20px;

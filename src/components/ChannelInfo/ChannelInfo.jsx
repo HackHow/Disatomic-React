@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Container,
   HashtagIcon,
   Title,
   // Separator,
   // Description,
-  DocumentsIcon,
-  LinkIcon,
   FileAndLink,
 } from './ChannelInfoStyles';
 import FilePopup from '../PopUp/FilePopup';

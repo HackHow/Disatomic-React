@@ -15,7 +15,7 @@ import {
   DialogTitle,
 } from '@mui/material/';
 
-const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
+const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState([]);
   const [isPublicOn, setIsPublicOn] = useState(true);
@@ -62,7 +62,7 @@ const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
         {
           serverId: serverId,
           channelTitle: channelName,
-          isPublicOn: isPublicOn,
+          isPublic: isPublicOn,
         },
         {
           headers: {
@@ -70,8 +70,8 @@ const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
           },
         }
       );
-      console.log('create channel:', data);
-      setChannelList(data);
+      setChannelList((prev) => [...prev, data]);
+      ws.emit('JoinCreatedChannel', data.channelId);
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +83,7 @@ const ChannelList = ({ setChooseChannelName, setChooseChannelId }) => {
     setChooseChannelId(channelId);
     navigate(`/channels/${chooseServerId}/${channelId}`);
     const newChannelList = JSON.parse(JSON.stringify(channelList));
+
     newChannelList.map((item) => {
       if (item.channelId === channelId) {
         return (item.selected = 'active');

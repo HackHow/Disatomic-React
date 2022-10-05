@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'styled-icons/entypo';
 import ChannelMessage from '../ChannelMessage/ChannelMessage';
 
-export const LinkIcon = styled(Link)`
+const LinkIcon = styled(Link)`
   width: 30px;
   height: 30px;
   color: var(--symbol);
@@ -44,7 +44,7 @@ const StyledPopup = styled(Popup)`
     border-radius: 8px;
     right: 50px;
     left: unset !important;
-    max-width: 400px;
+    max-width: 600px;
     height: 60vh;
     overflow: auto;
     scroll-behavior: smooth;

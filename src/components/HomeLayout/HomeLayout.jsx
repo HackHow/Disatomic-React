@@ -38,8 +38,8 @@ const HomeLayout = ({
         console.log('socket connected:', ws.id, new Date().toISOString());
       });
 
-      ws.on('token', (data) => {
-        alert(data);
+      ws.on('connect_error', (error) => {
+        alert(error.message);
         navigate('/');
       });
 
@@ -49,6 +49,7 @@ const HomeLayout = ({
 
       return () => {
         ws.off('connect');
+        ws.off('connect_error');
         ws.off('token');
         ws.off('disconnect');
       };

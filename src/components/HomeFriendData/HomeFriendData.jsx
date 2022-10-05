@@ -90,6 +90,10 @@ const HomeFriendData = ({
         }
       );
       setIncomingRequest(data.incomingFriendReq);
+      ws.emit('NotifyAcceptFriend', {
+        senderId: senderId,
+        outgoingFriendReq: data.outgoingFriendReq,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -109,6 +113,10 @@ const HomeFriendData = ({
         }
       );
       setIncomingRequest(data.incomingFriendReq);
+      ws.emit('NotifyRejectFriend', {
+        senderId: senderId,
+        outgoingFriendReq: data.outgoingFriendReq,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -128,11 +136,36 @@ const HomeFriendData = ({
         }
       );
       setOutgoingRequest(data.outgoingFriendReq);
-      console.log('cancel', data);
+      ws.emit('NotifyCancelFriend', {
+        receiverId: receiverId,
+        incomingFriendReq: data.incomingFriendReq,
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('NotifySenderAccept', (outgoingFriendReq) => {
+        setOutgoingRequest(outgoingFriendReq);
+      });
+
+      ws.on('NotifySenderReject', (outgoingFriendReq) => {
+        setOutgoingRequest(outgoingFriendReq);
+      });
+
+      ws.on('NotifyReceiverCancel', (incomingFriendReq) => {
+        setIncomingRequest(incomingFriendReq);
+      });
+
+      return () => {
+        ws.off('NotifySenderAccept');
+        ws.off('NotifySenderReject');
+        ws.off('NotifyReceiverCancel');
+      };
+    }
+  }, [ws]);
 
   const redirectPrivateMsg = async (userId, friendName) => {
     navigate(userId);

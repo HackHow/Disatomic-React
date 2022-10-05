@@ -14,7 +14,6 @@ import {
   UploadPreviewFile,
   Test,
 } from './HomePrivateDataStyles';
-import { W } from 'styled-icons/fa-solid';
 
 const HomePrivateData = ({
   ws,
