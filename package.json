@@ -1,8 +1,9 @@
 {
-  "name": "disatomic-react",
+  "name": "disatomic",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
+  "author": "Howard Shen",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -15,7 +16,6 @@
     "bootstrap-switch-button-react": "^1.2.0",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.5",
-    "electron": "^20.1.0",
     "electron-is-dev": "^2.0.0",
     "linkify-react": "^3.0.4",
     "linkifyjs": "^3.0.5",
@@ -37,7 +37,20 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn:electron\"",
-    "electron": "wait-on tcp:3000 && electron ."
+    "electron": "wait-on tcp:3000 && electron .",
+    "electron-start": "electron .",
+    "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron.js"
+  },
+  "build": {
+    "appId": "com.example.electron",
+    "productName": "Disatomic",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +72,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.3.0",
-    "wait-on": "^6.0.1"
+    "wait-on": "^6.0.1",
+    "electron": "^20.1.0",
+    "electron-builder": "^23.3.3"
   }
 }
