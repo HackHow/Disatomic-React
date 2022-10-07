@@ -40,6 +40,9 @@ const Input = styled.input`
 function Login() {
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState('電子郵件');
+  const [password, setPassword] = useState('密碼');
+
   useEffect(() => {
     const token = localStorage.getItem('Authorization');
     if (token) navigate('/channels/@me');
@@ -51,7 +54,6 @@ function Login() {
   });
 
   const changeHandler = (prop) => (event) => {
-    console.log(loginInfo);
     setLoginInfo({ ...loginInfo, [prop]: event.target.value });
   };
 
@@ -64,6 +66,7 @@ function Login() {
       navigate('/channels/@me');
     } catch (error) {
       console.log(error.response.data);
+      alert(error.response.data);
     }
   };
 
@@ -71,7 +74,7 @@ function Login() {
     <SignInContainer>
       <div>
         <TitleContainer>歡迎回來</TitleContainer>
-        <form action='' onSubmit={loginButton}>
+        <form onSubmit={loginButton}>
           <InputDataContainer>電子郵件</InputDataContainer>
           <Input
             type='email'

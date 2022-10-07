@@ -7,49 +7,14 @@ import ChannelList from '../ChannelList/ChannelList';
 import UserInfo from '../UserInfo/UserInfo';
 import ChannelData from '../ChannelData/ChannelData';
 
-const Layout = ({ ws }) => {
+const Layout = ({ ws, setWs }) => {
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseChannelId, setChooseChannelId] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
 
-  // useEffect(() => {
-  //   if (!ws) {
-  //     const token = window.localStorage.getItem('Authorization');
-  //     const socket = io(Constants.DNS, {
-  //       auth: {
-  //         token: `Bearer ${token}`,
-  //       },
-  //     });
-  //     setWs(socket);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (ws) {
-  //     ws.on('connect', () => {
-  //       console.log('socket connected:', ws.id, new Date().toISOString());
-  //     });
-
-  //     ws.on('token', (data) => {
-  //       alert(data);
-  //       navigate('/');
-  //     });
-
-  //     ws.on('disconnect', () => {
-  //       console.log('socket disconnect');
-  //     });
-
-  //     return () => {
-  //       ws.off('connect');
-  //       ws.off('token');
-  //       ws.off('disconnect');
-  //     };
-  //   }
-  // }, [ws]);
-
   return (
     <LayoutStyles>
-      <ServerList ws={ws} />
+      <ServerList ws={ws} setWs={setWs} />
 
       <ChannelFixed>
         <ServerName />

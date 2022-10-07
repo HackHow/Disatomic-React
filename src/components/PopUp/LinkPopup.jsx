@@ -51,7 +51,7 @@ const StyledPopup = styled(Popup)`
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
 
     &::-webkit-scrollbar {
       height: 20px;

@@ -10,6 +10,15 @@ import {
   GroupsIcon,
 } from './HomeInfoStyles';
 
+import adam from '../../assets/adam.webp';
+import ellie from '../../assets/ellie.webp';
+import jimmy from '../../assets/jimmy.webp';
+import claudia from '../../assets/claudia.webp';
+import kelvin from '../../assets/kelvin.webp';
+import morton from '../../assets/morton.webp';
+import tim from '../../assets/tim.webp';
+// import peter from '../../assets/peter.webp';
+
 const HomeInfo = ({
   chooseChannelName,
   setFriendState,
@@ -17,6 +26,15 @@ const HomeInfo = ({
   setIncomingRequest,
   setOutgoingRequest,
 }) => {
+  const pictureObj = [
+    { picture: adam },
+    { picture: ellie },
+    { picture: jimmy },
+    { picture: claudia },
+    { picture: kelvin },
+    { picture: morton },
+    { picture: tim },
+  ];
   const clickOnlineFriend = async () => {
     setFriendState('線上');
   };
@@ -30,7 +48,7 @@ const HomeInfo = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      setAllFriend(data);
+      setAllFriend(data.allFriends);
       setFriendState('所有');
     } catch (error) {
       console.log(error);

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  HashRouter,
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import GlobalStyles from './styles/GlobalStyles';
 import LoginInterface from './pages/LoginInterface';
@@ -43,6 +49,7 @@ function App() {
           <Route path='/login' element={<LoginInterface />} />
           <Route path='/register' element={<RegisterInterface />} />
 
+          <Route path='/channels' element={<Navigate to='/channels/@me' />} />
           <Route
             path='/channels'
             element={
@@ -87,8 +94,14 @@ function App() {
           </Route>
 
           <Route path='/channels'>
-            <Route path=':serverId/' element={<Layout ws={ws} />} />
-            <Route path=':serverId/:channelId' element={<Layout ws={ws} />} />
+            <Route
+              path=':serverId'
+              element={<Layout ws={ws} setWs={setWs} />}
+            />
+            <Route
+              path=':serverId/:channelId'
+              element={<Layout ws={ws} setWs={setWs} />}
+            />
           </Route>
         </Routes>
         <GlobalStyles />

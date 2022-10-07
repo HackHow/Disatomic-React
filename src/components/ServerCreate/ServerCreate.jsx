@@ -38,7 +38,7 @@ const ServerCreate = ({
           },
         }
       );
-      // console.log('data', data);
+      console.log('Create Server Success !');
       setServerArray((prev) => {
         return [...prev, data];
       });

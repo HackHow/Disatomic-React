@@ -18,7 +18,7 @@ import {
 const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState([]);
-  const [isPublicOn, setIsPublicOn] = useState(true);
+  const [isPublic, setIsPublic] = useState(true);
   const [open, setOpen] = useState(false);
   const { chooseServerId } = useGlobal();
 
@@ -43,7 +43,6 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log('data.channelList', data.channelList);
         setChannelList(data.channelList);
       };
       getChannelOfServer();
@@ -60,9 +59,9 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
       const { data } = await axios.post(
         url,
         {
-          serverId: serverId,
-          channelTitle: channelName,
-          isPublic: isPublicOn,
+          serverId,
+          channelName,
+          isPublic,
         },
         {
           headers: {
@@ -71,7 +70,7 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
         }
       );
       setChannelList((prev) => [...prev, data]);
-      ws.emit('JoinCreatedChannel', data.channelId);
+      ws.emit('joinCreatedChannel', data.channelId);
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +92,10 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
     });
     setChannelList(newChannelList);
   };
+
+  // useEffect(() => {
+
+  // },[])
 
   return (
     <Container>

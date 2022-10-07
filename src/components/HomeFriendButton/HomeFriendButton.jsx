@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Container,
   Avatar,
@@ -7,6 +7,15 @@ import {
   Content,
   UserIcon,
 } from './HomeFriendButtonStyles';
+
+// import adam from '../../assets/adam.webp';
+// import ellie from '../../assets/ellie.webp';
+// import jimmy from '../../assets/jimmy.webp';
+// import claudia from '../../assets/claudia.webp';
+// import kelvin from '../../assets/kelvin.webp';
+// import morton from '../../assets/morton.webp';
+// import tim from '../../assets/tim.webp';
+// import peter from '../../assets/peter.webp';
 
 export { Mention } from './HomeFriendButtonStyles';
 

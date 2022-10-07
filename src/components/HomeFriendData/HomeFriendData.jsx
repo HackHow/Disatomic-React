@@ -204,6 +204,7 @@ const HomeFriendData = ({
                 <FriendButton>
                   <HomeFriendButton
                     userName={item.name}
+                    userPicture={item.picture}
                     request={'已收到的好友請求'}
                   />
                   <CheckAndCancelIcon>
@@ -219,6 +220,7 @@ const HomeFriendData = ({
                 <FriendButton>
                   <HomeFriendButton
                     userName={item.name}
+                    userPicture={item.picture}
                     request={'送出中的好友請求'}
                   />
                   <CheckAndCancelIcon>
@@ -235,7 +237,10 @@ const HomeFriendData = ({
             <>
               <Separator />
               <FriendButton>
-                <HomeFriendButton userName={item.name} />
+                <HomeFriendButton
+                  userName={item.name}
+                  userPicture={item.picture}
+                />
                 <CheckAndCancelIcon>
                   <ChatboxIcon
                     onClick={() => redirectPrivateMsg(item._id, item.name)}

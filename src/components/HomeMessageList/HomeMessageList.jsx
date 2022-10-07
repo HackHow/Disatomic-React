@@ -44,7 +44,7 @@ const HomeMessageList = ({
     const token = localStorage.getItem('Authorization');
     const url = Constants.ADD_FRIEND_URL;
     try {
-      await axios.post(
+      const { data } = await axios.post(
         url,
         { friendName },
         {
@@ -53,6 +53,7 @@ const HomeMessageList = ({
           },
         }
       );
+      console.log(data);
     } catch (error) {
       console.log(error);
       alert(error.response.data);
@@ -72,13 +73,13 @@ const HomeMessageList = ({
             Authorization: `Bearer ${token}`,
           },
         });
-        setAllFriend(data);
+        setAllFriend(data.allFriends);
       };
       privateMessageList();
     } catch (error) {
       console.log(error);
     }
-  });
+  }, []);
 
   const redirectPrivateMsg = async (userId, friendName) => {
     navigate(`@me/${userId}`);

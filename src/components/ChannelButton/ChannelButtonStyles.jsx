@@ -21,6 +21,9 @@ export const Container = styled.div`
     font-size: 15px;
     margin-left: 5px;
     color: var(--senary);
+    /* text-overflow: ellipsis; */
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
   }
   & .iconsRight {
     display: none;

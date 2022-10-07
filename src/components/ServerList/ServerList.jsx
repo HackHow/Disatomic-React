@@ -5,27 +5,65 @@ import { Container, Separator } from './ServerListStyles';
 import ServerButton from '../ServerButton/ServerButton';
 import ServerHome from '../ServerHome/ServerHome';
 import ServerCreate from '../ServerCreate/ServerCreate';
+import io from 'socket.io-client';
 import Constants from '../Constants';
 import { useGlobal } from '../../context/global';
 
-const ServerList = ({ ws }) => {
+const ServerList = ({ ws, setWs }) => {
   const { setChooseServerName, setChooseServerId } = useGlobal();
   const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const url = Constants.USER_INFO;
+    if (!ws) {
+      const token = window.localStorage.getItem('Authorization');
+      const socket = io(Constants.DNS, {
+        auth: {
+          token: `Bearer ${token}`,
+        },
+      });
+      setWs(socket);
+      navigate('/channels/@me');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('connect', () => {
+        console.log('socket connected:', ws.id, new Date().toISOString());
+      });
+
+      ws.on('connect_error', (error) => {
+        alert(error.message);
+        navigate('/');
+      });
+
+      ws.on('disconnect', () => {
+        console.log('socket disconnect');
+      });
+
+      return () => {
+        ws.off('connect');
+        ws.off('connect_error');
+        ws.off('token');
+        ws.off('disconnect');
+      };
+    }
+  }, [ws]);
+
+  useEffect(() => {
+    const url = Constants.GET_USER_SERVER;
     const token = localStorage.getItem('Authorization');
     try {
-      const getUserInfo = async () => {
+      const getUserServer = async () => {
         const { data } = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setServerArray(data.userOwnServer);
+        setServerArray(data.userServers);
       };
-      getUserInfo();
+      getUserServer();
     } catch (error) {
       console.log(error);
     }

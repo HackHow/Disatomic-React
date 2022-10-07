@@ -46,14 +46,14 @@ const StyledPopup = styled(Popup)`
     border-radius: 8px;
     right: 110px;
     left: unset !important;
-    max-width: 800px;
+    max-width: 600px;
     height: 60vh;
     overflow: auto;
     scroll-behavior: smooth;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
 
     &::-webkit-scrollbar {
       height: 20px;

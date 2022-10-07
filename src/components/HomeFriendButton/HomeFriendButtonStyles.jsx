@@ -4,7 +4,8 @@ import { User } from 'styled-icons/entypo';
 
 export const Container = styled.div`
   display: flex;
-  align-items: 4px;
+  /* align-items: 4px; */
+  align-items: center;
   padding: 10px 16px;
   margin-right: 4px;
   background-color: transparent;
@@ -27,6 +28,7 @@ export const Avatar = styled.div`
   background-color: var(--mention-detail);
   border-radius: 50%;
   position: relative;
+  /* background-image: ${(props) => `url(${props.userPicture})`}; */
 
   &.bot {
     background-color: var(--mention-detail);

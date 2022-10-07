@@ -7,20 +7,27 @@ const isDev = require('electron-is-dev');
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1440,
+    height: 900,
     webPreferences: {
       nodeIntegration: true,
     },
+    autoHideMenuBar: true,
+    // titleBarStyle: 'hidden',
+    // titleBarOverlay: true,
+    // titleBarOverlay: {
+    //   color: '#292b2f',
+    //   symbolColor: '#74777a',
+    // },
   });
   win.setMaximumSize(1600, 900);
-  win.maximizable = false;
+  // win.maximizable = false;
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
   win.loadURL(
     isDev
-      ? 'http://localhost:3000'
+      ? 'http://localhost:3000/'
       : `file://${path.join(__dirname, '../build/index.html')}`
   );
   // Open the DevTools.
