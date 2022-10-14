@@ -1,33 +1,23 @@
-## **This is Disatomic project with React**
+![Logo]()
 
-**_2022/09/11_**
+# Disatomic
 
-- **Modify login console log**
-- **Add jwt verify and sign in login/register**
-- **Direct default page to login page**
-- **Add Home component**
+An online chat service includes links and files that automatically record chat content
 
-**_2022/09/09_**
+## Demo
 
-- **Add login layout**
-- **Add register layout**
-- **Add React Router**
+[Demo video](https://drive.google.com/file/d/1x9eUrFunTPjnNZyUa8nAw0Lkrj1JphJY/view)
 
-**_2022/09/08_**
+## Table of Contents
 
-- **Add picture preview in upload**
-- **Picture could preview in chat record**
-- **File could be save in Server**
+- [Motivation](https://github.com/HackHow/Disatomic-React/edit/develop/README.md/#Motivation)
+- [Features](https://github.com/HackHow/Disatomic-React/edit/develop/README.md/#Features)
 
-**_2022/09/03_**
+## Features
 
-- **Using styled-components**
-- **Create direct messages logo layout**
-- **Create add server layout**
-- **Add project directory**
-
-**_2022/08/31_**
-
-- **Start up React project**
-- **Start up Electron**
-- **Make sure React can run on Electron**
+- Stored automaitcally files and links in chat room
+- Created Workspaces and channels
+- Cross-platform desktop applications
+- Identified text containing HTTP or HTTPS and turn it into a link
+- Previewed user-uploaded images
+- Real-time notification mechanism
