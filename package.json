@@ -24,7 +24,6 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
     "reactjs-popup": "^2.0.5",
     "socket.io-client": "^4.5.2",
     "styled-components": "^5.3.5",
@@ -72,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "react-scripts": "^5.0.1",
     "concurrently": "^7.3.0",
     "electron": "^21.1.1",
     "electron-builder": "^23.6.0",
