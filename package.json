@@ -1,18 +1,35 @@
 {
-  "name": "disatomic-react",
+  "name": "disatomic",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
+  "author": "Howard Shen",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.1",
+    "bootstrap-switch-button-react": "^1.2.0",
     "cross-env": "^7.0.3",
-    "electron": "^20.1.0",
+    "dayjs": "^1.11.5",
     "electron-is-dev": "^2.0.0",
+    "linkify-react": "^3.0.4",
+    "linkifyjs": "^3.0.5",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "reactjs-popup": "^2.0.5",
+    "socket.io-client": "^4.5.2",
+    "styled-components": "^5.3.5",
+    "styled-icons": "^10.46.0",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -21,7 +38,20 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn:electron\"",
-    "electron": "wait-on tcp:3000 && electron ."
+    "electron": "wait-on tcp:3000 && electron .",
+    "electron-start": "electron .",
+    "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron.js"
+  },
+  "build": {
+    "appId": "com.example.electron",
+    "productName": "Disatomic",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +73,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.3.0",
+    "electron": "^20.1.0",
     "electron-builder": "^23.3.3",
     "wait-on": "^6.0.1"
   }

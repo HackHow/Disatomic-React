@@ -9,4 +9,7 @@
 # misc
 README_example.md
 
+.env
+.env.sample
 
+/dist
