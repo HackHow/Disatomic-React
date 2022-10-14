@@ -14,6 +14,7 @@ import {
   UploadPreviewFile,
   Test,
 } from './HomePrivateDataStyles';
+import { v4 as uuidv4 } from 'uuid';
 
 const HomePrivateData = ({
   ws,
@@ -172,6 +173,7 @@ const HomePrivateData = ({
       <Messages>
         {messageReceived.map((item) => (
           <HomePrivateMessage
+            key={uuidv4()}
             author={item.sender.name}
             date={item.createdAt}
             content={item.text}

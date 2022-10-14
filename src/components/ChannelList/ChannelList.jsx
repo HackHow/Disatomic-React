@@ -14,6 +14,7 @@ import {
   // DialogContentText,
   DialogTitle,
 } from '@mui/material/';
+import { v4 } from 'uuid';
 
 const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
   const [channelName, setChannelName] = useState('');
@@ -131,6 +132,7 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
       {channelList &&
         channelList.map((item) => (
           <ChannelButton
+            key={v4()}
             channelName={item.channelName}
             channelId={item.channelId}
             redirectChannel={redirectChannel}

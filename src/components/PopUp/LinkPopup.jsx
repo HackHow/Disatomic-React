@@ -3,6 +3,7 @@ import Popup from 'reactjs-popup';
 import styled from 'styled-components';
 import { Link } from 'styled-icons/entypo';
 import ChannelMessage from '../ChannelMessage/ChannelMessage';
+import { v4 as uuidv4 } from 'uuid';
 
 const LinkIcon = styled(Link)`
   width: 30px;
@@ -98,6 +99,7 @@ const LinkPopup = ({ messageReceived }) => {
       {filterLinkMessage.length > 0 ? (
         filterLinkMessage.map((item) => (
           <ChannelMessage
+            key={uuidv4()}
             author={item.sender.name}
             date={item.createdAt}
             content={item.text}

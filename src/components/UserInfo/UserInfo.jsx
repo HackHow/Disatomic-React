@@ -23,11 +23,12 @@ const UserInfo = ({ ws }) => {
         setUserName(() => userName.split('#')[0]);
         setUserHashNumber(() => userName.split('#')[1]);
       });
+
       return () => {
         ws.off('userName');
       };
     }
-  });
+  }, [ws]);
 
   return (
     <Container>

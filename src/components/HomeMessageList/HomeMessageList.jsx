@@ -21,6 +21,7 @@ import {
   // DialogContentText,
   DialogTitle,
 } from '@mui/material/';
+import { v4 } from 'uuid';
 
 const HomeMessageList = ({
   allFriend,
@@ -119,6 +120,7 @@ const HomeMessageList = ({
       <PrivateMessage>
         {allFriend.map((item) => (
           <PrivateMessageFriendList
+            key={v4()}
             onClick={() => redirectPrivateMsg(item._id, item.name)}
           >
             <HomeFriendButton userName={item.name} />

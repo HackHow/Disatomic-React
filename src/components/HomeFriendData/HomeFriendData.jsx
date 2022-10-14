@@ -15,6 +15,7 @@ import {
   Separator,
   ChatboxIcon,
 } from './HomeFriendDataStyles';
+import { v4 } from 'uuid';
 
 const HomeFriendData = ({
   ws,
@@ -178,7 +179,7 @@ const HomeFriendData = ({
       <Messages>
         {friendState === '線上' ? (
           onlineFriends.map((item) => (
-            <>
+            <div key={v4()}>
               <Separator />
               <FriendButton>
                 <HomeFriendButton
@@ -194,17 +195,16 @@ const HomeFriendData = ({
                   />
                 </CheckAndCancelIcon>
               </FriendButton>
-            </>
+            </div>
           ))
         ) : friendState === '等待中' ? (
           <>
             {incomingRequest.map((item) => (
-              <>
+              <div key={v4()}>
                 <Separator />
                 <FriendButton>
                   <HomeFriendButton
                     userName={item.name}
-                    userPicture={item.picture}
                     request={'已收到的好友請求'}
                   />
                   <CheckAndCancelIcon>
@@ -212,15 +212,14 @@ const HomeFriendData = ({
                     <CrossIcon onClick={() => clickRejectFriend(item._id)} />
                   </CheckAndCancelIcon>
                 </FriendButton>
-              </>
+              </div>
             ))}
             {outgoingRequest.map((item) => (
-              <>
+              <div key={v4()}>
                 <Separator />
                 <FriendButton>
                   <HomeFriendButton
                     userName={item.name}
-                    userPicture={item.picture}
                     request={'送出中的好友請求'}
                   />
                   <CheckAndCancelIcon>
@@ -229,25 +228,22 @@ const HomeFriendData = ({
                     />
                   </CheckAndCancelIcon>
                 </FriendButton>
-              </>
+              </div>
             ))}
           </>
         ) : (
           allFriend.map((item) => (
-            <>
+            <div key={v4()}>
               <Separator />
               <FriendButton>
-                <HomeFriendButton
-                  userName={item.name}
-                  userPicture={item.picture}
-                />
+                <HomeFriendButton userName={item.name} />
                 <CheckAndCancelIcon>
                   <ChatboxIcon
                     onClick={() => redirectPrivateMsg(item._id, item.name)}
                   />
                 </CheckAndCancelIcon>
               </FriendButton>
-            </>
+            </div>
           ))
         )}
       </Messages>

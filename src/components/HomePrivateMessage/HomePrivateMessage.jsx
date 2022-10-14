@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Linkify from 'linkify-react';
 import dayjs from 'dayjs';
 import {

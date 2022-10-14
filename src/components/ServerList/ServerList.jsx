@@ -7,6 +7,7 @@ import ServerHome from '../ServerHome/ServerHome';
 import ServerCreate from '../ServerCreate/ServerCreate';
 import io from 'socket.io-client';
 import Constants from '../Constants';
+import { v4 } from 'uuid';
 import { useGlobal } from '../../context/global';
 
 const ServerList = ({ ws, setWs }) => {
@@ -15,7 +16,7 @@ const ServerList = ({ ws, setWs }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!ws) {
+    if (!ws || ws.connected !== true) {
       const token = window.localStorage.getItem('Authorization');
       const socket = io(Constants.DNS, {
         auth: {
@@ -34,7 +35,9 @@ const ServerList = ({ ws, setWs }) => {
       });
 
       ws.on('connect_error', (error) => {
+        console.log('error', error);
         alert(error.message);
+        localStorage.removeItem('Authorization');
         navigate('/');
       });
 
@@ -45,7 +48,6 @@ const ServerList = ({ ws, setWs }) => {
       return () => {
         ws.off('connect');
         ws.off('connect_error');
-        ws.off('token');
         ws.off('disconnect');
       };
     }
@@ -94,6 +96,7 @@ const ServerList = ({ ws, setWs }) => {
       {serverArray &&
         serverArray.map((item) => (
           <ServerButton
+            key={v4()}
             serverName={item.serverName}
             serverId={item.serverId}
             redirect={redirect}

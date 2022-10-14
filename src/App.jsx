@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  HashRouter,
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import GlobalStyles from './styles/GlobalStyles';
 import LoginInterface from './pages/LoginInterface';
