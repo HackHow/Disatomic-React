@@ -1,33 +1,29 @@
-## **This is Disatomic project with React**
+![Logo](./public/Disatomic_Logo.png)
+**<p align="center">A minimal online chat service, and provided both website and cross-platform desktop application with <a href="https://www.electronjs.org/">Electron</a>.</p>**
 
-**_2022/09/11_**
+## Disatomic
 
-- **Modify login console log**
-- **Add jwt verify and sign in login/register**
-- **Direct default page to login page**
-- **Add Home component**
+- [Website](https://dis4tomic.com)
+- [Back-End Repo](https://github.com/HackHow/Disatomic-Server)
 
-**_2022/09/09_**
+## Tech Stack
 
-- **Add login layout**
-- **Add register layout**
-- **Add React Router**
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-**_2022/09/08_**
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 
-- **Add picture preview in upload**
-- **Picture could preview in chat record**
-- **File could be save in Server**
+![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 
-**_2022/09/03_**
+![Electron](https://img.shields.io/badge/Electron-2B2E3A?style=for-the-badge&logo=electron&logoColor=9FEAF9)
 
-- **Using styled-components**
-- **Create direct messages logo layout**
-- **Create add server layout**
-- **Add project directory**
 
-**_2022/08/31_**
+## Acknowledgements
 
-- **Start up React project**
-- **Start up Electron**
-- **Make sure React can run on Electron**
+ - [Discord_UI_Clone](https://github.com/FabioJunik/Discord_UI_Clone)
+
+## Contact
+If you have some suggestions or feedback, please get in touch with me.
+
+<a href="mailto:howardshen2306@gmail.com" ref="nofollow"><img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
+
+<a href="https://www.linkedin.com/in/howardshen23/" rel="nofollow"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
