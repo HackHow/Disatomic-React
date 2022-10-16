@@ -4,7 +4,7 @@
 ## Disatomic
 
 - [Website](https://dis4tomic.com)
-- [Back-End Repo](https://github.com/HackHow/Disatomic-Server)
+- [Back-End Repo](https://github.com/HackHow/Disatomic-server)
 
 ## Tech Stack
 
