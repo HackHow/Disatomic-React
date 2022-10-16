@@ -111,7 +111,7 @@ const ChannelData = ({
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(data);
+          // console.log(data);
           setMessageReceived(data);
         };
         getMultiChatRecord();

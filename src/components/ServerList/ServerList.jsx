@@ -11,8 +11,13 @@ import { v4 } from 'uuid';
 import { useGlobal } from '../../context/global';
 
 const ServerList = ({ ws, setWs }) => {
-  const { setChooseServerName, setChooseServerId } = useGlobal();
-  const [serverArray, setServerArray] = useState('');
+  const {
+    setChooseServerName,
+    setChooseServerId,
+    serverArray,
+    setServerArray,
+  } = useGlobal();
+  // const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {

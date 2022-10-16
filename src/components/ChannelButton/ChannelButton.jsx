@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
   Container,
@@ -8,7 +8,6 @@ import {
 } from './ChannelButtonStyles';
 import Constants from '../Constants';
 import { useGlobal } from '../../context/global';
-
 import {
   Button,
   TextField,
@@ -24,10 +23,12 @@ const ChannelButton = ({
   channelId,
   selected,
   redirectChannel,
+  ws,
+  setChannelList,
 }) => {
   const [friendName, setFriendName] = useState('');
   const [open, setOpen] = useState(false);
-  const { chooseServerId } = useGlobal();
+  const { chooseServerId, setServerArray } = useGlobal();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,12 +54,29 @@ const ChannelButton = ({
           },
         }
       );
-      console.log(data);
+      ws.emit('InviteFriendToChannel', {
+        receiverId: data.receiverId,
+        userServers: data.userServers,
+        channelList: data.channelList,
+      });
+      console.log(data.msg);
     } catch (error) {
       console.log(error);
     }
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('receiverJoinChannel', ({ userServers, channelList }) => {
+        setServerArray((prev) => [...prev, userServers]);
+        setChannelList(channelList);
+      });
+      return () => {
+        ws.off('receiverJoinChannel');
+      };
+    }
+  }, [ws]);
 
   return (
     <Container

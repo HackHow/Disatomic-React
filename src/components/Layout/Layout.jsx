@@ -22,6 +22,7 @@ const Layout = ({ ws, setWs }) => {
           ws={ws}
           setChooseChannelName={setChooseChannelName}
           setChooseChannelId={setChooseChannelId}
+          setMessageReceived={setMessageReceived}
         />
         <UserInfo ws={ws} />
       </ChannelFixed>

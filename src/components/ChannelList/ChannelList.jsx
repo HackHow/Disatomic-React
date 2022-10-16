@@ -16,7 +16,12 @@ import {
 } from '@mui/material/';
 import { v4 } from 'uuid';
 
-const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
+const ChannelList = ({
+  ws,
+  setChooseChannelName,
+  setChooseChannelId,
+  setMessageReceived,
+}) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState([]);
   const [isPublic, setIsPublic] = useState(true);
@@ -44,6 +49,8 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        setChooseChannelName('');
+        setMessageReceived([]);
         setChannelList(data.channelList);
       };
       getChannelOfServer();
@@ -94,10 +101,6 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
     setChannelList(newChannelList);
   };
 
-  // useEffect(() => {
-
-  // },[])
-
   return (
     <Container>
       <Category>
@@ -132,7 +135,9 @@ const ChannelList = ({ ws, setChooseChannelName, setChooseChannelId }) => {
       {channelList &&
         channelList.map((item) => (
           <ChannelButton
-            key={v4()}
+            // key={v4()}
+            ws={ws}
+            setChannelList={setChannelList}
             channelName={item.channelName}
             channelId={item.channelId}
             redirectChannel={redirectChannel}

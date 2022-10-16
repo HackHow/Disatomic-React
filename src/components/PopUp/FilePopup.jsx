@@ -3,7 +3,7 @@ import Popup from 'reactjs-popup';
 import styled from 'styled-components';
 import { Documents } from 'styled-icons/ionicons-outline';
 import ChannelMessage from '../ChannelMessage/ChannelMessage';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 const DocumentsIcon = styled(Documents)`
   width: 30px;
   height: 30px;
@@ -98,7 +98,7 @@ const FilePopup = ({ messageReceived }) => {
       {filterFileMessage.length > 0 ? (
         filterFileMessage.map((item) => (
           <ChannelMessage
-            key={uuidv4()}
+            key={v4()}
             author={item.sender.name}
             date={item.createdAt}
             content={item.text}
