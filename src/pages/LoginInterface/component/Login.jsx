@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const SignInContainer = styled.div`
   width: 100vw;
@@ -24,6 +26,7 @@ const RegisterButton = styled.button`
   display: block;
   margin-top: 20px;
   border-radius: 16px 0;
+  cursor: pointer;
 `;
 
 const ButtonAndLink = styled.div`
@@ -40,8 +43,7 @@ const Input = styled.input`
 function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('電子郵件');
-  const [password, setPassword] = useState('密碼');
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const token = localStorage.getItem('Authorization');
@@ -65,8 +67,13 @@ function Login() {
       localStorage.setItem('Authorization', data.accessToken);
       navigate('/channels/@me');
     } catch (error) {
-      console.log(error.response.data);
-      alert(error.response.data);
+      // console.log(error.response.data);
+      // alert(error.response.data);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        html: `<b>${error.response.data}</b>`,
+      });
     }
   };
 

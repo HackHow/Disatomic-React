@@ -9,6 +9,8 @@ import io from 'socket.io-client';
 import Constants from '../Constants';
 import { v4 } from 'uuid';
 import { useGlobal } from '../../context/global';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const ServerList = ({ ws, setWs }) => {
   const {
@@ -19,6 +21,8 @@ const ServerList = ({ ws, setWs }) => {
   } = useGlobal();
   // const [serverArray, setServerArray] = useState('');
   const navigate = useNavigate();
+
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     if (!ws || ws.connected !== true) {
@@ -40,8 +44,20 @@ const ServerList = ({ ws, setWs }) => {
       });
 
       ws.on('connect_error', (error) => {
-        console.log('error', error);
-        alert(error.message);
+        console.log(error);
+        if (error.message === 'xhr poll error') {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: `<b>Unable to connect to the server</b>`,
+          });
+        } else {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            html: `<b>${error.message}</b>`,
+          });
+        }
         localStorage.removeItem('Authorization');
         navigate('/');
       });

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { ButtonCreate, PlusIcon } from './ServerCreateStyles';
 import Constants from '../Constants';
 import {
@@ -25,6 +27,8 @@ const ServerCreate = ({
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const MySwal = withReactContent(Swal);
+
   const clickCreateServer = async () => {
     const url = Constants.CREATE_SERVER;
     const token = localStorage.getItem('Authorization');
@@ -38,7 +42,13 @@ const ServerCreate = ({
           },
         }
       );
-      console.log('Create Server Success !');
+      // console.log('Create Server Success !');
+      MySwal.fire({
+        icon: 'success',
+        title: data.msg,
+        showConfirmButton: true,
+        timer: 1500,
+      });
       setServerArray((prev) => {
         return [...prev, data];
       });

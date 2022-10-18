@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import {
   Container,
   HashtagIcon,
@@ -33,6 +35,8 @@ const ChannelButton = ({
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const MySwal = withReactContent(Swal);
+
   const changeHandler = (event) => {
     setFriendName(event.target.value);
   };
@@ -59,9 +63,20 @@ const ChannelButton = ({
         userServers: data.userServers,
         channelList: data.channelList,
       });
-      console.log(data.msg);
+      MySwal.fire({
+        position: 'top',
+        icon: 'success',
+        title: data.msg,
+        showConfirmButton: true,
+        timer: 2500,
+      });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.msg,
+      });
     }
     setOpen(false);
   };

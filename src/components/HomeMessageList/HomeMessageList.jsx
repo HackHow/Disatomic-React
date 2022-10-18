@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import HomeFriendButton from '../HomeFriendButton/HomeFriendButton';
 import {
   Container,
@@ -37,6 +39,8 @@ const HomeMessageList = ({
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const MySwal = withReactContent(Swal);
+
   const changeHandler = (event) => {
     setFriendName(event.target.value);
   };
@@ -54,10 +58,20 @@ const HomeMessageList = ({
           },
         }
       );
-      console.log(data);
+      // console.log(data);
+      MySwal.fire({
+        // position: 'top',
+        icon: 'success',
+        html: data,
+        // showConfirmButton: true,
+        timer: 2500,
+      });
     } catch (error) {
-      console.log(error);
-      alert(error.response.data);
+      // console.log(error);
+      MySwal.fire({
+        icon: 'error',
+        html: `<b>${error.response.data}</b>`,
+      });
     } finally {
       setFriendName('');
       setOpen(false);
@@ -106,6 +120,7 @@ const HomeMessageList = ({
               fullWidth
               variant='standard'
               onChange={changeHandler}
+              placeholder='userName#0000'
             />
           </DialogContent>
           <DialogActions>

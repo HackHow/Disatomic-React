@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import ChannelButton from '../ChannelButton/ChannelButton';
 import { Container, Category, AddCategoryIcon } from './ChannelListStyles';
 import Constants from '../Constants';
-import axios from 'axios';
+
 import { useGlobal } from '../../context/global';
 import {
   Button,
@@ -14,7 +17,6 @@ import {
   // DialogContentText,
   DialogTitle,
 } from '@mui/material/';
-import { v4 } from 'uuid';
 
 const ChannelList = ({
   ws,
@@ -33,6 +35,8 @@ const ChannelList = ({
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const MySwal = withReactContent(Swal);
 
   const changeHandler = (event) => {
     setChannelName(event.target.value);
@@ -77,6 +81,12 @@ const ChannelList = ({
           },
         }
       );
+      MySwal.fire({
+        icon: 'success',
+        title: data.msg,
+        showConfirmButton: true,
+        timer: 1500,
+      });
       setChannelList((prev) => [...prev, data]);
       ws.emit('joinCreatedChannel', data.channelId);
     } catch (error) {
@@ -133,9 +143,9 @@ const ChannelList = ({
       </Category>
 
       {channelList &&
-        channelList.map((item) => (
+        channelList.map((item, index) => (
           <ChannelButton
-            // key={v4()}
+            key={index}
             ws={ws}
             setChannelList={setChannelList}
             channelName={item.channelName}

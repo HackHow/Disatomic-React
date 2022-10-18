@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Constants from '../../../components/Constants';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const SignUpContainer = styled.div`
   width: 100vw;
@@ -40,6 +42,8 @@ const Input = styled.input`
 function Register() {
   const navigate = useNavigate();
 
+  const MySwal = withReactContent(Swal);
+
   const token = localStorage.getItem('Authorization');
 
   useEffect(() => {
@@ -64,8 +68,12 @@ function Register() {
       localStorage.setItem('Authorization', data.accessToken);
       navigate('/channels/@me');
     } catch (error) {
-      console.log('Register Fail');
-      alert(error.response.data);
+      // alert(error.response.data);
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        html: `<b>${error.response.data}</b>`,
+      });
     }
   };
 
