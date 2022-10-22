@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Container, Separator } from './ServerListStyles';
@@ -19,7 +19,7 @@ const ServerList = ({ ws, setWs }) => {
     serverArray,
     setServerArray,
   } = useGlobal();
-  // const [serverArray, setServerArray] = useState('');
+
   const navigate = useNavigate();
 
   const MySwal = withReactContent(Swal);
