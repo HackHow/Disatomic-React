@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Constants from '../Constants';
-import HomeFriendButton, {
-  Mention,
-} from '../HomeFriendButton/HomeFriendButton';
+import HomeFriendButton from '../HomeFriendButton/HomeFriendButton';
 import {
   Container,
   Messages,
@@ -30,52 +28,6 @@ const HomeFriendData = ({
 }) => {
   const navigate = useNavigate();
   const [onlineFriends, setOnlineFriends] = useState([]);
-  // const [currentOnline, setCurrentOnline] = useState([]);
-
-  useEffect(() => {
-    if (ws) {
-      ws.emit('getOnlineFriend', 'Online friend list');
-      ws.on('onlineFriend', (friendsList) => {
-        setOnlineFriends(friendsList);
-      });
-
-      return () => {
-        ws.off('onlineFriend');
-      };
-    }
-  }, [ws]);
-
-  useEffect(() => {
-    if (ws) {
-      ws.on('onlineNotify', (friendOnline) => {
-        // const friendIdArray = currentOnline.map((item) => item.friendId);
-        // if (!friendIdArray.includes(friendOnline.friendId)) {
-        // console.log('AAA');
-        setOnlineFriends((prev) => [friendOnline, ...prev]);
-        // }
-      });
-
-      return () => {
-        ws.off('onlineNotify');
-      };
-    }
-  }, [ws, onlineFriends]);
-
-  useEffect(() => {
-    if (ws) {
-      ws.on('OfflineNotify', (friendOffline) => {
-        const updateOnlineUser = onlineFriends.filter(
-          (item) => item.friendId !== friendOffline.friendId
-        );
-        console.log('updateOnlineUser', updateOnlineUser);
-        setOnlineFriends(updateOnlineUser);
-      });
-
-      return () => {
-        ws.off('userOffline');
-      };
-    }
-  }, [ws, onlineFriends]);
 
   const clickAcceptFriend = async (senderId) => {
     const url = Constants.ACCEPT_FRIEND;
@@ -148,6 +100,23 @@ const HomeFriendData = ({
 
   useEffect(() => {
     if (ws) {
+      ws.emit('getOnlineFriend', 'Online friend list');
+      ws.on('onlineFriend', (friendsList) => {
+        setOnlineFriends(friendsList);
+      });
+
+      ws.on('onlineNotify', (friendOnline) => {
+        setOnlineFriends((prev) => [friendOnline, ...prev]);
+        ws.emit('addOnlineFriendToList', friendOnline);
+      });
+
+      ws.on('OfflineNotify', (friendOffline) => {
+        const updateOnlineUser = onlineFriends.filter(
+          (item) => item.friendId !== friendOffline.friendId
+        );
+        setOnlineFriends(updateOnlineUser);
+      });
+
       ws.on('NotifySenderAccept', (outgoingFriendReq) => {
         setOutgoingRequest(outgoingFriendReq);
       });
@@ -161,6 +130,9 @@ const HomeFriendData = ({
       });
 
       return () => {
+        ws.off('onlineFriend');
+        ws.off('onlineNotify');
+        ws.off('OfflineNotify');
         ws.off('NotifySenderAccept');
         ws.off('NotifySenderReject');
         ws.off('NotifyReceiverCancel');
