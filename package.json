@@ -4,6 +4,7 @@
   "private": true,
   "main": "public/electron.js",
   "author": "Howard Shen",
+  "description": "A online chat service",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
