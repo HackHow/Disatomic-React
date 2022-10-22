@@ -87,13 +87,31 @@ const ChannelList = ({
         showConfirmButton: true,
         timer: 1500,
       });
+      console.log('data', data);
       setChannelList((prev) => [...prev, data]);
-      ws.emit('joinCreatedChannel', data.channelId);
+      ws.emit('joinCreatedChannel', {
+        serverMembers: data.serverMembers,
+        channelId: data.channelId,
+        channelName: data.channelName,
+      });
     } catch (error) {
       console.log(error);
     }
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (ws) {
+      ws.on('renderChannelForMembers', (data) => {
+        setChannelList((prev) => [...prev, data]);
+        ws.emit('serverMembersJoinChannel', data.channelId);
+      });
+
+      return () => {
+        ws.off('renderChannelForMembers');
+      };
+    }
+  }, [ws]);
 
   const redirectChannel = (chooseServerId, channelId, channelName) => () => {
     setChooseChannelName(channelName);
