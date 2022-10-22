@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Mic, Headset, Settings } from 'styled-icons/material';
-import { User } from 'styled-icons/entypo';
+import { User, LogOut } from 'styled-icons/entypo';
+import { LogoutCircleR } from 'styled-icons/remix-line';
 
 export const Container = styled.div`
   grid-area: UI;
@@ -93,4 +94,17 @@ export const UserIcon = styled(User)`
   border-radius: 50%;
   background-color: var(--mention-detail);
   /* background-color: var(--gray); */
+`;
+
+export const LogoutCircleRIcon = styled(LogoutCircleR)`
+  width: 30px;
+  height: 30px;
+  color: var(--white);
+  opacity: 0.7;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
