@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  HashRouter,
+} from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import GlobalStyles from './styles/GlobalStyles';
 import LoginInterface from './pages/LoginInterface';
