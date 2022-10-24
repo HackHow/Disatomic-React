@@ -24,7 +24,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
-    "react-router-dom": "^6.3.0",
+    "react-router-dom": "6.3.0",
     "react-scripts": "^5.0.1",
     "reactjs-popup": "^2.0.5",
     "socket.io-client": "^4.5.2",
@@ -47,7 +47,7 @@
     "electron:package:mac": "yarn build && electron-builder -m -c.extraMetadata.main=build/electron.js"
   },
   "build": {
-    "appId": "com.example.electron",
+    "appId": "Disatomic_v1.0",
     "productName": "Disatomic",
     "files": [
       "build/**/*",
@@ -55,6 +55,19 @@
     ],
     "directories": {
       "buildResources": "public"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": "x64"
+        },
+        {
+          "target": "portable",
+          "arch": "x64"
+        }
+      ],
+      "icon": "public/website.jpg"
     }
   },
   "eslintConfig": {
