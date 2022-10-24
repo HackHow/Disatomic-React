@@ -65,7 +65,7 @@ const ChannelData = ({
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log('ChannelData', data);
+        // console.log('ChannelData', data);
         ws.emit('channelSendMessage', {
           channelId: chooseChannelId,
           text: message,
@@ -139,7 +139,7 @@ const ChannelData = ({
 
   const changeHandler = (event) => {
     const [uploadFile] = event.target.files;
-    console.log('uploadFile', uploadFile);
+    // console.log('uploadFile', uploadFile);
     if (!uploadFile) {
       return 'No files';
     }
