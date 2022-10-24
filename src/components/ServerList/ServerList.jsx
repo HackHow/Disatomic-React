@@ -12,7 +12,7 @@ import { useGlobal } from '../../context/global';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
-const ServerList = ({ ws, setWs }) => {
+const ServerList = ({ ws, setWs, setChannelList }) => {
   const {
     setChooseServerName,
     setChooseServerId,
@@ -59,6 +59,7 @@ const ServerList = ({ ws, setWs }) => {
           });
         }
         localStorage.removeItem('Authorization');
+        ws.disconnect();
         navigate('/');
       });
 
@@ -92,6 +93,25 @@ const ServerList = ({ ws, setWs }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (ws) {
+      ws.on(
+        'receiverRenderServerAndChannel',
+        ({ userServers, channelList, channelIdArray }) => {
+          // console.log('receiverRenderServerAndChannel', 'PASS');
+          setServerArray((prev) => [...prev, userServers]);
+          // console.log('@@@@PASS2');
+          // setChannelList(channelList);
+          // setChannelList((prev) => [...prev, channelList]);
+          ws.emit('receiverJoinChannel', channelIdArray);
+        }
+      );
+      return () => {
+        ws.off('receiverRenderServerAndChannel');
+      };
+    }
+  }, [ws]);
+
   const redirect = (serverId, serverName) => () => {
     setChooseServerName(serverName);
     setChooseServerId(serverId);
@@ -115,9 +135,9 @@ const ServerList = ({ ws, setWs }) => {
       <Separator />
 
       {serverArray &&
-        serverArray.map((item) => (
+        serverArray.map((item, index) => (
           <ServerButton
-            key={v4()}
+            key={index}
             serverName={item.serverName}
             serverId={item.serverId}
             redirect={redirect}

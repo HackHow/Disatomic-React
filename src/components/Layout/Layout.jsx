@@ -11,10 +11,11 @@ const Layout = ({ ws, setWs }) => {
   const [chooseChannelName, setChooseChannelName] = useState('');
   const [chooseChannelId, setChooseChannelId] = useState('');
   const [messageReceived, setMessageReceived] = useState([]);
+  const [channelList, setChannelList] = useState([]);
 
   return (
     <LayoutStyles>
-      <ServerList ws={ws} setWs={setWs} />
+      <ServerList ws={ws} setWs={setWs} setChannelList={setChannelList} />
 
       <ChannelFixed>
         <ServerName />
@@ -23,6 +24,8 @@ const Layout = ({ ws, setWs }) => {
           setChooseChannelName={setChooseChannelName}
           setChooseChannelId={setChooseChannelId}
           setMessageReceived={setMessageReceived}
+          channelList={channelList}
+          setChannelList={setChannelList}
         />
         <UserInfo ws={ws} />
       </ChannelFixed>

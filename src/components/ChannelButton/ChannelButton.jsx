@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -16,7 +16,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  // DialogContentText,
   DialogTitle,
 } from '@mui/material/';
 
@@ -26,11 +25,10 @@ const ChannelButton = ({
   selected,
   redirectChannel,
   ws,
-  setChannelList,
 }) => {
   const [friendName, setFriendName] = useState('');
   const [open, setOpen] = useState(false);
-  const { chooseServerId, setServerArray } = useGlobal();
+  const { chooseServerId } = useGlobal();
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,18 +78,6 @@ const ChannelButton = ({
     }
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (ws) {
-      ws.on('receiverJoinChannel', ({ userServers, channelList }) => {
-        setServerArray((prev) => [...prev, userServers]);
-        setChannelList(channelList);
-      });
-      return () => {
-        ws.off('receiverJoinChannel');
-      };
-    }
-  }, [ws]);
 
   return (
     <Container

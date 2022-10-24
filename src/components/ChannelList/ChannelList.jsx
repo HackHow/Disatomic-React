@@ -23,9 +23,10 @@ const ChannelList = ({
   setChooseChannelName,
   setChooseChannelId,
   setMessageReceived,
+  channelList,
+  setChannelList,
 }) => {
   const [channelName, setChannelName] = useState('');
-  const [channelList, setChannelList] = useState([]);
   const [isPublic, setIsPublic] = useState(true);
   const [open, setOpen] = useState(false);
   const { chooseServerId } = useGlobal();
@@ -43,7 +44,7 @@ const ChannelList = ({
   };
 
   useEffect(() => {
-    const serverId = window.location.href.split('/')[4];
+    const serverId = location.pathname.split('/')[2];
     const url = Constants.SERVER_INFO + `/${serverId}`;
     const token = localStorage.getItem('Authorization');
     try {
@@ -87,7 +88,7 @@ const ChannelList = ({
         showConfirmButton: true,
         timer: 1500,
       });
-      console.log('data', data);
+      // console.log('data', data);
       setChannelList((prev) => [...prev, data]);
       ws.emit('joinCreatedChannel', {
         serverMembers: data.serverMembers,
@@ -103,6 +104,7 @@ const ChannelList = ({
   useEffect(() => {
     if (ws) {
       ws.on('renderChannelForMembers', (data) => {
+        console.log('renderChannelForMembers', 'PASS');
         setChannelList((prev) => [...prev, data]);
         ws.emit('serverMembersJoinChannel', data.channelId);
       });
@@ -165,7 +167,6 @@ const ChannelList = ({
           <ChannelButton
             key={index}
             ws={ws}
-            setChannelList={setChannelList}
             channelName={item.channelName}
             channelId={item.channelId}
             redirectChannel={redirectChannel}
