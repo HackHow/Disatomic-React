@@ -107,7 +107,7 @@ const HomeFriendData = ({
 
       ws.on('onlineNotify', (friendOnline) => {
         setOnlineFriends((prev) => [friendOnline, ...prev]);
-        ws.emit('addOnlineFriendToList', friendOnline);
+        ws.emit('addOnlineFriendToList', 'getOnlineFriend()');
       });
 
       ws.on('OfflineNotify', (friendOffline) => {
