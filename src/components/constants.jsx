@@ -1,5 +1,5 @@
-const DNS = 'https://dis4tomic.com';
-// const DNS = 'http://localhost:3001';
+// const DNS = 'https://dis4tomic.com';
+const DNS = 'http://localhost:3001';
 
 const REGISTER_URL = `${DNS}/api/1.0/user/signup`;
 const LOGIN_URL = `${DNS}/api/1.0/user/signin`;
@@ -23,6 +23,7 @@ const REJECT_FRIEND = `${DNS}/api/1.0/friend/reject`;
 const CANCEL_FRIEND = `${DNS}/api/1.0/friend/cancel`;
 
 const UPLOAD_FILES = `${DNS}/api/1.0/uploadfiles`;
+const UPLOAD_AVATAR = `${DNS}/api/1.0/uploadAvatar`;
 
 const GET_MULTI_CHAT_RECORD = `${DNS}/api/1.0/chat/channel`;
 const GET_PERSONAL_CHAT_RECORD = `${DNS}/api/1.0/chat/receiver`;
@@ -43,6 +44,7 @@ const constants = {
   REJECT_FRIEND,
   CANCEL_FRIEND,
   UPLOAD_FILES,
+  UPLOAD_AVATAR,
   InviteFriendToChannel,
   GET_MULTI_CHAT_RECORD,
   GET_PERSONAL_CHAT_RECORD,

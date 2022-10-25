@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Constants from '../Constants';
-import ChannelMessage, { Mention } from '../ChannelMessage/ChannelMessage';
+import ChannelMessage from '../ChannelMessage/ChannelMessage';
 import { v4 } from 'uuid';
 import {
   Container,
@@ -162,6 +162,7 @@ const ChannelData = ({
         {messageReceived.map((item) => (
           <ChannelMessage
             key={v4()}
+            avatarURL={item.sender.avatarURL}
             author={item.sender.name}
             date={item.createdAt}
             content={item.text}

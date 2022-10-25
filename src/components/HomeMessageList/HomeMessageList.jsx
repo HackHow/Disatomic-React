@@ -32,7 +32,7 @@ const HomeMessageList = ({
   setReceiverId,
 }) => {
   const navigate = useNavigate();
-  //   const location = useLocation();
+
   const [friendName, setFriendName] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -58,12 +58,9 @@ const HomeMessageList = ({
           },
         }
       );
-      // console.log(data);
       MySwal.fire({
-        // position: 'top',
         icon: 'success',
         html: data,
-        // showConfirmButton: true,
         timer: 2500,
       });
     } catch (error) {
@@ -138,7 +135,7 @@ const HomeMessageList = ({
             key={v4()}
             onClick={() => redirectPrivateMsg(item._id, item.name)}
           >
-            <HomeFriendButton userName={item.name} />
+            <HomeFriendButton avatarURL={item.avatarURL} userName={item.name} />
           </PrivateMessageFriendList>
         ))}
       </PrivateMessage>

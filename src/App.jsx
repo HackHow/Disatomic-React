@@ -28,6 +28,7 @@ function App() {
   const [friendUserName, setFriendUserName] = useState('');
   const [receiverId, setReceiverId] = useState('');
   const [serverArray, setServerArray] = useState('');
+  const [avatarURL, setAvatarURL] = useState('');
 
   const [ws, setWs] = useState(null);
 
@@ -44,6 +45,8 @@ function App() {
         setUserHashNumber,
         serverArray,
         setServerArray,
+        avatarURL,
+        setAvatarURL,
       }}
     >
       <BrowserRouter>

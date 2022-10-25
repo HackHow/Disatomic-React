@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Mic, Headset, Settings } from 'styled-icons/material';
 import { User, LogOut } from 'styled-icons/entypo';
-import { LogoutCircleR } from 'styled-icons/remix-line';
+import DefaultAvatar from '../../assets/default_avatar.png';
+import { Wrench } from 'styled-icons/fluentui-system-filled';
 
 export const Container = styled.div`
   grid-area: UI;
@@ -17,14 +18,15 @@ export const Container = styled.div`
 export const Profile = styled.div`
   display: flex;
   align-items: center;
+  /* margin-left: 10px; */
 `;
 
-export const Avatar = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: var(--gray);
-`;
+// export const Avatar = styled.div`
+//   width: 32px;
+//   height: 32px;
+//   border-radius: 50%;
+//   background-color: var(--gray);
+// `;
 
 export const UserData = styled.div`
   margin-left: 10px;
@@ -32,6 +34,7 @@ export const UserData = styled.div`
   > strong {
     color: var(--white);
     display: block;
+    font-size: 17px;
   }
 
   > span {
@@ -89,14 +92,62 @@ export const SettingsIcon = styled(Settings)`
 `;
 
 export const UserIcon = styled(User)`
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background-color: var(--mention-detail);
+  position: relative;
+  cursor: pointer;
+  color: black;
+
+  /* &:hover {
+    opacity: 0.5;
+  } */
+`;
+
+export const Avatar = styled.img`
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+`;
+
+export const DefaultUserAvatar = styled.div`
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  /* background-color: var(--mention-detail); */
+  background-color: var(--white);
+  border-radius: 50%;
+  position: relative;
+  background-image: url(${DefaultAvatar});
+  background-size: cover;
+`;
+
+export const InputAvatar = styled.input`
+  margin-bottom: 20px;
+`;
+
+export const WrenchIcon = styled(Wrench)`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--mention-detail);
-  /* background-color: var(--gray); */
+  position: absolute;
+  opacity: 0;
+  left: 16px;
+  top: 11px;
+  width: 34px;
+  height: 34px;
+  color: white;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    color: red;
+  }
 `;
 
-export const LogoutCircleRIcon = styled(LogoutCircleR)`
+export const LogoutIcon = styled(LogOut)`
   width: 30px;
   height: 30px;
   color: var(--white);
@@ -107,4 +158,16 @@ export const LogoutCircleRIcon = styled(LogoutCircleR)`
   &:hover {
     opacity: 1;
   }
+`;
+
+export const UploadAvatarWrapper = styled.div`
+  position: relative;
+`;
+
+export const PreviewAvatar = styled.img`
+  height: 180px;
+  width: 180px;
+  margin-top: 5px;
+  margin-left: 37px;
+  margin-bottom: 25px;
 `;

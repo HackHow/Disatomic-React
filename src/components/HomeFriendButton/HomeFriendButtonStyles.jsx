@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { AlternateEmail } from 'styled-icons/material';
 import { User } from 'styled-icons/entypo';
+import DefaultAvatar from '../../assets/default_avatar.png';
 
 export const Container = styled.div`
   display: flex;
@@ -25,10 +26,11 @@ export const Avatar = styled.div`
   height: 40px;
   width: 40px;
   min-width: 40px;
-  background-color: var(--mention-detail);
   border-radius: 50%;
   position: relative;
-  /* background-image: ${(props) => `url(${props.userPicture})`}; */
+  background-color: var(--white);
+  background-image: url(${DefaultAvatar});
+  background-size: cover;
 
   &.bot {
     background-color: var(--mention-detail);
@@ -43,7 +45,7 @@ export const Avatar = styled.div`
     height: 16px;
     padding: auto;
     bottom: 0px;
-    left: 25px;
+    left: 26px;
     border: 1px solid var(--quaternary);
     border-radius: 12px;
   }
@@ -108,4 +110,39 @@ export const UserIcon = styled(User)`
   width: 40px;
   background-color: var(--mention-detail);
   border-radius: 50%;
+`;
+
+// export const AvatarPrivateMessage = styled.img`
+//   width: 45px;
+//   height: 45px;
+//   border-radius: 50%;
+// `;
+
+export const AvatarPrivateMessage = styled.div`
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  background-color: var(--mention-detail);
+  border-radius: 50%;
+  position: relative;
+  background-image: ${(props) => `url(${props.avatarURL})`};
+  background-size: cover;
+
+  &.bot {
+    background-color: var(--mention-detail);
+  }
+
+  &::after {
+    content: '${({ state }) => state}';
+    display: ${({ state }) => (state ? 'flex' : 'none')};
+    position: absolute;
+    background-color: var(--plus);
+    width: 16px;
+    height: 16px;
+    padding: auto;
+    bottom: 0px;
+    left: 26px;
+    border: 1px solid var(--quaternary);
+    border-radius: 12px;
+  }
 `;

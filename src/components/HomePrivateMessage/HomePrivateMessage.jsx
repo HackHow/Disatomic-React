@@ -9,11 +9,19 @@ import {
   Content,
   PictureLink,
   PreviewImg,
+  DefaultUserAvatar,
 } from './HomePrivateMessageStyles';
 
 export { Mention } from './HomePrivateMessageStyles';
 
-const HomePrivateMessage = ({ author, date, content, hasMention, fileURL }) => {
+const HomePrivateMessage = ({
+  author,
+  date,
+  content,
+  hasMention,
+  fileURL,
+  avatarURL,
+}) => {
   const options = {
     defaultProtocol: 'https',
     target: '_blank',
@@ -27,7 +35,7 @@ const HomePrivateMessage = ({ author, date, content, hasMention, fileURL }) => {
 
   return (
     <Container className={hasMention ? 'mention' : ''}>
-      <Avatar />
+      {avatarURL ? <Avatar avatarURL={avatarURL} /> : <DefaultUserAvatar />}
       <Message>
         <Header>
           <strong>{userName}</strong>

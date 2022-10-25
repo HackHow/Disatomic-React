@@ -132,7 +132,6 @@ const HomePrivateData = ({
   useEffect(() => {
     if (ws) {
       ws.on('privateReceiveMessage', (data) => {
-        console.log('server socket message pass');
         if (
           data.sender.id === receiverId ||
           data.sender.id === data.receiver.id
@@ -174,6 +173,7 @@ const HomePrivateData = ({
         {messageReceived.map((item) => (
           <HomePrivateMessage
             key={v4()}
+            avatarURL={item.sender.avatarURL}
             author={item.sender.name}
             date={item.createdAt}
             content={item.text}

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { AlternateEmail } from 'styled-icons/material';
+import DefaultAvatar from '../../assets/default_avatar.png';
 
 export const Container = styled.div`
   display: flex;
@@ -22,13 +23,27 @@ export const Container = styled.div`
 export const Avatar = styled.div`
   height: 40px;
   width: 40px;
-  /* background-color: var(--secondary); */
-  background-color: var(--mention-detail);
+  min-width: 40px;
+  /* background-color: var(--mention-detail); */
   border-radius: 50%;
+  position: relative;
+  background-image: ${(props) => `url(${props.avatarURL})`};
+  background-size: cover;
 
   &.bot {
     background-color: var(--mention-detail);
   }
+`;
+
+export const DefaultUserAvatar = styled.div`
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  background-color: var(--white);
+  border-radius: 50%;
+  position: relative;
+  background-image: url(${DefaultAvatar});
+  background-size: cover;
 `;
 
 export const Message = styled.div`
